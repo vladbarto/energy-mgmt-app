@@ -14,7 +14,9 @@ import ro.tucn.energy_mgmt_backend.model.UserEntity;
 import ro.tucn.energy_mgmt_backend.repository.UserRepository;
 import ro.tucn.energy_mgmt_backend.security.util.SecurityConstants;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -53,5 +55,34 @@ public class UserServiceBean implements UserService {
         UserEntity userAdded = userRepository.save(userToBeAdded);
 
         return userMapper.entityToResponseDTO(userAdded);
+    }
+
+    @Override
+    @Transactional
+    public UserResponseDTO update(UserRequestDTO userRequestDTO, UUID userId) {
+        return userRepository.findById(userId)
+                .map((userEntity)-> {
+                    userEntity.setEmail(userRequestDTO.getEmail());
+                    userEntity.setUsername(userRequestDTO.getUsername());
+                    userEntity.setPassword(userRequestDTO.getPassword());
+
+                    userRepository.save(userEntity);
+
+                    return userEntity;
+                })
+                .map(userMapper::entityToResponseDTO)
+                .orElseThrow(() -> new NotFoundException(String.format(
+                        ExceptionCode.ERR002_USERNAME_NOT_FOUND.getMessage(), //TODO: new error code, username to user
+                        userId
+                )))
+                ;
+    }
+
+    @Override
+    @Transactional
+    public UserResponseDTO deleteById(UUID userId) {
+
+        userRepository.deleteById(userId);
+        return null;
     }
 }

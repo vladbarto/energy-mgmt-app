@@ -1,8 +1,8 @@
 spring:
   application:
-    name: energy-mgmt-backend
+    name: energy-mgmt-devices
   datasource:
-    url: jdbc:postgresql://localhost:5432/user-db
+    url: jdbc:postgresql://localhost:5432/device-db
     username: postgres
     password: postgres
   jpa:
@@ -13,7 +13,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
 server:
-  port: 6584
+  port: 6585
   servlet:
     context-path: '/api'
   error:

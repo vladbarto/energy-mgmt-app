@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import ro.tucn.energy_mgmt_backend.dto.user.UserResponseDTO;
@@ -17,6 +18,7 @@ import ro.tucn.energy_mgmt_backend.service.UserService;
 import ro.tucn.energy_mgmt_backend.dto.user.UserRequestDTO;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -64,6 +66,50 @@ public class UserController {
         return new ResponseEntity<>(
                 userService.save(userRequestDTO),
                 HttpStatus.CREATED
+        );
+    }
+
+    @GetMapping("/{username}")
+    @Operation(summary = "Gets one specific user", description = "the user must exist")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User found",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))}),
+            @ApiResponse(responseCode = "404", description = "User not found",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionBody.class))}),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionBody.class))})
+    })
+//    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    public ResponseEntity<UserResponseDTO> findByUsername(@PathVariable("username") String username) {
+        return new ResponseEntity<>(
+                userService.findByUsername(username),
+                HttpStatus.OK
+        );
+    }
+
+    @PatchMapping("/{id}")
+    @Operation(summary = "Update one user")
+    @ApiResponse(responseCode = "301", description = "User successfully updated",
+            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))})
+    //@PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserResponseDTO> updateUser(
+            @RequestBody UserRequestDTO userRequestDTO, @PathVariable("id") UUID userId
+    ) {
+        return new ResponseEntity<>(
+                userService.update(userRequestDTO, userId),
+                HttpStatus.OK
+        );
+    }
+    
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete one user")
+    @ApiResponse(responseCode = "301", description = "user successfully deleted",
+            content = {@Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))})
+    //@PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UserResponseDTO> deleteById(@PathVariable("id") UUID userId) {
+        return new ResponseEntity<>(
+                userService.deleteById(userId),
+                HttpStatus.OK
         );
     }
 }
