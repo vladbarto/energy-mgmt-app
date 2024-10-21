@@ -1,0 +1,16 @@
+* {
+  font-family: Poppins, serif;
+}
+
+/* Ensure Font Awesome icons retain their own font-family */
+.fa, .fas, .far, .fal, .fab, .fa-regular {
+  font-family: "Font Awesome 6 Free", serif !important;
+}
+
+.utility {
+  color: black;
+}
+
+.utility:hover {
+  background-color: grey;
+}
