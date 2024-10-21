@@ -1,26 +1,27 @@
 package ro.tucn.energy_mgmt_devices.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name="USER_REFERENCE")
+@Table(name="USERREFERENCE")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserReferenceEntity {
-    @Id
-    private UUID id;
 
-    @Column(name="USER_ID")
+    @OneToMany
+
+    private List<DeviceEntity> id;
+
+    @Id
+    @Column(name="USERID")
     private UUID userId;
 }

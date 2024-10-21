@@ -1,12 +1,8 @@
 package ro.tucn.energy_mgmt_devices.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.annotation.Nullable;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,5 +36,7 @@ public class DeviceEntity {
     private float mhec; /// maximum hourly energy consumption
 
     @Column(name = "USERID")
-    private UUID userId;
+    @ManyToOne
+    @Nullable
+    private UserReferenceEntity userId;
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import ro.tucn.energy_mgmt_devices.dto.device.DeviceRequestDTO;
 import ro.tucn.energy_mgmt_devices.dto.device.DeviceResponseDTO;
 import ro.tucn.energy_mgmt_devices.exception.ExceptionBody;
-import ro.tucn.energy_mgmt_devices.service.DeviceService;
+import ro.tucn.energy_mgmt_devices.service.device.DeviceService;
 
 import java.util.List;
 import java.util.UUID;

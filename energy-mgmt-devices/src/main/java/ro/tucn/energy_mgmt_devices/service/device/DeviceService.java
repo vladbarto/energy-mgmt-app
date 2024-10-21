@@ -1,4 +1,4 @@
-package ro.tucn.energy_mgmt_devices.service;
+package ro.tucn.energy_mgmt_devices.service.device;
 
 import ro.tucn.energy_mgmt_devices.dto.device.DeviceResponseDTO;
 import ro.tucn.energy_mgmt_devices.dto.device.DeviceRequestDTO;
