@@ -1,10 +1,10 @@
 spring:
   application:
-    name: energy-mgmt-backend
+    name: energy-mgmt-login
   datasource:
     url: jdbc:postgresql://localhost:5432/user-db
-    username: vladbarto
-    password: 1234
+    username: login_user
+    password: auth
   jpa:
     hibernate:
       ddl-auto: update
@@ -13,9 +13,12 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
 server:
-  port: 6584
+  port: 6582
   servlet:
     context-path: '/api'
   error:
     whitelabel:
       enabled: false
+security:
+  secret-key: PS-SD-2024-3023X-1q2w3e4r5t6y7u8i9o0p
+  token-expiration-days: 15
