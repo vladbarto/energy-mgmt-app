@@ -9,6 +9,7 @@ import {HttpClientModule, provideHttpClient, withInterceptors} from "@angular/co
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import {HeaderComponent} from "./shared/components/header/header.component";
+import {requestInterceptor} from "./core/http-interceptor/http-interceptor";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import {HeaderComponent} from "./shared/components/header/header.component";
     BrowserAnimationsModule
   ],
   providers: [
-    //provideHttpClient(withInterceptors([ requestInterceptor ])) CAND INCEPEM SA FACEM INTERCEPTORII
+    provideHttpClient(withInterceptors([ requestInterceptor ]))
   ],
   bootstrap: [AppComponent]
 })
