@@ -35,7 +35,7 @@ public class SecurityConfig {
             AccessDeniedHandler accessDeniedHandler
     ) throws Exception {
         return http
-                .cors(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable) //adaugat ulterior, no effect
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(handler -> handler.accessDeniedHandler(accessDeniedHandler))
