@@ -13,8 +13,6 @@ export class AuthService {
   }
 
   login(credentials: LoginModel): Observable<void> {
-    return this.http.post<void>('auth/v1/login', credentials, {
-      withCredentials: true
-    });
+    return this.http.post<void>('auth/v1/login', credentials);
   }
 }
