@@ -56,13 +56,12 @@ export class LoginComponent implements OnInit {
   }
 
   private getUserInfo(): void {
-    console.log(this.userService.getInfo());
 
     this.userService.getInfo()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(response => {
         localStorage.setItem('loggedUser', JSON.stringify(response));
-        this.router.navigateByUrl('/dashboard/client');
+        this.router.navigateByUrl(response.admin? '/dashboard/admin' : '/dashboard/client');
       });
   }
 }

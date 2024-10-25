@@ -1,6 +1,7 @@
 import { HttpHeaders, HttpInterceptorFn} from "@angular/common/http";
 import { inject } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { environment } from "../../../environments/environment.development";
 
 export const requestInterceptor: HttpInterceptorFn = (req, next) => {
   const modifiedReq = req.clone({
@@ -13,7 +14,7 @@ export const requestInterceptor: HttpInterceptorFn = (req, next) => {
 };
 
 const getUrl = (url: string): string => {
-  return 'http://localhost:6582/api/' + url;
+  return environment.apiLoginServiceUrl + url;
 };
 
 const getHeaders = (url: string): HttpHeaders => {

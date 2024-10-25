@@ -15,6 +15,7 @@ export class UserService {
     return this.http.get<UserModel>('user/v1/info');
   }
 
-  register(newUser: UserModel): Observable<UserModel> {
-    return this.http.post<UserModel>(`user/v1/one`, newUser);
-  }}
+  // register(newUser: UserModel): Observable<UserModel> {
+  //   return this.http.post<UserModel>(`user/v1/one`, newUser);
+  // }
+}

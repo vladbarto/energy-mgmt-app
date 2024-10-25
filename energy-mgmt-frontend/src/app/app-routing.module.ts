@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {authGuard} from "./core/guard/authentication/authentication.guard";
+import {UserModel} from "./shared/models/user.model";
+
 
 const routes: Routes = [
   {
@@ -20,12 +22,11 @@ const routes: Routes = [
       jwtTokenPresent: true,
       redirectUrl: '/auth/login'
     }
-  }
-  ,
+  },
   {
     path: '**',
     redirectTo: 'auth/login'
-  }
+  },
 
 ];
 
@@ -34,3 +35,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+

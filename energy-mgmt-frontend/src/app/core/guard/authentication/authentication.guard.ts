@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import {UserModel} from "../../../shared/models/user.model";
 
 
 export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
@@ -12,10 +13,15 @@ export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
   return jwtTokenPresent === hasCookie
     ? true
     : router.navigateByUrl(redirectUrl);
+
 };
 
 const isCookiePresent = (): boolean => {
   const cookieService = inject(CookieService);
 
   return cookieService.check('jwt-token');
+};
+
+const getUser = (): UserModel => {
+  return JSON.parse(localStorage.getItem('loggedUser') || '');
 };

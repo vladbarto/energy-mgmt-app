@@ -9,7 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import ro.tucn.energy_mgmt_backend.dto.user.UserResponseDTO;
@@ -22,7 +23,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-//@CrossOrigin("*")//@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RequestMapping("/user/v1")
 @RequiredArgsConstructor
 public class UserController {
@@ -46,9 +47,11 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<UserResponseDTO> getLoggedUserInfo() {
-        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = new String("vladbarto");//(String) authentication.getPrincipal();
+    public ResponseEntity<UserResponseDTO> getLoggedUserInfo(@RequestParam String username) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String username = (String) authentication.getPrincipal();
+
+        log.info("Received username from request param: " + username);
 
         return new ResponseEntity<>(
                 userService.findByUsername(username),
