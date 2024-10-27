@@ -10,6 +10,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import {HeaderComponent} from "./shared/components/header/header.component";
 import {requestInterceptor} from "./core/http-interceptor/http-interceptor";
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,11 @@ import {requestInterceptor} from "./core/http-interceptor/http-interceptor";
     BrowserAnimationsModule
   ],
   providers: [
-    provideHttpClient(withInterceptors([ requestInterceptor ]))
+    provideHttpClient(withInterceptors([requestInterceptor])),
+    provideAnimationsAsync()
+  ],
+  exports: [
+
   ],
   bootstrap: [AppComponent]
 })

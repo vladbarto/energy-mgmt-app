@@ -8,27 +8,25 @@
         <img alt="responsive-image" src="assets/Enel_Group_logo.svg" style="width: 100pt; height: auto">
       </div>
 
-      <div class="right col-lg-6 d-flex justify-content-end">
-        <!--      <button (click)="currentUser()" class="btn p-2 utility">-->
-        <button class="btn p-2 utility me-1">
+      <div #drop class="dropdown singleDro right col-lg-6 d-flex justify-content-end">
+        <button mat-icon-button [matMenuTriggerFor]="beforeMenu" class="btn p-2 utility me-1">
           <i class="fa-regular fa-user"></i>
         </button>
-        <!--      <button (click)="logOut()" class="btn ms-2 utility">-->
-        <button class="btn p-2 utility">
+
+        <button (click)="logOut()" class="btn p-2 logout">
           <i class="fa fa-right-from-bracket"></i>
         </button>
-      </div>
-      <!--    <div class="ms-5">-->
-      <!--      <button class="rounded-5 bg-success border-light-subtle text-light p-1 ps-3 pe-3">-->
-      <!--        Your Devices-->
-      <!--      </button>-->
-      <!--    </div>-->
 
-      <!--    <div class="ms-3">-->
-      <!--      <button class="rounded-5 bg-success border-light-subtle text-light p-1 ps-3 pe-3">-->
-      <!--        Account Details-->
-      <!--      </button>-->
-      <!--    </div>-->
+        <mat-menu class="bg-info" #beforeMenu="matMenu" xPosition="before">
+          <div class="m-1 p-1" style="font-size: 11pt">
+            <span class="fw-bold">User: </span>
+            <p>{{this.getUser().username}}</p>
+            <span class="fw-bold">Email: </span>
+            <p>{{this.getUser().email}}</p>
+          </div>
+
+        </mat-menu>
+      </div>
 
     </div>
   </div>
@@ -36,16 +34,79 @@
 
 <!--  Body-->
 <div class="container mt-5">
-  <h1>My dashboard</h1>
-  <div class="d-flex flex-row align-items-center justify-content-center">
-    <div class="card align-items-center p-2">
-      <div class="number">
-        <h1>5</h1>
-      </div>
-      <div class="title">
-        <h5>Number of devices</h5>
-      </div>
+  <div class="row pt-2">
+    <div>
+      <h1>My dashboard</h1>
+      <div class="d-flex flex-row align-items-center justify-content-center">
+        <div class="card align-items-center p-2">
+          <div class="number">
+            <h1>{{noOfDevices}}</h1>
+          </div>
+          <div class="title">
+            <h5>Number of devices</h5>
+          </div>
+        </div>
     </div>
+
+    <!--    Devices area -->
+    <div class="bg-light mt-5">
+
+      <!--    Device cards "army" -->
+      <div class="p-2 d-flex flex-row">
+        @for (device of devices; track device.id) {
+<!--          <app-device-card [device]="device" (deleteAnnouncement)="deleteAnnouncementCalled($event)"></app-device-card>-->
+        <app-device-card [device]="device"></app-device-card>
+        } @empty {
+          <p>No device</p>
+        }
+      </div>
+
+      <!--    Add new device -->
+      <div class="w-25">
+        <button #drop class="rounded-1 border-0 dropdown singleDro pt-2" (click)="displayNewDeviceForm()">
+          <i class="fa-solid fa-plus text-danger"></i>
+          <p>Add device</p>
+        </button>
+
+        <div *ngIf = "showNewDevice">
+          <div class="container bg-danger">
+            <form (ngSubmit)="onAddNewDevice()" [formGroup]="newDeviceRequestForm">
+              <div class="form-outline mb-1">
+                <label class="form-label"></label>
+                <input class="form-control" formControlName="description" placeholder="Description">
+              </div>
+              <div class="form-outline mb-1">
+                <label class="form-label"></label>
+                <input class="form-control" formControlName="address" placeholder="Address">
+              </div>
+              <div class="form-outline mb-1">
+                <label class="form-label"></label>
+                <input class="form-control" formControlName="mhec" placeholder="Max. Hourly Energy Cons.">
+              </div>
+<!--              <div class="form-outline mb-1">-->
+<!--                <label class="form-label"></label>-->
+<!--                <textarea class="form-control" formControlName="body" rows="5" placeholder="Your Email goes here!"></textarea>-->
+<!--              </div>-->
+              <button class="mt-3 mb-3 btn btn-success">Send</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+
+
+
+    </div>
+
+  </div>
+
+
+<!--    <li #drop class="dropdown singleDro" (mouseover)="hoverOn()" (mouseleave)="hoverOff()">-->
+<!--      <button (click)="currentUser()" class="p-3 rounded-5 fundal">-->
+<!--        <i class="fa-solid fa-baby fa-2xl" style="color: white"></i>-->
+<!--      </button>-->
+<!--    </li>-->
 
   </div>
 </div>

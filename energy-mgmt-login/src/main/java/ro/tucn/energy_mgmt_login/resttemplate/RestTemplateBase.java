@@ -1,14 +1,14 @@
 package ro.tucn.energy_mgmt_login.resttemplate;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import ro.tucn.energy_mgmt_login.exception.RestTemplateException;
 
+@Slf4j
 @RequiredArgsConstructor
 public abstract class RestTemplateBase<Request, Response> {
 
@@ -28,6 +28,21 @@ public abstract class RestTemplateBase<Request, Response> {
         }
     }
 
+    // New method for List<ResponseDTO> or other complex types
+    public <T> T getForEntity(String url, ParameterizedTypeReference<T> responseType) {
+        try {
+            ResponseEntity<T> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, responseType);
+
+            if (!responseEntity.getStatusCode().is2xxSuccessful()) {
+                throw new RestTemplateException("Error fetching data from GET request to URL: " + url);
+            }
+
+            return responseEntity.getBody();
+        } catch (RestClientException e) {
+            throw new RestTemplateException("Error fetching data from GET request to URL: " + url);
+        }
+    }
+
     public Response postForEntity(String url, Request request) {
         HttpEntity<Request> requestEntity = buildRequestEntity(request);
 
@@ -35,11 +50,13 @@ public abstract class RestTemplateBase<Request, Response> {
             ResponseEntity<Response> responseEntity = restTemplate.postForEntity(url, requestEntity, getResponseType());
 
             if (!responseEntity.getStatusCode().is2xxSuccessful()) {
+                log.info("postForEntity request fails");
                 throw new RestTemplateException(getExceptionMessage(request));
             }
 
             return responseEntity.getBody();
         } catch (RestClientException e) {
+            log.info("postForEntity request fails for unknown reason");
             throw new RestTemplateException(getExceptionMessage(request));
         }
     }

@@ -17,7 +17,6 @@ const getUser = (): UserModel => {
 };
 
 const getUserRole = (loggedUser: UserModel) : string => {
-  console.log(loggedUser);
   return loggedUser.admin
     ? 'ROLE_ADMIN'
     : 'ROLE_USER';

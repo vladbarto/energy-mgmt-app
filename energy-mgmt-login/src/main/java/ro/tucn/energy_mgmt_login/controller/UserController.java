@@ -10,7 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ro.tucn.energy_mgmt_login.dto.user.UserRequestDTO;
 import ro.tucn.energy_mgmt_login.dto.user.UserResponseDTO;
-import ro.tucn.energy_mgmt_login.security.service.user.UserService;
+import ro.tucn.energy_mgmt_login.service.user.UserService;
 
 @Slf4j
 @RestController

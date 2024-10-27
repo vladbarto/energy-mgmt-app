@@ -17,9 +17,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserReferenceEntity {
 
-    @OneToMany
-
-    private List<DeviceEntity> id;
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    private List<DeviceEntity> devices;
 
     @Id
     @Column(name="USERID")

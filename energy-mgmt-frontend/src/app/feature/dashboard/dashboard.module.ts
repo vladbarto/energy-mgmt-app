@@ -4,21 +4,27 @@ import { AdminComponent } from './home/admin/admin.component';
 import {DashboardRoutingModule} from "./dashboard-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AppModule} from "../../app.module";
-import {AppRoutingModule} from "../../app-routing.module";
 import { ClientComponent } from './home/client/client.component';
-
+import {MatIcon} from "@angular/material/icon";
+import {MatMenu, MatMenuTrigger} from "@angular/material/menu";
+import { DeviceCardComponent } from './home/client/device-card/device-card.component';
 
 
 @NgModule({
   declarations: [
     AdminComponent,
-    ClientComponent
+    ClientComponent,
+    DeviceCardComponent
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule, // Important again!!! (see authentication.module.ts)
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatIcon,
+    MatMenu,
+    MatMenuTrigger,
+    //AppModule
   ]
 })
 export class DashboardModule { }
