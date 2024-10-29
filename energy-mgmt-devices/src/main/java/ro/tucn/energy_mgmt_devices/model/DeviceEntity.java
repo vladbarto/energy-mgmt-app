@@ -35,8 +35,8 @@ public class DeviceEntity {
     @Column(name = "MHEC")
     private float mhec; /// maximum hourly energy consumption
 
-    @Column(name = "USERID")
-    @ManyToOne
-    @Nullable
+    //@Column(name = "USERID")
+    @ManyToOne()
+    @JoinColumn(name="USERID", nullable=true)
     private UserReferenceEntity userId;
 }

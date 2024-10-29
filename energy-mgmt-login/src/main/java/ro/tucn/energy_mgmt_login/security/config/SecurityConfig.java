@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.web.cors.CorsConfigurationSource;
 import ro.tucn.energy_mgmt_login.exception.AccessDeniedHandlerBean;
 import ro.tucn.energy_mgmt_login.repository.UserRepository;
 import ro.tucn.energy_mgmt_login.security.filter.LoginFilter;
@@ -32,9 +33,11 @@ public class SecurityConfig {
             HttpSecurity http,
             LoginFilter loginFilter,
             AuthorizationFilter authorizationFilter,
-            AccessDeniedHandler accessDeniedHandler
+            AccessDeniedHandler accessDeniedHandler,
+            CorsConfigurationSource corsConfigurationSource
     ) throws Exception {
         return http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource))
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(handler -> handler.accessDeniedHandler(accessDeniedHandler))

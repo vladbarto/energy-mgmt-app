@@ -1,0 +1,110 @@
+<!--  Header-->
+<div class="bg-light pt-3 pb-3">
+
+  <div class="container">
+    <div class="row pt-2">
+
+      <div class="left col-lg-6 align-items-center justify-content-center">
+        <img alt="responsive-image"  src="assets/Enel_Group_logo.svg" style="width: 100pt; height: auto">
+      </div>
+
+      <div class="dropdown singleDro right col-lg-6 d-flex justify-content-end">
+        <button mat-icon-button [matMenuTriggerFor]="beforeMenu" class="btn p-2 utility me-1">
+          <i class="fa-regular fa-user"></i>
+        </button>
+
+        <button (click)="logOut()" class="btn p-2 logout">
+          <i class="fa fa-right-from-bracket"></i>
+        </button>
+
+        <mat-menu #beforeMenu="matMenu" xPosition="before">
+          <div class="gold">
+            <div class="m-1 p-1" style="font-size: 11pt">
+              <span class="fw-bold">User: </span>
+              <p>{{this.getUser().username}}</p>
+              <span class="fw-bold">Email: </span>
+              <p>{{this.getUser().email}}</p>
+            </div>
+          </div>
+        </mat-menu>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--    Body -->
+<div class="container mt-5 d-flex flex-column">
+
+  <div class="mb-3 d-flex flex-row">
+    <label class="form-label"></label>
+    <input type="text" placeholder="Maximum Hourly Energy Consumption" class="form-control" [(ngModel)]="mhec">
+    <button class="btn btn-info" (click)="searchAllByMhec()">
+      <i class="fa fa-magnifying-glass"></i>
+    </button>
+    <button class="btn btn-success" (click)="getDevices()">
+      <p>All</p>
+    </button>
+  </div>
+
+  <div class="dropdown singleDro right d-flex justify-content-end">
+    <button (click)="displayNewDeviceForm()"  class="btn p-2 utility me-1">
+      <i class="fa-regular fa-plus"></i>
+    </button>
+
+    <div *ngIf = "showNewDevice" class="bg-info-subtle">
+      <form class="m-1 p-2" (ngSubmit)="addDevice()" style="font-size: 10pt" [formGroup]="newDeviceForm">
+        <div class="form-control">
+          <label class="form-label" for="description">Description</label>
+          <input class="form-control"
+                 type="text"
+                 formControlName="description"
+                 id="description"
+                 placeholder="Description"
+          >
+        </div>
+        <div class="form-control">
+          <label class="form-label" for="address">Physical Address</label>
+          <input class="form-control"
+                 type="text"
+                 name="address"
+                 id="address"
+                 formControlName="address"
+                 placeholder="George Baritiu 26-28 St."
+          >
+        </div>
+        <div class="form-control">
+          <label class="form-label" for="mhec">Mhec</label>
+          <input class="form-control"
+                 type="number"
+                 name="universityCode"
+                 id="mhec"
+                 formControlName="mhec"
+          >
+        </div>
+        <div class="form-control">
+          <label class="form-label" for="userId">UserId</label>
+          <input class="form-control"
+                 type="text"
+                 name="userId"
+                 id="userId"
+                 formControlName="userId"
+          >
+        </div>
+        <button type="submit" class="btn btn-success mt-2">Add User</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="container">
+    @for (device of devices; track device.id) {
+      <app-device-card-a
+        [device]="device"
+        (saveDevice)="saveDeviceCalled($event)"
+        (deleteDevice)="deleteDeviceCalled($event)">
+      </app-device-card-a>
+    } @empty {
+      <p>No device</p>
+    }
+  </div>
+</div>
