@@ -8,6 +8,8 @@ import java.util.UUID;
 public interface DeviceService {
 
     List<DeviceResponseDTO> findAll();
+    List<DeviceResponseDTO> findAllBelongingToUserId(UUID userId);
+    List<DeviceResponseDTO> findAllByMhecGreaterThan(double mhec);
     DeviceResponseDTO save(DeviceRequestDTO deviceRequestDTO);
     DeviceResponseDTO update(DeviceRequestDTO deviceRequestDTO, UUID deviceId);
     DeviceResponseDTO deleteById(UUID deviceId);

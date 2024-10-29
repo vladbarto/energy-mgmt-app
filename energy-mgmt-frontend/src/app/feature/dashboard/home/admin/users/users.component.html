@@ -1,0 +1,112 @@
+<!--  Header-->
+<div class="bg-light pt-3 pb-3">
+
+  <div class="container">
+    <div class="row pt-2">
+
+      <div class="left col-lg-6 align-items-center justify-content-center">
+        <img alt="responsive-image" src="assets/Enel_Group_logo.svg" style="width: 100pt; height: auto">
+      </div>
+
+      <div #drop class="dropdown singleDro right col-lg-6 d-flex justify-content-end">
+        <button mat-icon-button [matMenuTriggerFor]="userMenu" class="btn p-2 utility me-1">
+          <i class="fa-regular fa-user"></i>
+        </button>
+
+        <button (click)="logOut()" class="btn p-2 logout">
+          <i class="fa fa-right-from-bracket"></i>
+        </button>
+
+        <mat-menu #userMenu="matMenu" xPosition="before">
+          <div class="gold">
+            <div class="m-1 p-1" style="font-size: 11pt">
+              <span class="fw-bold">User: </span>
+              <p>{{this.getUser().username}}</p>
+              <span class="fw-bold">Email: </span>
+              <p>{{this.getUser().email}}</p>
+            </div>
+          </div>
+        </mat-menu>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--    Body -->
+<div class="container mt-5">
+
+  <div class="d-flex flex-column">
+    <div class="mb-3 d-flex flex-row">
+      <label class="form-label"></label>
+      <input type="text" placeholder="Username" class="form-control" [(ngModel)]="username">
+      <button class="btn btn-info" (click)="searchByUsername()">
+        <i class="fa fa-magnifying-glass"></i>
+      </button>
+      <button class="btn btn-success" (click)="getUsers()">
+        <p>All users</p>
+      </button>
+
+  </div>
+
+  <div class="dropdown singleDro right d-flex justify-content-end">
+    <button (click)="displayNewUserForm()"  class="btn p-2 utility me-1">
+      <i class="fa-regular fa-plus"></i>
+    </button>
+
+    <div *ngIf = "showNewUser" class="bg-info-subtle">
+      <form class="m-1 p-2" (ngSubmit)="addUser()" style="font-size: 10pt" [formGroup]="newUserForm">
+        <div class="form-control">
+          <label class="form-label" for="username">Username</label>
+          <input class="form-control"
+                 type="text"
+                 formControlName="username"
+                 id="username"
+                 placeholder="Username"
+          >
+        </div>
+        <div class="form-control">
+          <label class="form-label" for="email">Email</label>
+          <input class="form-control"
+                 type="text"
+                 name="email"
+                 id="email"
+                 formControlName="email"
+                 placeholder="example@email.com"
+          >
+        </div>
+        <div class="form-control">
+          <label class="form-label" for="password">Password</label>
+          <input class="form-control"
+                 type="password"
+                 name="password"
+                 id="password"
+                 formControlName="password"
+          >
+        </div>
+        <div class="form-control">
+          <label class="form-check-label">Admin</label>
+          <input type="checkbox"
+                 formControlName="admin"
+                 id="admin"
+          >
+        </div>
+
+        <button type="submit" class="btn btn-success mt-2">Add User</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="container">
+    @for (user of users; track user.id) {
+      <app-user-card
+        [user]="user"
+        (saveUser)="saveUserCalled($event)"
+        (deleteUser)="deleteUserCalled($event)">
+      </app-user-card>
+    } @empty {
+      <p>No user</p>
+    }
+  </div>
+</div>
+

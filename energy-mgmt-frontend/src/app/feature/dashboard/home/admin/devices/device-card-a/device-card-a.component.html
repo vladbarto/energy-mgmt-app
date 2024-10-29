@@ -1,0 +1,35 @@
+<div class="card shadow-lg p-2 m-2">
+  <div class="d-flex flex-row">
+    <div class="m-2">
+      <i class="fa fa-house-laptop fa-2x"></i>
+    </div>
+    <div class="d-flex flex-column me-auto">
+      <!-- Toggle between display and input fields based on editMode -->
+      <ng-container *ngIf="!editMode; else editFields">
+        <span class="fw-bold">Description: {{ device.description }}</span>
+        <span class="fw-bold">Address: {{ device.address }}</span>
+        <span class="fw-bold">Mhec: {{ device.mhec }}</span>
+        <span class="fw-bold">UserId: {{device.userId }}</span>
+      </ng-container>
+      <ng-template #editFields>
+        <input class="form-control mb-1" [(ngModel)]="editableDevice.description" placeholder="Description">
+        <input class="form-control mb-1" [(ngModel)]="editableDevice.address" placeholder="Address">
+        <input class="form-control mb-1" [(ngModel)]="editableDevice.mhec" placeholder="Mhec">
+      </ng-template>
+    </div>
+    <div>
+      <button *ngIf="!editMode" class="btn btn-warning me-1" (click)="editDevice()">
+        <i class="fa fa-pencil"></i>
+      </button>
+      <button *ngIf="editMode" class="btn btn-info me-1" (click)="save()">
+        <i class="fa fa-save"></i>
+      </button>
+      <button *ngIf="editMode" class="btn btn-danger me-1" (click)="cancelEdit()">
+        <i class="fa fa-times"></i>
+      </button>
+      <button class="btn btn-danger" (click)="deleteDevicePressed(device.id)">
+        <i class="fa fa-trash"></i>
+      </button>
+    </div>
+  </div>
+</div>

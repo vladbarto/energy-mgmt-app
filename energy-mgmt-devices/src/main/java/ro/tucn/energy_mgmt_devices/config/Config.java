@@ -1,5 +1,6 @@
 package ro.tucn.energy_mgmt_devices.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ro.tucn.energy_mgmt_devices.mapper.UserReferenceMapper;
@@ -17,16 +18,19 @@ public class Config {
     @Bean
     public DeviceService deviceServiceBean(
             DeviceRepository deviceRepository,
-            DeviceMapper deviceMapper
+            DeviceMapper deviceMapper,
+            @Value("${spring.application.name:BACKEND}") String applicationName,
+            UserReferenceRepository userReferenceRepository
     ) {
-        return new DeviceServiceBean(deviceRepository, deviceMapper);
+        return new DeviceServiceBean(deviceRepository, deviceMapper, applicationName, userReferenceRepository);
     }
 
     @Bean
     public UserReferenceService userReferenceServiceBean(
             UserReferenceRepository userReferenceRepository,
-            UserReferenceMapper userReferenceMapper
+            UserReferenceMapper userReferenceMapper,
+            @Value("${spring.application.name:BACKEND}") String applicationName
     ) {
-        return new UserReferenceServiceBean(userReferenceRepository, userReferenceMapper);
+        return new UserReferenceServiceBean(userReferenceRepository, userReferenceMapper, applicationName);
     }
 }

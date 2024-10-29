@@ -7,10 +7,14 @@
   font-family: "Font Awesome 6 Free", serif !important;
 }
 
-.utility {
+.utility, logout {
   color: black;
 }
 
 .utility:hover {
-  background-color: grey;
+  background-color: royalblue;
+}
+
+.logout:hover {
+  background-color: red;
 }
