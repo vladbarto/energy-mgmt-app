@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.util.UUID;
 
 /**
- * Necessary for user registration
+ * Necessary for device-regarding requests
  */
 @Getter
 @Setter
