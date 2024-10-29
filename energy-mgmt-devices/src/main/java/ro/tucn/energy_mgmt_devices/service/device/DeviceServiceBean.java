@@ -56,6 +56,14 @@ public class DeviceServiceBean implements DeviceService {
         // Map the list of DeviceEntity to DeviceResponseDTO
         return deviceMapper.entityListToResponseDTOList(filteredDevices);
     }
+
+    @Override
+    public List<DeviceResponseDTO> findAllByMhecGreaterThan(double mhec) {
+        log.info("Getting all devices greater than mhec {} for application {}", mhec, applicationName);
+
+        List<DeviceEntity> deviceEntityList = deviceRepository.findAllByMhecGreaterThan(mhec);
+        return deviceMapper.entityListToResponseDTOList(deviceEntityList);
+    }
 //    @Override
 //    public DeviceResponseDTO findByDeviceName(String devicename) {
 //        return deviceRepository.findByDeviceName(devicename)

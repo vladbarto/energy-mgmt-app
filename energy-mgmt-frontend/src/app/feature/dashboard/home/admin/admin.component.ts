@@ -1,7 +1,5 @@
 import {Component, DestroyRef} from '@angular/core';
 import {Router} from "@angular/router";
-import {FormBuilder} from "@angular/forms";
-import {DeviceService} from "../../../../core/service/device/device.service";
 import {UserModel} from "../../../../shared/models/user.model";
 
 @Component({
@@ -15,6 +13,7 @@ export class AdminComponent {
     private router: Router
   ) {
   }
+
   logOut(): void {
     this.clearCookies();
     localStorage.removeItem('loggedUser');

@@ -1,0 +1,38 @@
+<div class="card shadow-lg p-2 m-2">
+  <div class="d-flex flex-row">
+    <div class="m-2">
+      <i class="fa fa-user fa-2x"></i>
+    </div>
+    <div class="d-flex flex-column me-auto">
+      <!-- Toggle between display and input fields based on editMode -->
+      <ng-container *ngIf="!editMode; else editFields">
+        <span class="fw-bold">Name: {{ user.username }}</span>
+        <span class="fw-bold">Email: {{ user.email }}</span>
+        <span class="fw-bold">Is Admin: {{ user.admin }}</span>
+        <span class="fst-italic">UserId: {{ user.id }}</span>
+      </ng-container>
+      <ng-template #editFields>
+        <input class="form-control mb-1" [(ngModel)]="editableUser.username" placeholder="Name">
+        <input class="form-control mb-1" [(ngModel)]="editableUser.email" placeholder="Email">
+        <label class="form-check-label">
+          <input type="checkbox" [(ngModel)]="editableUser.admin"> Is Admin
+        </label>
+      </ng-template>
+    </div>
+    <div>
+      <button *ngIf="!editMode" class="btn btn-warning me-1" (click)="editUser()">
+        <i class="fa fa-pencil"></i>
+      </button>
+      <button *ngIf="editMode" class="btn btn-success me-1" (click)="save()">
+        <i class="fa fa-save"></i>
+      </button>
+      <button *ngIf="editMode" class="btn btn-secondary me-1" (click)="cancelEdit()">
+        <i class="fa fa-times"></i>
+      </button>
+      <button class="btn btn-danger" (click)="deleteUserPressed(user.id)">
+        <i class="fa fa-trash"></i>
+      </button>
+    </div>
+  </div>
+</div>
+

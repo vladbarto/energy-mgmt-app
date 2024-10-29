@@ -23,10 +23,11 @@ public class UserServiceBean implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final String applicationName;
 
     @Override
     public List<UserResponseDTO> findAll() {
-        log.info("Getting all chefs for application {}", "Application name TODO Fill");
+        log.info("Getting all chefs for application {}", applicationName);
 
         List<UserEntity> userEntityList = userRepository.findAll();
 

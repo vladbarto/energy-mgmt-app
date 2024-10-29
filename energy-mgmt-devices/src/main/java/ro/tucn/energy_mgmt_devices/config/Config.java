@@ -28,8 +28,9 @@ public class Config {
     @Bean
     public UserReferenceService userReferenceServiceBean(
             UserReferenceRepository userReferenceRepository,
-            UserReferenceMapper userReferenceMapper
+            UserReferenceMapper userReferenceMapper,
+            @Value("${spring.application.name:BACKEND}") String applicationName
     ) {
-        return new UserReferenceServiceBean(userReferenceRepository, userReferenceMapper);
+        return new UserReferenceServiceBean(userReferenceRepository, userReferenceMapper, applicationName);
     }
 }

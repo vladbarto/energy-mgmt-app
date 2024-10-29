@@ -85,7 +85,7 @@ public class UserController {
         );
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     @Operation(summary = "Update one user")
     @ApiResponse(responseCode = "301", description = "User successfully updated",
             content = {@Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))})

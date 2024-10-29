@@ -45,6 +45,16 @@ public class DeviceController {
         );
     }
 
+    @GetMapping("/all/{mhec}")
+    public ResponseEntity<List<DeviceResponseDTO>> findAllByMhec(
+            @PathVariable("mhec") double mhec
+    ) {
+        return new ResponseEntity<>(
+                deviceService.findAllByMhecGreaterThan(mhec),
+                HttpStatus.OK
+        );
+    }
+
 //    @GetMapping("/info")
 //    public ResponseEntity<DeviceResponseDTO> getLoggedDeviceInfo() {
 //        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -72,7 +82,7 @@ public class DeviceController {
         );
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     @Operation(summary = "Update one device")
     @ApiResponse(responseCode = "301", description = "Device successfully updated",
             content = {@Content(mediaType = "application/json", schema = @Schema(implementation = DeviceResponseDTO.class))})

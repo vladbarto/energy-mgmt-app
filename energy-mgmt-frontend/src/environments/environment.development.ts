@@ -1,4 +1,5 @@
 export const environment = {
   production: false,
-  apiLoginServiceUrl: "http://localhost:6582/api/" // TODO: port is 6582 for login
+  apiLoginServiceUrl: "http://localhost:6582/api/", // TODO: port is 6582 for login
+  userServicePreEndpoint: "user/v1"
 };

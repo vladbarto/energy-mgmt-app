@@ -15,4 +15,6 @@ import java.util.UUID;
  */
 @Repository
 public interface DeviceRepository extends JpaRepository<DeviceEntity, UUID> {
+
+    List<DeviceEntity> findAllByMhecGreaterThan(double mhec);
 }

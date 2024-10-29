@@ -8,13 +8,20 @@ import { ClientComponent } from './home/client/client.component';
 import {MatIcon} from "@angular/material/icon";
 import {MatMenu, MatMenuTrigger} from "@angular/material/menu";
 import { DeviceCardComponent } from './home/client/device-card/device-card.component';
-
+import { UsersComponent } from './home/admin/users/users.component';
+import { DevicesComponent } from './home/admin/devices/devices.component';
+import { UserCardComponent } from './home/admin/users/user-card/user-card.component';
+import { DeviceCardAComponent } from './home/admin/devices/device-card-a/device-card-a.component';
 
 @NgModule({
   declarations: [
     AdminComponent,
     ClientComponent,
-    DeviceCardComponent
+    DeviceCardComponent,
+    UsersComponent,
+    DevicesComponent,
+    UserCardComponent,
+    DeviceCardAComponent
   ],
   imports: [
     CommonModule,

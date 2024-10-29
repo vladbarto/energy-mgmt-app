@@ -20,10 +20,10 @@ public class UserReferenceServiceBean implements UserReferenceService {
 
     private final UserReferenceRepository userReferenceRepository;
     private final UserReferenceMapper userReferenceMapper;
-
+    private final String applicationName;
     @Override
     public List<UserReferenceResponseDTO> findAll() {
-        log.info("Getting all chefs for application {}", "Application name TODO Fill");
+        log.info("Getting all userRefs for application {}", applicationName);
 
         List<UserReferenceEntity> userReferenceEntityList = userReferenceRepository.findAll();
 
@@ -43,7 +43,7 @@ public class UserReferenceServiceBean implements UserReferenceService {
     @Override
     @Transactional
     public UserReferenceResponseDTO save(UserReferenceRequestDTO userReferenceRequestDTO) {
-        log.info("Posting a new userReference for application {}", "App name TODO Fill");
+        log.info("Posting a new userReference for application {}", applicationName);
         UserReferenceEntity userReferenceToBeAdded = userReferenceMapper.requestDTOToEntity(userReferenceRequestDTO);
         UserReferenceEntity userReferenceAdded = userReferenceRepository.save(userReferenceToBeAdded);
 
@@ -53,6 +53,8 @@ public class UserReferenceServiceBean implements UserReferenceService {
     @Override
     @Transactional
     public UserReferenceResponseDTO update(UserReferenceRequestDTO userReferenceRequestDTO, UUID userReferenceId) {
+        log.info("Updating a userReference for application {}", applicationName);
+
         return userReferenceRepository.findById(userReferenceId)
                 .map((userReferenceEntity)-> {
                     userReferenceEntity.setUserId(userReferenceRequestDTO.getUserId());
@@ -72,7 +74,7 @@ public class UserReferenceServiceBean implements UserReferenceService {
     @Override
     @Transactional
     public UserReferenceResponseDTO deleteById(UUID userReferenceId) {
-
+        log.info("Deleting userReference with id {}", userReferenceId);
         userReferenceRepository.deleteById(userReferenceId);
         return null;
     }

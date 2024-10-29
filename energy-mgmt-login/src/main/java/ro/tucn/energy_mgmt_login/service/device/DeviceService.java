@@ -10,4 +10,7 @@ public interface DeviceService {
     DeviceResponseDTO saveDevice(DeviceRequestDTO deviceRequestDTO);
     List<DeviceResponseDTO> findAllByUserId(UUID userId);
     List<DeviceResponseDTO> findAll();
+    List<DeviceResponseDTO> findAllByMhecGreaterThan(double rating);
+    DeviceResponseDTO updateById(UUID id, DeviceRequestDTO deviceRequestDTO);
+    DeviceResponseDTO deleteById(UUID id);
 }

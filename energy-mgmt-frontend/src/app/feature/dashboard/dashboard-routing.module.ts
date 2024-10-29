@@ -4,6 +4,8 @@ import {AdminComponent} from "./home/admin/admin.component";
 import {NgModule} from "@angular/core";
 import {NotFoundComponent} from "../../shared/components/not-found/not-found.component";
 import {hasRole} from "../../core/guard/authorization/authorization.guard";
+import {UsersComponent} from "./home/admin/users/users.component";
+import {DevicesComponent} from "./home/admin/devices/devices.component";
 
 export const routes: Routes = [
   {
@@ -20,6 +22,22 @@ export const routes: Routes = [
     component: ClientComponent,
     data: {
       requiredRoles: ['ROLE_USER']
+    }
+  },
+  {
+    path: 'admin/users',
+    canActivate: [hasRole],
+    component: UsersComponent,
+    data: {
+      requiredRoles: ['ROLE_ADMIN']
+    }
+  },
+  {
+    path: 'admin/devices',
+    canActivate: [hasRole],
+    component: DevicesComponent,
+    data: {
+      requiredRoles: ['ROLE_ADMIN']
     }
   },
   {

@@ -8,6 +8,10 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import ro.tucn.energy_mgmt_login.exception.RestTemplateException;
 
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 @Slf4j
 @RequiredArgsConstructor
 public abstract class RestTemplateBase<Request, Response> {
@@ -57,6 +61,50 @@ public abstract class RestTemplateBase<Request, Response> {
             return responseEntity.getBody();
         } catch (RestClientException e) {
             log.info("postForEntity request fails for unknown reason");
+            throw new RestTemplateException(getExceptionMessage(request));
+        }
+    }
+
+    public ResponseEntity<Response> deleteForEntity(String url, Class<Response> responseClass) {
+        try {
+            ResponseEntity<Response> responseEntity = restTemplate.exchange(
+                    url,
+                    HttpMethod.DELETE,
+                    null,
+                    responseClass
+            );
+
+            if (!responseEntity.getStatusCode().is2xxSuccessful()) {
+                log.info("deleteForEntity request failed");
+                throw new RestTemplateException("Error deleting data from DELETE request to URL: " + url);
+            }
+
+            return responseEntity;
+        } catch (RestClientException e) {
+            log.info("deleteForEntity request failed due to unknown reason");
+            throw new RestTemplateException("Error deleting data from DELETE request to URL: " + url);
+        }
+    }
+
+    public Response putForEntity(String url, Request request) {
+        HttpEntity<Request> requestEntity = buildRequestEntity(request);
+
+        try {
+            ResponseEntity<Response> responseEntity = restTemplate.exchange(
+                    url,
+                    HttpMethod.PUT,
+                    requestEntity,
+                    getResponseType());
+
+
+            if (!responseEntity.getStatusCode().is2xxSuccessful()) {
+                log.info("putForEntity request fails");
+                throw new RestTemplateException(getExceptionMessage(request));
+            }
+            return responseEntity.getBody();
+
+        } catch(RestClientException e) {
+            log.info("putForEntity request fails for unknown reason");
             throw new RestTemplateException(getExceptionMessage(request));
         }
     }
