@@ -13,7 +13,7 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequestMapping("/userRef/v1")
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "http://front_app:4200"}, allowCredentials = "true")
 @RequiredArgsConstructor
 public class UserReferenceController {
     private final UserReferenceService userReferenceService;

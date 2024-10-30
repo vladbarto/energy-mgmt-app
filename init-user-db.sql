@@ -1,0 +1,3 @@
+CREATE USER vladbarto WITH PASSWORD '1234';
+CREATE DATABASE "user-db" WITH OWNER vladbarto;
+GRANT ALL PRIVILEGES ON DATABASE "user-db" TO vladbarto;

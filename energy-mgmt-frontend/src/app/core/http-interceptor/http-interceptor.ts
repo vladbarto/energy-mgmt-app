@@ -1,7 +1,7 @@
 import { HttpHeaders, HttpInterceptorFn} from "@angular/common/http";
 import { inject } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { environment } from "../../../environments/environment.development";
+import { environment } from "../../../environments/environment";
 
 export const requestInterceptor: HttpInterceptorFn = (req, next) => {
   const modifiedReq = req.clone({

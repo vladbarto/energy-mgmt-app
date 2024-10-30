@@ -1,0 +1,109 @@
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Docker Compose reference guide at
+# https://docs.docker.com/go/compose-spec-reference/
+
+# Here the instructions define your application as a service called "server".
+# This service is built from the Dockerfile in the current directory.
+# You can add other services your application may depend on here, such as a
+# database or a cache. For examples, see the Awesome Compose repository:
+# https://github.com/docker/awesome-compose
+
+services:
+  BazaDateUser:
+    image: postgres:latest
+    container_name: userContainer
+    restart: always
+    environment:
+      POSTGRES_DB: user-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5433:5432"
+    volumes:
+      - user_db_data:/var/lib/postgresql/data
+      - ./init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql  # Mount the init script
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  BazaDateDevices:
+    image: postgres:latest
+    container_name: deviceContainer
+    restart: always
+    environment:
+      POSTGRES_DB: device
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
+    volu√mes:
+      - device_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+      
+  front_app:
+    image: energy-mgmt-frontend
+    container_name: front_app
+    build:
+      context: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 6581:4200
+    depends_on:
+      - login_app
+#      - user_app
+#      - device_app
+    networks:
+      - app-network
+
+  login_app:
+    image: energy-mgmt-login
+    container_name: login_app
+    build:
+      context: ./energy-mgmt-login
+      dockerfile: ./energy-mgmt-login/Dockerfile
+    ports:
+      - "6582:6582"
+    environment:
+      DB_IP: BazaDateUser
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: root
+      DB_DBNAME: user-db
+    networks:
+      - app-network
+
+  user_app:
+    image: energy-mgmt-user
+    container_name: user_app
+    build:
+      context: ./energy-mgmt-user
+      dockerfile: ./energy-mgmt-user/Dockerfile
+    ports:
+      - "6584:6584"
+    environment:
+      DB_IP: BazaDateUser
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: root
+      DB_DBNAME: user-db
+    networks:
+      - app-network
+
+volumes:
+  user_db_data:
+  device_db_data:
+
+networks:
+  app-network:
+
