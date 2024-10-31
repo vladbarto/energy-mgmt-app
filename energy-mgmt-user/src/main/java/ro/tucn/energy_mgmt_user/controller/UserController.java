@@ -21,8 +21,9 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-//@CrossOrigin("*")
-@CrossOrigin(origins = {"http://localhost:4200", "http://front_app:4200", "http://localhost:6581"}, allowCredentials = "true")
+//@CrossOrigin(origins = {"http://localhost:4200", "http://front_app:4200", "http://localhost:6582"}, allowCredentials = "true")
+// TODO: change 6582 to 6581? and localhost to docker internal host chestia aia (DE TESTAT)
+@CrossOrigin("*")
 @RequestMapping("/user/v1")
 @RequiredArgsConstructor
 public class UserController {
@@ -31,9 +32,9 @@ public class UserController {
 
     @GetMapping("/all")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Chef found",
+            @ApiResponse(responseCode = "200", description = "User found",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))}),
-            @ApiResponse(responseCode = "401", description = "Chef not found",
+            @ApiResponse(responseCode = "401", description = "user not found",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionBody.class))}),
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionBody.class))})

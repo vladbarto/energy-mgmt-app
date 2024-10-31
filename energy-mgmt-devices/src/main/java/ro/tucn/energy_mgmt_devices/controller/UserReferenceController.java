@@ -29,9 +29,9 @@ public class UserReferenceController {
 
     @GetMapping("/all")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Chef found",
+            @ApiResponse(responseCode = "200", description = "userreference found",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = UserReferenceResponseDTO.class))}),
-            @ApiResponse(responseCode = "401", description = "Chef not found",
+            @ApiResponse(responseCode = "401", description = "userreference not found",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionBody.class))}),
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionBody.class))})

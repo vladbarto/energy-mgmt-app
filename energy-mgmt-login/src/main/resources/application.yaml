@@ -29,5 +29,7 @@ security:
   secret-key: PS-SD-2024-3023X-1q2w3e4r5t6y7u8i9o0p
   token-expiration-days: 15
 microservices:
-  userService: "http://localhost:6584/api"
-  deviceService: "http://localhost:6585/api"
+#  userService: "http://localhost:6584/api"
+#  deviceService: "http://localhost:6585/api"
+  userService: "http://host.docker.internal:6584/api"
+  deviceService: "http://host.docker.internal:6585/api"

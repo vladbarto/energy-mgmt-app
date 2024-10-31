@@ -63,8 +63,6 @@ services:
       - 6581:4200
     depends_on:
       - login_app
-#      - user_app
-#      - device_app
     networks:
       - app-network
 
@@ -84,7 +82,7 @@ services:
       DB_DBNAME: user-db
     depends_on:
       - user_app
-      - device_app
+#      - device_app
     networks:
       - app-network
 
@@ -105,22 +103,22 @@ services:
     networks:
       - app-network
 
-  device_app:
-    image: energy-mgmt-devices
-    container_name: device_app
-    build:
-      context: ./energy-mgmt-devices
-      dockerfile: ./energy-mgmt-devices/Dockerfile
-    ports:
-      - 6585:6585
-    environment:
-      DB_IP: BazaDateDevices
-      DB_PORT: 5432
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_DBNAME: device-db
-    networks:
-      - app-network
+#  device_app:
+#    image: energy-mgmt-devices
+#    container_name: device_app
+#    build:
+#      context: ./energy-mgmt-devices
+#      dockerfile: ./energy-mgmt-devices/Dockerfile
+#    ports:
+#      - 6585:6585
+#    environment:
+#      DB_IP: BazaDateDevices
+#      DB_PORT: 5432
+#      DB_USER: postgres
+#      DB_PASSWORD: postgres
+#      DB_DBNAME: device-db
+#    networks:
+#      - app-network
 
 volumes:
   user_db_data:

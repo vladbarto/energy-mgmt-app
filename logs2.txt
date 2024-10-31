@@ -1,0 +1,241 @@
+[+] Running 5/5
+ ✔ Container user_app         Created                                                                                                                             0.0s
+ ✔ Container deviceContainer  Created                                                                                                                             0.0s
+ ✔ Container userContainer    Created                                                                                                                             0.0s
+ ✔ Container login_app        Recreated                                                                                                                           0.1s
+ ✔ Container front_app        Recreated                                                                                                                           0.1s
+Attaching to deviceContainer, front_app, login_app, userContainer, user_app
+userContainer    |
+userContainer    | PostgreSQL Database directory appears to contain a database; Skipping initialization
+deviceContainer  |
+userContainer    |
+deviceContainer  | PostgreSQL Database directory appears to contain a database; Skipping initialization
+deviceContainer  |
+deviceContainer  | 2024-10-31 16:11:29.066 UTC [1] LOG:  starting PostgreSQL 17.0 (Debian 17.0-1.pgdg120+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+deviceContainer  | 2024-10-31 16:11:29.067 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+userContainer    | 2024-10-31 16:11:29.067 UTC [1] LOG:  starting PostgreSQL 17.0 (Debian 17.0-1.pgdg120+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+deviceContainer  | 2024-10-31 16:11:29.067 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+userContainer    | 2024-10-31 16:11:29.067 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+userContainer    | 2024-10-31 16:11:29.067 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+deviceContainer  | 2024-10-31 16:11:29.071 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+userContainer    | 2024-10-31 16:11:29.071 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+userContainer    | 2024-10-31 16:11:29.079 UTC [29] LOG:  database system was shut down at 2024-10-31 16:09:09 UTC
+deviceContainer  | 2024-10-31 16:11:29.079 UTC [29] LOG:  database system was shut down at 2024-10-31 16:09:09 UTC
+userContainer    | 2024-10-31 16:11:29.086 UTC [1] LOG:  database system is ready to accept connections
+deviceContainer  | 2024-10-31 16:11:29.086 UTC [1] LOG:  database system is ready to accept connections
+user_app         |
+user_app         |   .   ____          _            __ _ _
+user_app         |  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+user_app         | ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+user_app         |  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+user_app         |   '  |____| .__|_| |_|_| |_\__, | / / / /
+user_app         |  =========|_|==============|___/=/_/_/_/
+user_app         |  :: Spring Boot ::                (v3.2.3)
+user_app         |
+login_app        |
+login_app        |   .   ____          _            __ _ _
+login_app        |  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+login_app        | ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+login_app        |  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+login_app        |   '  |____| .__|_| |_|_| |_\__, | / / / /
+login_app        |  =========|_|==============|___/=/_/_/_/
+login_app        |
+login_app        |  :: Spring Boot ::                (v3.3.4)
+login_app        |
+user_app         | 2024-10-31T16:11:30.174Z  INFO 1 --- [energy-mgmt-login] [           main] r.t.e.EnergyMgmtUserApplication          : Starting EnergyMgmtUserApplication v0.0.1-SNAPSHOT using Java 17.0.2 with PID 1 (/app/app.jar started by root in /app)
+user_app         | 2024-10-31T16:11:30.188Z  INFO 1 --- [energy-mgmt-login] [           main] r.t.e.EnergyMgmtUserApplication          : No active profile set, falling back to 1 default profile: "default"
+login_app        | 2024-10-31T16:11:30.302Z  INFO 1 --- [energy-mgmt-login] [           main] r.t.e.EnergyMgmtLoginApplication         : Starting EnergyMgmtLoginApplication v0.0.1-SNAPSHOT using Java 17.0.2 with PID 1 (/app/app.jar started by root in /app)
+login_app        | 2024-10-31T16:11:30.306Z  INFO 1 --- [energy-mgmt-login] [           main] r.t.e.EnergyMgmtLoginApplication         : No active profile set, falling back to 1 default profile: "default"
+front_app        |
+front_app        | Warning: This is a simple server for use in testing or debugging Angular applications
+front_app        | locally. It hasn't been reviewed for security issues.
+front_app        |
+front_app        | Binding this server to an open connection can result in compromising your application or
+front_app        | computer. Using a different host than the one passed to the "--host" flag might result in
+front_app        | websocket connection issues. You might need to use "--disable-host-check" if that's the
+front_app        | case.
+front_app        |
+front_app        | - Building...
+front_app        |
+login_app        | 2024-10-31T16:11:31.755Z  INFO 1 --- [energy-mgmt-login] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+user_app         | 2024-10-31T16:11:31.803Z  INFO 1 --- [energy-mgmt-login] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+login_app        | 2024-10-31T16:11:31.820Z  INFO 1 --- [energy-mgmt-login] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 55 ms. Found 1 JPA repository interface.
+user_app         | 2024-10-31T16:11:31.879Z  INFO 1 --- [energy-mgmt-login] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 58 ms. Found 1 JPA repository interface.
+login_app        | 2024-10-31T16:11:32.753Z  INFO 1 --- [energy-mgmt-login] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 6582 (http)
+login_app        | 2024-10-31T16:11:32.765Z  INFO 1 --- [energy-mgmt-login] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+login_app        | 2024-10-31T16:11:32.766Z  INFO 1 --- [energy-mgmt-login] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+user_app         | 2024-10-31T16:11:32.785Z  INFO 1 --- [energy-mgmt-login] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 6584 (http)
+user_app         | 2024-10-31T16:11:32.811Z  INFO 1 --- [energy-mgmt-login] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+user_app         | 2024-10-31T16:11:32.812Z  INFO 1 --- [energy-mgmt-login] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+login_app        | 2024-10-31T16:11:32.814Z  INFO 1 --- [energy-mgmt-login] [           main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+login_app        | 2024-10-31T16:11:32.815Z  INFO 1 --- [energy-mgmt-login] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2453 ms
+user_app         | 2024-10-31T16:11:32.896Z  INFO 1 --- [energy-mgmt-login] [           main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+user_app         | 2024-10-31T16:11:32.899Z  INFO 1 --- [energy-mgmt-login] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2570 ms
+user_app         | 2024-10-31T16:11:33.165Z  INFO 1 --- [energy-mgmt-login] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+login_app        | 2024-10-31T16:11:33.213Z  WARN 1 --- [energy-mgmt-login] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+user_app         | 2024-10-31T16:11:33.258Z  INFO 1 --- [energy-mgmt-login] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+user_app         | 2024-10-31T16:11:33.317Z  INFO 1 --- [energy-mgmt-login] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+login_app        | 2024-10-31T16:11:33.370Z  INFO 1 --- [energy-mgmt-login] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+login_app        | 2024-10-31T16:11:33.504Z  INFO 1 --- [energy-mgmt-login] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+login_app        | 2024-10-31T16:11:33.554Z  INFO 1 --- [energy-mgmt-login] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+user_app         | 2024-10-31T16:11:33.648Z  INFO 1 --- [energy-mgmt-login] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+user_app         | 2024-10-31T16:11:33.693Z  INFO 1 --- [energy-mgmt-login] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+login_app        | 2024-10-31T16:11:33.976Z  INFO 1 --- [energy-mgmt-login] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+login_app        | 2024-10-31T16:11:34.022Z  INFO 1 --- [energy-mgmt-login] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+user_app         | 2024-10-31T16:11:34.052Z  INFO 1 --- [energy-mgmt-login] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@43deba42
+user_app         | 2024-10-31T16:11:34.055Z  INFO 1 --- [energy-mgmt-login] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+user_app         | 2024-10-31T16:11:34.108Z  WARN 1 --- [energy-mgmt-login] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+login_app        | 2024-10-31T16:11:34.330Z  INFO 1 --- [energy-mgmt-login] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@f810c18
+login_app        | 2024-10-31T16:11:34.356Z  INFO 1 --- [energy-mgmt-login] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+login_app        | 2024-10-31T16:11:34.403Z  WARN 1 --- [energy-mgmt-login] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+user_app         | 2024-10-31T16:11:34.926Z  INFO 1 --- [energy-mgmt-login] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+user_app         | 2024-10-31T16:11:34.967Z  INFO 1 --- [energy-mgmt-login] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+login_app        | 2024-10-31T16:11:35.145Z  INFO 1 --- [energy-mgmt-login] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+login_app        | 2024-10-31T16:11:35.197Z  INFO 1 --- [energy-mgmt-login] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+user_app         | 2024-10-31T16:11:35.612Z  WARN 1 --- [energy-mgmt-login] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+login_app        | 2024-10-31T16:11:35.636Z  INFO 1 --- [energy-mgmt-login] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+user_app         | 2024-10-31T16:11:36.375Z  INFO 1 --- [energy-mgmt-login] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 6584 (http) with context path '/api'
+user_app         | 2024-10-31T16:11:36.416Z  INFO 1 --- [energy-mgmt-login] [           main] r.t.e.EnergyMgmtUserApplication          : Started EnergyMgmtUserApplication in 6.897 seconds (process running for 7.419)
+login_app        | 2024-10-31T16:11:36.545Z  INFO 1 --- [energy-mgmt-login] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 6582 (http) with context path '/api'
+login_app        | 2024-10-31T16:11:36.558Z  INFO 1 --- [energy-mgmt-login] [           main] r.t.e.EnergyMgmtLoginApplication         : Started EnergyMgmtLoginApplication in 6.791 seconds (process running for 7.37)
+front_app        | Initial chunk files | Names                 |  Raw size
+front_app        | styles.css          | styles                | 730.99 kB |
+front_app        | polyfills.js        | polyfills             |  88.09 kB |
+front_app        | main.js             | main                  |   5.24 kB |
+front_app        | chunk-4E2JY3TT.js   | -                     | 754 bytes |
+front_app        |
+front_app        |                     | Initial total         | 825.05 kB
+front_app        |
+front_app        | Lazy chunk files    | Names                 |  Raw size
+front_app        | chunk-O2HUWCVM.js   | dashboard-module      |  73.27 kB |
+front_app        | chunk-JUF3LU4B.js   | authentication-module |  17.00 kB |
+front_app        | chunk-JE5INQ6Y.js   | -                     |   1.12 kB |
+front_app        |
+front_app        | Application bundle generation complete. [5.870 seconds]
+front_app        |
+front_app        | Watch mode enabled. Watching for file changes...
+front_app        | Re-optimizing dependencies because vite config has changed
+front_app        |   ➜  Local:   http://localhost:4200/
+front_app        |   ➜  Network: http://172.18.0.6:4200/
+login_app        | 2024-10-31T16:12:05.193Z  INFO 1 --- [energy-mgmt-login] [nio-6582-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+login_app        | 2024-10-31T16:12:05.194Z  INFO 1 --- [energy-mgmt-login] [nio-6582-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+login_app        | 2024-10-31T16:12:05.198Z  INFO 1 --- [energy-mgmt-login] [nio-6582-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+login_app        | Hibernate: select ue1_0.id,ue1_0.email,ue1_0.admin,ue1_0.password,ue1_0.username from "user" ue1_0 where ue1_0.username=?
+login_app        | 2024-10-31T16:12:10.770Z  INFO 1 --- [energy-mgmt-login] [nio-6582-exec-3] r.t.e.service.user.UserServiceBean       : Sent insert user request user_a
+user_app         | 2024-10-31T16:12:10.878Z  INFO 1 --- [energy-mgmt-login] [nio-6584-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+user_app         | 2024-10-31T16:12:10.879Z  INFO 1 --- [energy-mgmt-login] [nio-6584-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+user_app         | 2024-10-31T16:12:10.882Z  INFO 1 --- [energy-mgmt-login] [nio-6584-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+user_app         | Hibernate: insert into "user" (email,admin,password,username,id) values (?,?,?,?,?)
+login_app        | Hibernate: select ue1_0.id,ue1_0.email,ue1_0.admin,ue1_0.password,ue1_0.username from "user" ue1_0 where ue1_0.username=?
+login_app        | 2024-10-31T16:12:35.233Z  INFO 1 --- [energy-mgmt-login] [nio-6582-exec-7] r.t.e.service.user.UserServiceBean       : Sent user info request admin
+user_app         | 2024-10-31T16:12:35.240Z ERROR 1 --- [energy-mgmt-login] [nio-6584-exec-2] o.a.c.c.C.[.[.[.[dispatcherServlet]      : Servlet.service() for servlet [dispatcherServlet] in context with path [/api] threw exception [Request processing failed: java.lang.IllegalArgumentException: Name for argument of type [java.lang.String] not specified, and parameter name information not available via reflection. Ensure that the compiler uses the '-parameters' flag.] with root cause
+user_app         |
+user_app         | java.lang.IllegalArgumentException: Name for argument of type [java.lang.String] not specified, and parameter name information not available via reflection. Ensure that the compiler uses the '-parameters' flag.
+user_app         |      at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.updateNamedValueInfo(AbstractNamedValueMethodArgumentResolver.java:185) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.getNamedValueInfo(AbstractNamedValueMethodArgumentResolver.java:160) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.resolveArgument(AbstractNamedValueMethodArgumentResolver.java:106) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:228) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:182) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:920) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:830) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+user_app         |
+login_app        | Hibernate: select ue1_0.id,ue1_0.email,ue1_0.admin,ue1_0.password,ue1_0.username from "user" ue1_0 where ue1_0.username=?
+login_app        | 2024-10-31T16:12:36.666Z  INFO 1 --- [energy-mgmt-login] [nio-6582-exec-9] r.t.e.service.user.UserServiceBean       : Sent user info request admin
+user_app         | 2024-10-31T16:12:36.670Z ERROR 1 --- [energy-mgmt-login] [nio-6584-exec-3] o.a.c.c.C.[.[.[.[dispatcherServlet]      : Servlet.service() for servlet [dispatcherServlet] in context with path [/api] threw exception [Request processing failed: java.lang.IllegalArgumentException: Name for argument of type [java.lang.String] not specified, and parameter name information not available via reflection. Ensure that the compiler uses the '-parameters' flag.] with root cause
+user_app         |
+user_app         | java.lang.IllegalArgumentException: Name for argument of type [java.lang.String] not specified, and parameter name information not available via reflection. Ensure that the compiler uses the '-parameters' flag.
+user_app         |      at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.updateNamedValueInfo(AbstractNamedValueMethodArgumentResolver.java:185) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.getNamedValueInfo(AbstractNamedValueMethodArgumentResolver.java:160) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.resolveArgument(AbstractNamedValueMethodArgumentResolver.java:106) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:228) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:182) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:920) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:830) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.4.jar!/:6.1.4]
+user_app         |      at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.4.jar!/:6.1.4]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.19.jar!/:na]
+user_app         |      at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+user_app         |
+
