@@ -1,10 +1,12 @@
-import {Component, DestroyRef, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, model, OnInit, signal} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../../../core/service/auth/auth.service";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {LoginModel} from "../../../shared/models/login.model";
 import {UserService} from "../../../core/service/user/user.service";
+import {MatDialog} from '@angular/material/dialog';
+import {DialogOverviewExampleComponent} from "./dialog-overview-example/dialog-overview-example.component";
 
 @Component({
   selector: 'app-login',
@@ -26,6 +28,22 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.buildLoginForm();
+  }
+
+  readonly animal = signal('');
+  readonly name = model('');
+  readonly dialog = inject(MatDialog);
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogOverviewExampleComponent, {
+      data: {name: this.name(), animal: this.animal()},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result !== undefined) {
+        this.animal.set(result);
+      }
+    });
   }
 
   private buildLoginForm(): void {
@@ -65,3 +83,5 @@ export class LoginComponent implements OnInit {
       });
   }
 }
+
+

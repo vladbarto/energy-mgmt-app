@@ -11,9 +11,9 @@
 	</parent>
 
 	<groupId>ro.tucn</groupId>
-	<artifactId>energy-mgmt-backend</artifactId>
+	<artifactId>energy-mgmt-devices</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>energy-mgmt-backend</name>
+	<name>energy-mgmt-devices</name>
 	<description>Energy management app</description>
 
 	<properties>
@@ -102,6 +102,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<layers>
+						<enabled>true</enabled>
+					</layers>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>

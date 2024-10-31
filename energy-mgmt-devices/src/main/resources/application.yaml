@@ -1,10 +1,16 @@
+database:
+  user: ${DB_USER:postgres}
+  name: ${DB_DBNAME:device-db}
+  port: ${DB_PORT:5432}
+  ip: ${DB_IP:localhost}
+  password: ${DB_PASSWORD:postgres}
 spring:
   application:
     name: energy-mgmt-devices
   datasource:
-    url: jdbc:postgresql://localhost:5432/device-db
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://${database.ip}:${database.port}/${database.name}
+    username: ${database.user}
+    password: ${database.password}
   jpa:
     hibernate:
       ddl-auto: update

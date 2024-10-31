@@ -35,7 +35,9 @@
               <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
             </div>
 
-            <p>Don't have an account? <a href="/auth/register" class="link-info">Register here</a></p>
+            <p>Don't have an account?
+              <button class="btn link-info" mat-raised-button (click)="openDialog()">Register here</button>
+            </p>
           </form>
 
         </div>
@@ -48,3 +50,4 @@
     </div>
   </div>
 </section>
+

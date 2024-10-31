@@ -1,0 +1,248 @@
+docker-compose up
+WARN[0000] volume "proiect-vladbarto-tot_user_db_data" already exists but was not created by Docker Compose. Use `external: true` to use an existing volume
+WARN[0000] Found orphan containers ([device_app]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.
+[+] Running 5/0
+ ✔ Container user_app         Created                                                                                0.0s
+ ✔ Container userContainer    Created                                                                                0.0s
+ ✔ Container deviceContainer  Created                                                                                0.0s
+ ✔ Container login_app        Created                                                                                0.0s
+ ✔ Container front_app        Created                                                                                0.0s
+Attaching to deviceContainer, front_app, login_app, userContainer, user_app
+deviceContainer  |
+deviceContainer  | PostgreSQL Database directory appears to contain a database; Skipping initialization
+userContainer    |
+deviceContainer  |
+userContainer    | PostgreSQL Database directory appears to contain a database; Skipping initialization
+userContainer    |
+deviceContainer  | 2024-10-31 14:28:10.587 UTC [1] LOG:  starting PostgreSQL 17.0 (Debian 17.0-1.pgdg120+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+deviceContainer  | 2024-10-31 14:28:10.588 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+userContainer    | 2024-10-31 14:28:10.588 UTC [1] LOG:  starting PostgreSQL 17.0 (Debian 17.0-1.pgdg120+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+deviceContainer  | 2024-10-31 14:28:10.588 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+userContainer    | 2024-10-31 14:28:10.588 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+deviceContainer  | 2024-10-31 14:28:10.590 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+userContainer    | 2024-10-31 14:28:10.588 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+userContainer    | 2024-10-31 14:28:10.590 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+deviceContainer  | 2024-10-31 14:28:10.595 UTC [28] LOG:  database system was shut down at 2024-10-31 14:27:56 UTC
+userContainer    | 2024-10-31 14:28:10.596 UTC [29] LOG:  database system was shut down at 2024-10-31 14:27:56 UTC
+deviceContainer  | 2024-10-31 14:28:10.600 UTC [1] LOG:  database system is ready to accept connections
+userContainer    | 2024-10-31 14:28:10.603 UTC [1] LOG:  database system is ready to accept connections
+user_app         |
+user_app         |   .   ____          _            __ _ _
+user_app         |  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+user_app         | ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+user_app         |  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+user_app         |   '  |____| .__|_| |_|_| |_\__, | / / / /
+user_app         |  =========|_|==============|___/=/_/_/_/
+user_app         |  :: Spring Boot ::                (v3.2.3)
+user_app         |
+login_app        |
+login_app        |   .   ____          _            __ _ _
+login_app        |  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+login_app        | ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+login_app        |  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+login_app        |   '  |____| .__|_| |_|_| |_\__, | / / / /
+login_app        |  =========|_|==============|___/=/_/_/_/
+login_app        |
+login_app        |  :: Spring Boot ::                (v3.3.4)
+login_app        |
+login_app        | 2024-10-31T14:28:11.907Z  INFO 1 --- [energy-mgmt-login] [           main] r.t.e.EnergyMgmtLoginApplication         : Starting EnergyMgmtLoginApplication v0.0.1-SNAPSHOT using Java 17.0.2 with PID 1 (/app/app.jar started by root in /app)
+login_app        | 2024-10-31T14:28:11.916Z  INFO 1 --- [energy-mgmt-login] [           main] r.t.e.EnergyMgmtLoginApplication         : No active profile set, falling back to 1 default profile: "default"
+user_app         | 2024-10-31T14:28:11.930Z  INFO 1 --- [energy-mgmt-login] [           main] r.t.e.EnergyMgmtUserApplication          : Starting EnergyMgmtUserApplication v0.0.1-SNAPSHOT using Java 17.0.2 with PID 1 (/app/app.jar started by root in /app)
+user_app         | 2024-10-31T14:28:11.939Z  INFO 1 --- [energy-mgmt-login] [           main] r.t.e.EnergyMgmtUserApplication          : No active profile set, falling back to 1 default profile: "default"
+front_app        |
+front_app        | Warning: This is a simple server for use in testing or debugging Angular applications
+front_app        | locally. It hasn't been reviewed for security issues.
+front_app        |
+front_app        | Binding this server to an open connection can result in compromising your application or
+front_app        | computer. Using a different host than the one passed to the "--host" flag might result in
+front_app        | websocket connection issues. You might need to use "--disable-host-check" if that's the
+front_app        | case.
+front_app        |
+front_app        | - Building...
+front_app        |
+login_app        | 2024-10-31T14:28:13.200Z  INFO 1 --- [energy-mgmt-login] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+login_app        | 2024-10-31T14:28:13.305Z  INFO 1 --- [energy-mgmt-login] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 95 ms. Found 1 JPA repository interface.
+user_app         | 2024-10-31T14:28:13.549Z  INFO 1 --- [energy-mgmt-login] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+user_app         | 2024-10-31T14:28:13.628Z  INFO 1 --- [energy-mgmt-login] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 69 ms. Found 1 JPA repository interface.
+login_app        | 2024-10-31T14:28:14.199Z  INFO 1 --- [energy-mgmt-login] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 6582 (http)
+login_app        | 2024-10-31T14:28:14.231Z  INFO 1 --- [energy-mgmt-login] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+login_app        | 2024-10-31T14:28:14.231Z  INFO 1 --- [energy-mgmt-login] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+login_app        | 2024-10-31T14:28:14.279Z  INFO 1 --- [energy-mgmt-login] [           main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+login_app        | 2024-10-31T14:28:14.285Z  INFO 1 --- [energy-mgmt-login] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2293 ms
+login_app        | 2024-10-31T14:28:14.632Z  WARN 1 --- [energy-mgmt-login] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+user_app         | 2024-10-31T14:28:14.685Z  INFO 1 --- [energy-mgmt-login] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 6584 (http)
+user_app         | 2024-10-31T14:28:14.714Z  INFO 1 --- [energy-mgmt-login] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+user_app         | 2024-10-31T14:28:14.714Z  INFO 1 --- [energy-mgmt-login] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+user_app         | 2024-10-31T14:28:14.779Z  INFO 1 --- [energy-mgmt-login] [           main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+user_app         | 2024-10-31T14:28:14.780Z  INFO 1 --- [energy-mgmt-login] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2696 ms
+login_app        | 2024-10-31T14:28:14.791Z  INFO 1 --- [energy-mgmt-login] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+login_app        | 2024-10-31T14:28:14.852Z  INFO 1 --- [energy-mgmt-login] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+login_app        | 2024-10-31T14:28:14.916Z  INFO 1 --- [energy-mgmt-login] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+user_app         | 2024-10-31T14:28:14.965Z  INFO 1 --- [energy-mgmt-login] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+user_app         | 2024-10-31T14:28:15.075Z  INFO 1 --- [energy-mgmt-login] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+user_app         | 2024-10-31T14:28:15.109Z  INFO 1 --- [energy-mgmt-login] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+login_app        | 2024-10-31T14:28:15.437Z  INFO 1 --- [energy-mgmt-login] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+user_app         | 2024-10-31T14:28:15.445Z  INFO 1 --- [energy-mgmt-login] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+user_app         | 2024-10-31T14:28:15.494Z  INFO 1 --- [energy-mgmt-login] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+login_app        | 2024-10-31T14:28:15.504Z  INFO 1 --- [energy-mgmt-login] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+user_app         | 2024-10-31T14:28:15.844Z  INFO 1 --- [energy-mgmt-login] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5e24592e
+user_app         | 2024-10-31T14:28:15.849Z  INFO 1 --- [energy-mgmt-login] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+login_app        | 2024-10-31T14:28:15.881Z  INFO 1 --- [energy-mgmt-login] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6b091a92
+login_app        | 2024-10-31T14:28:15.884Z  INFO 1 --- [energy-mgmt-login] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+user_app         | 2024-10-31T14:28:15.914Z  WARN 1 --- [energy-mgmt-login] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+login_app        | 2024-10-31T14:28:15.935Z  WARN 1 --- [energy-mgmt-login] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+login_app        | 2024-10-31T14:28:16.679Z  INFO 1 --- [energy-mgmt-login] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+login_app        | 2024-10-31T14:28:16.726Z  INFO 1 --- [energy-mgmt-login] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+user_app         | 2024-10-31T14:28:16.734Z  INFO 1 --- [energy-mgmt-login] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+user_app         | 2024-10-31T14:28:16.790Z  INFO 1 --- [energy-mgmt-login] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+login_app        | 2024-10-31T14:28:17.277Z  INFO 1 --- [energy-mgmt-login] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+user_app         | 2024-10-31T14:28:17.805Z  WARN 1 --- [energy-mgmt-login] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+user_app         | 2024-10-31T14:28:18.973Z  INFO 1 --- [energy-mgmt-login] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 6584 (http) with context path '/api'
+user_app         | 2024-10-31T14:28:19.020Z  INFO 1 --- [energy-mgmt-login] [           main] r.t.e.EnergyMgmtUserApplication          : Started EnergyMgmtUserApplication in 7.814 seconds (process running for 8.504)
+login_app        | 2024-10-31T14:28:19.091Z  INFO 1 --- [energy-mgmt-login] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 6582 (http) with context path '/api'
+login_app        | 2024-10-31T14:28:19.114Z  INFO 1 --- [energy-mgmt-login] [           main] r.t.e.EnergyMgmtLoginApplication         : Started EnergyMgmtLoginApplication in 7.712 seconds (process running for 8.435)
+front_app        | Initial chunk files | Names                 |  Raw size
+front_app        | styles.css          | styles                | 730.99 kB |
+front_app        | polyfills.js        | polyfills             |  88.09 kB |
+front_app        | main.js             | main                  |   5.24 kB |
+front_app        | chunk-4E2JY3TT.js   | -                     | 754 bytes |
+front_app        |
+front_app        |                     | Initial total         | 825.05 kB
+front_app        |
+front_app        | Lazy chunk files    | Names                 |  Raw size
+front_app        | chunk-O2HUWCVM.js   | dashboard-module      |  73.27 kB |
+front_app        | chunk-JUF3LU4B.js   | authentication-module |  17.00 kB |
+front_app        | chunk-JE5INQ6Y.js   | -                     |   1.12 kB |
+front_app        |
+front_app        | Application bundle generation complete. [6.964 seconds]
+front_app        |
+front_app        | Watch mode enabled. Watching for file changes...
+front_app        |   ➜  Local:   http://localhost:4200/
+front_app        |   ➜  Network: http://172.18.0.6:4200/
+login_app        | 2024-10-31T14:28:25.220Z  INFO 1 --- [energy-mgmt-login] [nio-6582-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+login_app        | 2024-10-31T14:28:25.220Z  INFO 1 --- [energy-mgmt-login] [nio-6582-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+login_app        | 2024-10-31T14:28:25.222Z  INFO 1 --- [energy-mgmt-login] [nio-6582-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+login_app        | 2024-10-31T14:28:25.305Z  INFO 1 --- [energy-mgmt-login] [nio-6582-exec-1] r.t.e.service.user.UserServiceBean       : Sent insert user request user_a
+login_app        | 2024-10-31T14:28:25.333Z  INFO 1 --- [energy-mgmt-login] [nio-6582-exec-1] r.t.e.resttemplate.RestTemplateBase      : postForEntity request fails for unknown reason
+login_app        | 2024-10-31T14:28:25.335Z ERROR 1 --- [energy-mgmt-login] [nio-6582-exec-1] o.a.c.c.C.[.[.[.[dispatcherServlet]      : Servlet.service() for servlet [dispatcherServlet] in context with path [/api] threw exception [Request processing failed: ro.tucn.energy_mgmt_login.exception.RestTemplateException: user_a ---> (FAIL)] with root cause
+login_app        |
+login_app        | ro.tucn.energy_mgmt_login.exception.RestTemplateException: user_a ---> (FAIL)
+login_app        |      at ro.tucn.energy_mgmt_login.resttemplate.RestTemplateBase.postForEntity(RestTemplateBase.java:64) ~[!/:0.0.1-SNAPSHOT]
+login_app        |      at ro.tucn.energy_mgmt_login.service.user.UserServiceBean.save(UserServiceBean.java:68) ~[!/:0.0.1-SNAPSHOT]
+login_app        |      at ro.tucn.energy_mgmt_login.controller.UserController.saveOne(UserController.java:76) ~[!/:0.0.1-SNAPSHOT]
+login_app        |      at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+login_app        |      at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+login_app        |      at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+login_app        |      at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+login_app        |      at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926) ~[spring-webmvc-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831) ~[spring-webmvc-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.1.13.jar!/:6.1.13]
+login_app        |      at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.13.jar!/:6.1.13]
+login_app        |      at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.30.jar!/:na]
+login_app        |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:227) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:221) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:100) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at ro.tucn.energy_mgmt_login.security.filter.AuthorizationFilter.doFilterInternal(AuthorizationFilter.java:42) ~[!/:0.0.1-SNAPSHOT]
+login_app        |      at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:227) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:221) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191) ~[spring-security-web-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:195) ~[spring-webmvc-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:230) ~[spring-security-config-6.3.3.jar!/:6.3.3]
+login_app        |      at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:352) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:268) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.13.jar!/:6.1.13]
+login_app        |      at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:384) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.30.jar!/:na]
+login_app        |      at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
+login_app        |
+login_app        | 2024-10-31T14:28:33.713Z  INFO 1 --- [energy-mgmt-login] [nio-6582-exec-3] r.t.e.service.user.UserServiceBean       : Sent insert user request user_a
+login_app        | 2024-10-31T14:28:33.714Z  INFO 1 --- [energy-mgmt-login] [nio-6582-exec-3] r.t.e.resttemplate.RestTemplateBase      : postForEntity request fails for unknown reason
+
+
+v View in Docker Desktop   o View Config   w Enable Watch

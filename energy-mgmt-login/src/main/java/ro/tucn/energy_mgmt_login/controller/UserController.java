@@ -1,5 +1,10 @@
 package ro.tucn.energy_mgmt_login.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -7,8 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import ro.tucn.energy_mgmt_login.dto.device.DeviceResponseDTO;
 import ro.tucn.energy_mgmt_login.dto.user.UserRequestDTO;
 import ro.tucn.energy_mgmt_login.dto.user.UserResponseDTO;
+import ro.tucn.energy_mgmt_login.exception.ExceptionBody;
 import ro.tucn.energy_mgmt_login.service.user.UserService;
 
 import java.util.List;
@@ -17,8 +24,7 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequestMapping("/user/v1")
-@CrossOrigin(origins = {"http://localhost:4200", "http://front_app:4200"}, allowCredentials = "true")
-//@CrossOrigin("*")
+@CrossOrigin(origins = {"http://localhost:4200", "http://front_app:4200", "http://localhost:6581"}, allowCredentials = "true")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -56,6 +62,15 @@ public class UserController {
     }
 
     @PostMapping("/one")
+    @Operation(summary = "Registration of new user attempt")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "New user registered",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = DeviceResponseDTO.class))}),
+            @ApiResponse(responseCode = "404", description = "??",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionBody.class))}),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionBody.class))})
+    })
     public ResponseEntity<UserResponseDTO> saveOne(@RequestBody UserRequestDTO request) {
         return new ResponseEntity<>(
                 userService.save(request),

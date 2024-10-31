@@ -6,7 +6,7 @@
     <div class="d-flex flex-column me-auto">
       <!-- Toggle between display and input fields based on editMode -->
       <ng-container *ngIf="!editMode; else editFields">
-        <span class="fw-bold">Name: {{ user.username }}</span>
+        <span class="fw-bold">Username: {{ user.username }}</span>
         <span class="fw-bold">Email: {{ user.email }}</span>
         <span class="fw-bold">Is Admin: {{ user.admin }}</span>
         <span class="fst-italic">UserId: {{ user.id }}</span>
