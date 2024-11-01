@@ -17,13 +17,20 @@ import ro.tucn.energy_mgmt_user.service.UserService;
 import ro.tucn.energy_mgmt_user.dto.user.UserRequestDTO;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @Slf4j
 @RestController
-//@CrossOrigin(origins = {"http://localhost:4200", "http://front_app:4200", "http://localhost:6582"}, allowCredentials = "true")
+@CrossOrigin(origins = {
+        "http://localhost:4200",
+        "http://front_app:4200",
+        "http://localhost:6582",
+        "http://localhost:6581",
+        "http://login_app:6582"
+}, allowCredentials = "true")
 // TODO: change 6582 to 6581? and localhost to docker internal host chestia aia (DE TESTAT)
-@CrossOrigin("*")
+//@CrossOrigin("*")
 @RequestMapping("/user/v1")
 @RequiredArgsConstructor
 public class UserController {
@@ -47,7 +54,8 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<UserResponseDTO> getLoggedUserInfo(@RequestParam String username) {
+    public ResponseEntity<UserResponseDTO> getLoggedUserInfo(@RequestParam(name = "username") String username)//(@RequestParam String username) {
+    {
         log.info("Received username from request param: " + username);
 
         return new ResponseEntity<>(

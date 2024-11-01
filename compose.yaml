@@ -21,7 +21,7 @@ services:
       - "5433:5432"
     volumes:
       - user_db_data:/var/lib/postgresql/data
-      - ./init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql  # Mount the init script
+#      - ./init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql  # Mount the init script
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -42,7 +42,7 @@ services:
       - "5434:5432"
     volumes:
       - device_db_data:/var/lib/postgresql/data
-      - ./init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql  # Mount the init script
+#      - ./init-device-db.sql:/docker-entrypoint-initdb.d/init-device-db.sql  # Mount the init script
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -82,7 +82,7 @@ services:
       DB_DBNAME: user-db
     depends_on:
       - user_app
-#      - device_app
+      - device_app
     networks:
       - app-network
 
@@ -103,22 +103,22 @@ services:
     networks:
       - app-network
 
-#  device_app:
-#    image: energy-mgmt-devices
-#    container_name: device_app
-#    build:
-#      context: ./energy-mgmt-devices
-#      dockerfile: ./energy-mgmt-devices/Dockerfile
-#    ports:
-#      - 6585:6585
-#    environment:
-#      DB_IP: BazaDateDevices
-#      DB_PORT: 5432
-#      DB_USER: postgres
-#      DB_PASSWORD: postgres
-#      DB_DBNAME: device-db
-#    networks:
-#      - app-network
+  device_app:
+    image: energy-mgmt-devices
+    container_name: device_app
+    build:
+      context: ./energy-mgmt-devices
+      dockerfile: ./energy-mgmt-devices/Dockerfile
+    ports:
+      - 6585:6585
+    environment:
+      DB_IP: BazaDateDevices
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_DBNAME: device-db
+    networks:
+      - app-network
 
 volumes:
   user_db_data:
