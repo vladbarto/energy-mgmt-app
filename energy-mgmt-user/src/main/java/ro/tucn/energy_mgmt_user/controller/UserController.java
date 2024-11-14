@@ -17,7 +17,6 @@ import ro.tucn.energy_mgmt_user.service.UserService;
 import ro.tucn.energy_mgmt_user.dto.user.UserRequestDTO;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 @Slf4j
@@ -30,7 +29,6 @@ import java.util.UUID;
         "http://login_app:6582"
 }, allowCredentials = "true")
 // TODO: change 6582 to 6581? and localhost to docker internal host chestia aia (DE TESTAT)
-//@CrossOrigin("*")
 @RequestMapping("/user/v1")
 @RequiredArgsConstructor
 public class UserController {

@@ -1,4 +1,4 @@
-import {Component, DestroyRef, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, DestroyRef, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DeviceModel} from "../../../../shared/models/device.model";
@@ -8,6 +8,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {multi} from "./data";
+import {Color, NgxChartsModule} from "@swimlane/ngx-charts";
 
 @Component({
   selector: 'app-client',
@@ -20,12 +22,46 @@ export class ClientComponent implements OnInit {
   devices: DeviceModel[] = [];
   noOfDevices: number = 0;
 
+  multi: any[] | undefined;
+  view = [700, 300];
+
+  // options
+  legend: boolean = true;
+  showLabels: boolean = true;
+  animations: boolean = true;
+  xAxis: boolean = true;
+  yAxis: boolean = true;
+  showYAxisLabel: boolean = true;
+  showXAxisLabel: boolean = true;
+  xAxisLabel: string = 'Year';
+  yAxisLabel: string = 'Population';
+  timeline: boolean = true;
+
+
   constructor(
     private router: Router,
     private destroyRef: DestroyRef,
     private formBuilder: FormBuilder,
     private deviceService: DeviceService
   ) {
+    Object.assign(this, { multi });
+  }
+
+  // colorScheme: Color = {
+  //   domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+  // };
+
+
+  onSelect(data: any): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  }
+
+  onActivate(data: any): void {
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  }
+
+  onDeactivate(data: any): void {
+    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
   ngOnInit(): void {
@@ -44,7 +80,7 @@ export class ClientComponent implements OnInit {
 
   logOut(): void {
     this.clearCookies();
-    localStorage.removeItem('loggedUser');
+    sessionStorage.removeItem('loggedUser');
     this.router.navigateByUrl('/auth/login');
   }
 
@@ -81,11 +117,11 @@ export class ClientComponent implements OnInit {
   }
 
   getUser = (): UserModel => {
-    return JSON.parse(localStorage.getItem('loggedUser') || '');
+    return JSON.parse(sessionStorage.getItem('loggedUser') || '');
   }
 
   private getDevicesOfLoggedUser(): void {
-    this.deviceService.getAllOfLoggedUser(JSON.parse(localStorage.getItem('loggedUser') || '').id)
+    this.deviceService.getAllOfLoggedUser(JSON.parse(sessionStorage.getItem('loggedUser') || '').id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: response => {

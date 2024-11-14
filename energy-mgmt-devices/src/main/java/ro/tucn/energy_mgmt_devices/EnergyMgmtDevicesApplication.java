@@ -11,6 +11,7 @@ public class EnergyMgmtDevicesApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(EnergyMgmtDevicesApplication.class, args);
+
 	}
 
 }

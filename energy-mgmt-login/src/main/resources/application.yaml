@@ -4,6 +4,13 @@ database:
   port: ${DB_PORT:5432}
   ip: ${DB_IP:localhost}
   password: ${DB_PASSWORD:auth}
+api:
+  userService:
+    host: ${BACKEND_USER_HOST:localhost}
+    port: ${BACKEND_USER_PORT:6584}
+  deviceService:
+    host: ${BACKEND_DEVICE_HOST:localhost}
+    port: ${BACKEND_DEVICE_PORT:6585}
 spring:
   application:
     name: energy-mgmt-login
@@ -31,5 +38,7 @@ security:
 microservices:
 #  userService: "http://localhost:6584/api"
 #  deviceService: "http://localhost:6585/api"
-  userService: "http://host.docker.internal:6584/api"
-  deviceService: "http://host.docker.internal:6585/api"
+#  userService: "http://host.docker.internal:6584/api"
+#  deviceService: "http://host.docker.internal:6585/api"
+  userService: http://${api.userService.host}:${api.userService.port}/api
+  deviceService: http://${api.deviceService.host}:${api.deviceService.port}/api

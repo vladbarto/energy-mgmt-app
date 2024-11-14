@@ -1,0 +1,8 @@
+simulator:
+  readings:
+    file: './sensor.csv'
+  device_id: 'da344d64-ffde-4ce0-8aeb-6959f5a3ff41'  # TODO: adjust with actual UUID in your app
+rabbitMQ:
+  queue: test_queue
+  exchange: test_exchange
+  url: 'amqps://ivpbhbrx:BB9NSs5i3qYczwRO-ofc-a9WkXEh04r7@sparrow.rmq.cloudamqp.com/ivpbhbrx'

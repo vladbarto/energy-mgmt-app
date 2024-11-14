@@ -11,5 +11,9 @@
 <!--    <button (click)="deleteAnnouncementPressed(announcement.announcementId || '')" class="btn btn-danger ms-1">-->
 <!--      <i class="fa fa-trash"></i>-->
 <!--    </button>-->
+    <button *ngIf="!editMode" class="btn btn-info me-1" (click)="editDevice()">
+      <i class="fa-solid fa-gauge-high"></i>
+    </button>
+
   </div>
 </div>

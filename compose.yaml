@@ -80,6 +80,10 @@ services:
       DB_USER: postgres
       DB_PASSWORD: root
       DB_DBNAME: user-db
+      BACKEND_USER_HOST: host.docker.internal
+      BACKEND_USER_PORT: 6584 
+      BACKEND_DEVICE_HOST: host.docker.internal
+      BACKEND_DEVICE_PORT: 6585 
     depends_on:
       - user_app
       - device_app

@@ -1,5 +1,8 @@
 package ro.tucn.energy_mgmt_devices.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +12,8 @@ import ro.tucn.energy_mgmt_devices.mapper.DeviceMapper;
 import ro.tucn.energy_mgmt_devices.repository.UserReferenceRepository;
 import ro.tucn.energy_mgmt_devices.service.device.DeviceService;
 import ro.tucn.energy_mgmt_devices.service.device.DeviceServiceBean;
+import ro.tucn.energy_mgmt_devices.service.rabbitmq.RabbitMqService;
+import ro.tucn.energy_mgmt_devices.service.rabbitmq.RabbitMqServiceBean;
 import ro.tucn.energy_mgmt_devices.service.userRef.UserReferenceService;
 import ro.tucn.energy_mgmt_devices.service.userRef.UserReferenceServiceBean;
 
@@ -33,4 +38,17 @@ public class Config {
     ) {
         return new UserReferenceServiceBean(userReferenceRepository, userReferenceMapper, applicationName);
     }
+
+    @Bean
+    public RabbitMqService rabbitMqServiceBean(
+            @Value("${spring.application.name:BACKEND}") String applicationName,
+            @Value("${spring.rabbitmq.queue}") String queueName,
+            @Value("${spring.rabbitmq.exchange}") String exchangeName,
+            RabbitTemplate rabbitTemplate,
+            ObjectMapper objectMapper,
+            ConnectionFactory connectionFactory
+    ) {
+        return new RabbitMqServiceBean(applicationName, queueName, exchangeName, rabbitTemplate, objectMapper, connectionFactory);
+    }
+
 }

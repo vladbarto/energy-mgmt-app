@@ -52,12 +52,12 @@ export class DevicesComponent implements OnInit {
   }
 
   getUser = (): UserModel => {
-    return JSON.parse(localStorage.getItem('loggedUser') || '');
+    return JSON.parse(sessionStorage.getItem('loggedUser') || '');
   }
 
   logOut(): void {
     this.clearCookies();
-    localStorage.removeItem('loggedUser');
+    sessionStorage.removeItem('loggedUser');
     this.router.navigateByUrl('/auth/login');
   }
 

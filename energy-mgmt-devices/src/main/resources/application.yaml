@@ -18,6 +18,15 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
+  rabbitmq:
+    url: amqps://eoypmofr:EvcIW3cQhlCEeMARih3ltpjzja7lGN8j@cow.rmq2.cloudamqp.com/eoypmofr
+    host: cow-01.rmq2.cloudamqp.com
+    port: 5672
+    username: eoypmofr
+    password: EvcIW3cQhlCEeMARih3ltpjzja7lGN8j
+    virtual-host: eoypmofr
+    queue: device_to_monitor_queue
+    exchange: device_to_monitor_exchange
 server:
   port: 6585
   servlet:

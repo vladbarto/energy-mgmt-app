@@ -23,5 +23,5 @@ const isCookiePresent = (): boolean => {
 };
 
 const getUser = (): UserModel => {
-  return JSON.parse(localStorage.getItem('loggedUser') || '');
+  return JSON.parse(sessionStorage.getItem('loggedUser') || '');
 };

@@ -12,6 +12,8 @@ import { UsersComponent } from './home/admin/users/users.component';
 import { DevicesComponent } from './home/admin/devices/devices.component';
 import { UserCardComponent } from './home/admin/users/user-card/user-card.component';
 import { DeviceCardAComponent } from './home/admin/devices/device-card-a/device-card-a.component';
+import { DeviceConsumptionStatsComponent } from './home/client/device-consumption-stats/device-consumption-stats.component';
+import {NgxChartsModule} from "@swimlane/ngx-charts";
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { DeviceCardAComponent } from './home/admin/devices/device-card-a/device-
     UsersComponent,
     DevicesComponent,
     UserCardComponent,
-    DeviceCardAComponent
+    DeviceCardAComponent,
+    DeviceConsumptionStatsComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +34,7 @@ import { DeviceCardAComponent } from './home/admin/devices/device-card-a/device-
     MatIcon,
     MatMenu,
     MatMenuTrigger,
+    NgxChartsModule,
     //AppModule
   ]
 })

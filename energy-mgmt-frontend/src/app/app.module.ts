@@ -11,6 +11,7 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import {HeaderComponent} from "./shared/components/header/header.component";
 import {requestInterceptor} from "./core/http-interceptor/http-interceptor";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -23,11 +24,12 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     HttpClientModule,
     RouterModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [
     provideHttpClient(withInterceptors([requestInterceptor])),
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    provideCharts(withDefaultRegisterables())
   ],
   exports: [
 

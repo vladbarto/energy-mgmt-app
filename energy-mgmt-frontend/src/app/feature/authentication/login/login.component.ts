@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
     this.userService.getInfo()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(response => {
-        localStorage.setItem('loggedUser', JSON.stringify(response));
+        sessionStorage.setItem('loggedUser', JSON.stringify(response));
         this.router.navigateByUrl(response.admin? '/dashboard/admin' : '/dashboard/client');
       });
   }

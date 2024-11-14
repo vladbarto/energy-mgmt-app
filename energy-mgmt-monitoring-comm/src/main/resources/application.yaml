@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: energy-mgmt-monitoring-comm
+  rabbitmq:
+    url: amqps://ivpbhbrx:BB9NSs5i3qYczwRO-ofc-a9WkXEh04r7@sparrow.rmq.cloudamqp.com/ivpbhbrx
+    host: sparrow-01.rmq.cloudamqp.com
+    port: 5672  # 5671 if ssl.enabled=true
+    username: ivpbhbrx
+    password: BB9NSs5i3qYczwRO-ofc-a9WkXEh04r7
+    virtual-host: ivpbhbrx
+    queue: test_queue
+    exchange: test_exchange
+#    ssl:
+#      enabled: true  # Enable SSL for amqps connection
+  datasource:
+    url: jdbc:postgresql://localhost:5432/monitoring-db
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+queues:
+  async-mail-sender-request: async-mail-sender-request
+

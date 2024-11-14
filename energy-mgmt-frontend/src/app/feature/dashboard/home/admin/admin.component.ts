@@ -16,7 +16,7 @@ export class AdminComponent {
 
   logOut(): void {
     this.clearCookies();
-    localStorage.removeItem('loggedUser');
+    sessionStorage.removeItem('loggedUser');
     this.router.navigateByUrl('/auth/login');
   }
 
@@ -31,6 +31,6 @@ export class AdminComponent {
   }
 
   getUser = (): UserModel => {
-    return JSON.parse(localStorage.getItem('loggedUser') || '');
+    return JSON.parse(sessionStorage.getItem('loggedUser') || '');
   }
 }

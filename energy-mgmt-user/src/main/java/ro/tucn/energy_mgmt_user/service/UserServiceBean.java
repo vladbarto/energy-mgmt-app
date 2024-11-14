@@ -27,7 +27,7 @@ public class UserServiceBean implements UserService {
 
     @Override
     public List<UserResponseDTO> findAll() {
-        log.info("Getting all chefs for application {}", applicationName);
+        log.info("Getting all users for application {}", applicationName);
 
         List<UserEntity> userEntityList = userRepository.findAll();
 

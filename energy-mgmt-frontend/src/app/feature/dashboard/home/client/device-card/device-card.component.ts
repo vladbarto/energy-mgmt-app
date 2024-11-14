@@ -8,4 +8,9 @@ import { DeviceModel } from '../../../../../shared/models/device.model';
 })
 export class DeviceCardComponent {
   @Input() device!: DeviceModel;
+  editMode: boolean = false;
+
+  editDevice(): void {
+    ;
+  }
 }
