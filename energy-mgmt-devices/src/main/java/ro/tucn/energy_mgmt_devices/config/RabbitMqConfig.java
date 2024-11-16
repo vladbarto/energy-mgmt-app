@@ -16,17 +16,10 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class RabbitMqConfig {
 
-    @Value("${spring.application.name}")
-    public String applicationName;
-
-    @Value("${spring.rabbitmq.queue}")
-    public String queueName;
-
-    @Value("${spring.rabbitmq.exchange}")
-    public String exchangeName;
-
-    @Value("${spring.rabbitmq.routing-key}")
-    public String routingKey;
+    @Value("${spring.application.name}")     public String applicationName;
+    @Value("${spring.rabbitmq.queue}")       public String queueName;
+    @Value("${spring.rabbitmq.exchange}")    public String exchangeName;
+    @Value("${spring.rabbitmq.routing-key}") public String routingKey;
 
     @Bean
     public Queue queue() {

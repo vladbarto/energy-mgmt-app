@@ -1,4 +1,4 @@
-package ro.tucn.energy_mgmt_devices.exception;
+package ro.tucn.energy_mgmt_monitoring_comm.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -10,9 +10,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ExceptionCode {
 
-    ERR002_USERNAME_NOT_FOUND("Username %s not found"),
-    ERR099_INVALID_CREDENTIALS("Invalid credentials."),
-    ERR003_DEVICE_OF_USERID_NOT_FOUND("Device of user with ID %s not found"),
     ERR004_DEVICE_NOT_FOUND("Device with ID %s not found");
     private final String message;
 }

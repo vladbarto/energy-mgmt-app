@@ -24,9 +24,10 @@ public class Config {
             DeviceRepository deviceRepository,
             DeviceMapper deviceMapper,
             @Value("${spring.application.name:BACKEND}") String applicationName,
-            UserReferenceRepository userReferenceRepository
+            UserReferenceRepository userReferenceRepository,
+            RabbitMqService rabbitMqServiceBean
     ) {
-        return new DeviceServiceBean(deviceRepository, deviceMapper, applicationName, userReferenceRepository);
+        return new DeviceServiceBean(deviceRepository, deviceMapper, applicationName, userReferenceRepository, rabbitMqServiceBean);
     }
 
     @Bean
