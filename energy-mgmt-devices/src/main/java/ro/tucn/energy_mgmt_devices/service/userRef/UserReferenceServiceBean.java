@@ -21,6 +21,7 @@ public class UserReferenceServiceBean implements UserReferenceService {
     private final UserReferenceRepository userReferenceRepository;
     private final UserReferenceMapper userReferenceMapper;
     private final String applicationName;
+
     @Override
     public List<UserReferenceResponseDTO> findAll() {
         log.info("Getting all userRefs for application {}", applicationName);

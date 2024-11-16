@@ -27,6 +27,7 @@ spring:
     virtual-host: eoypmofr
     queue: device_to_monitor_queue
     exchange: device_to_monitor_exchange
+    routing-key: "routing.key.#"
 server:
   port: 6585
   servlet:

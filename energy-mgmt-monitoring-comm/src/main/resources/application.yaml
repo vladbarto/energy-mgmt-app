@@ -2,16 +2,26 @@ spring:
   application:
     name: energy-mgmt-monitoring-comm
   rabbitmq:
-    url: amqps://ivpbhbrx:BB9NSs5i3qYczwRO-ofc-a9WkXEh04r7@sparrow.rmq.cloudamqp.com/ivpbhbrx
-    host: sparrow-01.rmq.cloudamqp.com
-    port: 5672  # 5671 if ssl.enabled=true
-    username: ivpbhbrx
-    password: BB9NSs5i3qYczwRO-ofc-a9WkXEh04r7
-    virtual-host: ivpbhbrx
-    queue: test_queue
-    exchange: test_exchange
-#    ssl:
-#      enabled: true  # Enable SSL for amqps connection
+    simulator:
+      url: amqps://ivpbhbrx:BB9NSs5i3qYczwRO-ofc-a9WkXEh04r7@sparrow.rmq.cloudamqp.com/ivpbhbrx
+      host: sparrow-01.rmq.cloudamqp.com
+      port: 5672
+      username: ivpbhbrx
+      password: BB9NSs5i3qYczwRO-ofc-a9WkXEh04r7
+      virtual-host: ivpbhbrx
+      queue: test_queue
+      exchange: test_exchange
+      routing-key: simulator.routing.key.#
+    from-device:
+      url: amqps://eoypmofr:EvcIW3cQhlCEeMARih3ltpjzja7lGN8j@cow.rmq2.cloudamqp.com/eoypmofr
+      host: cow-01.rmq2.cloudamqp.com
+      port: 5672
+      username: eoypmofr
+      password: EvcIW3cQhlCEeMARih3ltpjzja7lGN8j
+      virtual-host: eoypmofr
+      queue: device_to_monitor_queue
+      exchange: device_to_monitor_exchange
+      routing-key: device.routing.key.#
   datasource:
     url: jdbc:postgresql://localhost:5432/monitoring-db
     username: postgres

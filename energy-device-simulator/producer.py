@@ -37,9 +37,9 @@ def produce_message(channel, contor_reading: float, config_file):
 
     # create message as json format
     message = {
-        "device_id": config_file.get('simulator', {}).get('device_id'),
+        "deviceId": config_file.get('simulator', {}).get('device_id'),
         "timestamp": datetime.now().isoformat(),
-        "message": contor_reading
+        "readValue": contor_reading
     }
 
     # Convert message to JSON string

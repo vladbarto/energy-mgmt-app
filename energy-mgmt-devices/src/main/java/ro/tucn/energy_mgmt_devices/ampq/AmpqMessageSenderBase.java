@@ -15,52 +15,17 @@ public abstract class AmpqMessageSenderBase<Request> implements MessageSender<Re
     protected final String applicationName;
     protected final String queueName;
     protected final String exchangeName;
+    protected final String routingKey;
     protected final RabbitTemplate rabbitTemplate;
     protected final ObjectMapper objectMapper;
-    private final AmqpAdmin amqpAdmin;  // Added AmqpAdmin for declaration
 
-    protected AmpqMessageSenderBase(String applicationName, String queueName, String exchangeName, RabbitTemplate rabbitTemplate, ObjectMapper objectMapper, ConnectionFactory connectionFactory) {
+    protected AmpqMessageSenderBase(String applicationName, String queueName, String exchangeName, String routingKey, RabbitTemplate rabbitTemplate, ObjectMapper objectMapper) {
         this.applicationName = applicationName;
         this.queueName = queueName;
         this.exchangeName = exchangeName;
+        this.routingKey = routingKey;
         this.rabbitTemplate = rabbitTemplate;
         this.objectMapper = objectMapper;
-        this.amqpAdmin = new RabbitAdmin(connectionFactory);  // Initialize AmqpAdmin
-    }
-
-    // PostConstruct ensures exchange, queue, and binding are declared once the bean is created
-    @PostConstruct
-    private void setupQueueAndExchange() {
-        Queue queue = queue();
-        TopicExchange exchange = exchange();
-        Binding binding = binding(queue, exchange);
-
-        log.info("Declaring queue: {}", queueName);
-        amqpAdmin.declareQueue(queue);
-
-        log.info("Declaring exchange: {}", exchangeName);
-        amqpAdmin.declareExchange(exchange);
-
-        log.info("Declaring binding for queue {} and exchange {} with routing key 'routing.key.#'", queueName, exchangeName);
-        amqpAdmin.declareBinding(binding);
-    }
-
-    @Override
-    public Queue queue() {
-        log.info("Creating queue {} for application {}", queueName, applicationName);
-        return new Queue(queueName, false);
-    }
-
-    @Override
-    public TopicExchange exchange() {
-        log.info("Creating exchange {} for application {}", exchangeName, applicationName);
-        return new TopicExchange(exchangeName);
-    }
-
-    @Override
-    public Binding binding(Queue queue, TopicExchange exchange) {
-        log.info("Creating binding for queue {} and exchange {}; application {}", queue, exchange, applicationName);
-        return BindingBuilder.bind(queue).to(exchange).with("routing.key.#");
     }
 
     public SendingStatus sendMessage(Request request) {
@@ -68,7 +33,7 @@ public abstract class AmpqMessageSenderBase<Request> implements MessageSender<Re
 
         try {
             String payload = objectMapper.writeValueAsString(request);
-            rabbitTemplate.convertAndSend(exchangeName, "routing.key.name", payload);
+            rabbitTemplate.convertAndSend(exchangeName, routingKey, payload);
 
             return SendingStatus.SUCCESS;
         } catch (Exception e) {

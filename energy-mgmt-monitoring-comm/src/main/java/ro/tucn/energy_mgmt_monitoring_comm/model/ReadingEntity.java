@@ -3,6 +3,7 @@ package ro.tucn.energy_mgmt_monitoring_comm.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ public class ReadingEntity {
     private UUID deviceId;
 
     @Column(name="TIMESTAMP")
-    private LocalDateTime timestamp;
+    private Timestamp timestamp;
 
     @Column(name="READ_VALUE")
     private float readValue;

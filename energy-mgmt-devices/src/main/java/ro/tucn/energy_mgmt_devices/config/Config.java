@@ -1,7 +1,6 @@
 package ro.tucn.energy_mgmt_devices.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -44,11 +43,11 @@ public class Config {
             @Value("${spring.application.name:BACKEND}") String applicationName,
             @Value("${spring.rabbitmq.queue}") String queueName,
             @Value("${spring.rabbitmq.exchange}") String exchangeName,
+            @Value("${spring.rabbitmq.routing-key}") String routingKey,
             RabbitTemplate rabbitTemplate,
-            ObjectMapper objectMapper,
-            ConnectionFactory connectionFactory
+            ObjectMapper objectMapper
     ) {
-        return new RabbitMqServiceBean(applicationName, queueName, exchangeName, rabbitTemplate, objectMapper, connectionFactory);
+        return new RabbitMqServiceBean(applicationName, queueName, exchangeName, routingKey, rabbitTemplate, objectMapper);
     }
 
 }

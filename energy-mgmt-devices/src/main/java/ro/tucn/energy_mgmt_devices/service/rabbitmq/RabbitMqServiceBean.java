@@ -1,9 +1,7 @@
 package ro.tucn.energy_mgmt_devices.service.rabbitmq;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import ro.tucn.energy_mgmt_devices.ampq.AmpqMessageSenderBase;
 import ro.tucn.energy_mgmt_devices.dto.deviceChange.DeviceChangeRequestDTO;
@@ -19,11 +17,11 @@ public class RabbitMqServiceBean
     public RabbitMqServiceBean(String applicationName,
                                String queueName,
                                String exchangeName,
+                               String routingKey,
                                RabbitTemplate rabbitTemplate,
-                               ObjectMapper objectMapper,
-                               ConnectionFactory connectionFactory
+                               ObjectMapper objectMapper
     ) {
-        super(applicationName, queueName, exchangeName, rabbitTemplate, objectMapper, connectionFactory);
+        super(applicationName, queueName, exchangeName, routingKey, rabbitTemplate, objectMapper);
     }
 
     @Override
