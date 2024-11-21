@@ -1,72 +1,52 @@
-import {AfterViewInit, Component, DestroyRef, Input, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnDestroy, OnInit, signal, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {DeviceModel} from "../../../../shared/models/device.model";
 import {DeviceService} from "../../../../core/service/device/device.service";
 import {UserModel} from "../../../../shared/models/user.model";
-import {MatIconModule} from '@angular/material/icon';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatButtonModule} from '@angular/material/button';
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
-import {multi} from "./data";
-import {Color, NgxChartsModule} from "@swimlane/ngx-charts";
+import {WebSocketService} from "../../../../core/service/web-socket/web-socket.service";
+import {NotificationModel} from "../../../../shared/models/notification.model";
+import {MatDialog} from "@angular/material/dialog";
+import {PushNotificationComponent} from "./push-notification/push-notification.component";
 
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
-  styleUrl: './client.component.css',
+  styleUrl: './client.component.css'
 })
-export class ClientComponent implements OnInit {
+export class ClientComponent implements OnInit, OnDestroy {
   newDeviceRequestForm: FormGroup = new FormGroup({});
   showNewDevice: boolean = false;
   devices: DeviceModel[] = [];
   noOfDevices: number = 0;
-
-  multi: any[] | undefined;
-  view = [700, 300];
-
-  // options
-  legend: boolean = true;
-  showLabels: boolean = true;
-  animations: boolean = true;
-  xAxis: boolean = true;
-  yAxis: boolean = true;
-  showYAxisLabel: boolean = true;
-  showXAxisLabel: boolean = true;
-  xAxisLabel: string = 'Year';
-  yAxisLabel: string = 'Population';
-  timeline: boolean = true;
-
+  notification: NotificationModel = {
+    title: '',
+    message: ''
+  };
 
   constructor(
     private router: Router,
     private destroyRef: DestroyRef,
     private formBuilder: FormBuilder,
-    private deviceService: DeviceService
+    private deviceService: DeviceService,
+    private webSocketService: WebSocketService,
+    private dialogRef: MatDialog
   ) {
-    Object.assign(this, { multi });
-  }
-
-  // colorScheme: Color = {
-  //   domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
-  // };
-
-
-  onSelect(data: any): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
-  }
-
-  onActivate(data: any): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
-  }
-
-  onDeactivate(data: any): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
   ngOnInit(): void {
     this.buildNewDeviceForm();
     this.getDevicesOfLoggedUser();
+    this.webSocketService.connectSocket();
+  }
+
+  ngOnDestroy() { // TODO: mai testeaza, ca nu se distruge cookie-ul cum vrei tu cand dai stop la app
+    // Disconnect from the WebSocket when the component is destroyed
+    this.webSocketService.disconnectSocket();
+    console.warn("Socket connection closed");
+
+    this.clearCookies();
   }
 
   private buildNewDeviceForm(): void {
@@ -99,8 +79,6 @@ export class ClientComponent implements OnInit {
   }
 
   onAddNewDevice(): void {
-    console.log("YAAAY!");
-
     const newDevice: DeviceModel = {
       description: this.newDeviceRequestForm?.get('description')?.value,
       address: this.newDeviceRequestForm?.get('address')?.value,
@@ -126,11 +104,31 @@ export class ClientComponent implements OnInit {
       .subscribe({
         next: response => {
           this.devices = response;
-          console.log(this.devices);
           this.noOfDevices = response.length;
         }, error: err => console.log(err),
       });
   }
 
+  triggerNotification() {
+    this.notification = {
+      title: 'New Notification',
+      message: 'This is a dynamically triggered notification!'
+    };
+  }
+
+  openDialog() {
+    this.dialogRef.open(PushNotificationComponent, {
+      data: {
+        title: 'New Notification',
+        message: 'This is a dynamically triggered notification!'
+      },
+      width: '350px',
+      height: '100px',
+      position: {right:'10px', top: '10px'},
+      // disableClose: true
+    });
+  //   https://www.youtube.com/watch?v=FThtv9iorao&t=10s
+  //   https://www.concretepage.com/angular-material/angular-material-dialog-position
+  }
 }
 

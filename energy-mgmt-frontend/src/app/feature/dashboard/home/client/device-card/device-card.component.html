@@ -11,9 +11,51 @@
 <!--    <button (click)="deleteAnnouncementPressed(announcement.announcementId || '')" class="btn btn-danger ms-1">-->
 <!--      <i class="fa fa-trash"></i>-->
 <!--    </button>-->
-    <button *ngIf="!editMode" class="btn btn-info me-1" (click)="editDevice()">
+    <button mat-icon-button [matMenuTriggerFor]="displayStats" class="btn btn-info me-1">
       <i class="fa-solid fa-gauge-high"></i>
     </button>
+
+    <mat-menu class="my-class bg-info-subtle pt-2" #displayStats="matMenu">
+      <ngx-charts-line-chart
+        [view]="view"
+        [legend]="legend"
+        [scheme]="colorScheme"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxis]="xAxis"
+        [yAxis]="yAxis"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [timeline]="timeline"
+        [results]="multi"
+        (select)="onSelect($event)"
+        (activate)="onActivate($event)"
+        (deactivate)="onDeactivate($event)"
+      >
+      </ngx-charts-line-chart>
+
+    </mat-menu>
+
+    <form class="row row-cols-sm-auto">
+      <div class="col-12">
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="yyyy-mm-dd"
+            name="dp"
+            [(ngModel)]="model"
+            ngbDatepicker
+            #d="ngbDatepicker"
+          />
+          <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"></button>
+        </div>
+      </div>
+    </form>
+
+    <hr />
+<!--    <pre>Model: {{ model | json }}</pre>-->
+
+
 
   </div>
 </div>

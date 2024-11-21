@@ -6,3 +6,7 @@
   text-overflow: ellipsis;
   height: calc(1.2em * 3); /* Adjust based on your line height */
 }
+
+::ng-deep .my-class {
+  max-width:fit-content !important;
+}

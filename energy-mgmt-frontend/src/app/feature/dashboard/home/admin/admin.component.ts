@@ -1,4 +1,4 @@
-import {Component, DestroyRef} from '@angular/core';
+import {Component, DestroyRef, OnDestroy} from '@angular/core';
 import {Router} from "@angular/router";
 import {UserModel} from "../../../../shared/models/user.model";
 
@@ -7,7 +7,7 @@ import {UserModel} from "../../../../shared/models/user.model";
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })
-export class AdminComponent {
+export class AdminComponent implements OnDestroy{
 
   constructor(
     private router: Router
@@ -18,6 +18,10 @@ export class AdminComponent {
     this.clearCookies();
     sessionStorage.removeItem('loggedUser');
     this.router.navigateByUrl('/auth/login');
+  }
+
+  ngOnDestroy() {
+    this.clearCookies();
   }
 
   private clearCookies(): void {

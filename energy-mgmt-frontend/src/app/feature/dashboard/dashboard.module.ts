@@ -14,6 +14,16 @@ import { UserCardComponent } from './home/admin/users/user-card/user-card.compon
 import { DeviceCardAComponent } from './home/admin/devices/device-card-a/device-card-a.component';
 import { DeviceConsumptionStatsComponent } from './home/client/device-consumption-stats/device-consumption-stats.component';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
+import {MatFormField, MatFormFieldControl, MatFormFieldModule} from "@angular/material/form-field";
+import {
+  MatDatepicker,
+  MatDatepickerInput,
+  MatDatepickerModule,
+  MatDatepickerToggle
+} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {NgbAlert, NgbInputDatepicker} from "@ng-bootstrap/ng-bootstrap";
+import { PushNotificationComponent } from './home/client/push-notification/push-notification.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +34,9 @@ import {NgxChartsModule} from "@swimlane/ngx-charts";
     DevicesComponent,
     UserCardComponent,
     DeviceCardAComponent,
-    DeviceConsumptionStatsComponent
+    DeviceConsumptionStatsComponent,
+    PushNotificationComponent,
+    // PushComponent
   ],
   imports: [
     CommonModule,
@@ -35,6 +47,12 @@ import {NgxChartsModule} from "@swimlane/ngx-charts";
     MatMenu,
     MatMenuTrigger,
     NgxChartsModule,
+
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    NgbInputDatepicker,
+    NgbAlert,
     //AppModule
   ]
 })

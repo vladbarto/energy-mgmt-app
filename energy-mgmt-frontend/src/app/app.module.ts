@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +12,9 @@ import {HeaderComponent} from "./shared/components/header/header.component";
 import {requestInterceptor} from "./core/http-interceptor/http-interceptor";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {environment} from "../environments/environment.development";
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -25,11 +28,22 @@ import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
     RouterModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    NgbModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [
     provideHttpClient(withInterceptors([requestInterceptor])),
     provideAnimationsAsync(),
-    provideCharts(withDefaultRegisterables())
+    provideCharts(withDefaultRegisterables()),
+    {
+      provide: WebSocket,
+      useFactory: () => new WebSocket(environment.CHAT_URL),
+    },
   ],
   exports: [
 

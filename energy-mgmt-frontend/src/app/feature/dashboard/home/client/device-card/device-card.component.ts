@@ -1,16 +1,54 @@
 import { Component, Input } from '@angular/core';
 import { DeviceModel } from '../../../../../shared/models/device.model';
+import {Color, ScaleType} from "@swimlane/ngx-charts";
+import {multi} from "../data";
+import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-device-card',
   templateUrl: './device-card.component.html',
-  styleUrl: './device-card.component.css'
+  styleUrl: './device-card.component.css',
 })
 export class DeviceCardComponent {
   @Input() device!: DeviceModel;
-  editMode: boolean = false;
 
-  editDevice(): void {
-    ;
+  model: NgbDateStruct | undefined;
+
+  multi: any[] | undefined;
+  view: [number, number] = [700, 300];
+
+  // options
+  legend: boolean = true;
+  animations: boolean = true;
+  xAxis: boolean = true;
+  yAxis: boolean = true;
+  showYAxisLabel: boolean = true;
+  showXAxisLabel: boolean = true;
+  xAxisLabel: string = 'Hour';
+  yAxisLabel: string = 'Energy Consumption [kWh]';
+  timeline: boolean = true;
+
+  colorScheme: Color = {
+    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5'],
+    name: "some name",
+    selectable: true,
+    group: ScaleType.Linear
+  };
+
+  constructor() {
+    Object.assign(this, { multi });
   }
+
+  onSelect(data: any): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  }
+
+  onActivate(data: any): void {
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  }
+
+  onDeactivate(data: any): void {
+    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+  }
+
 }

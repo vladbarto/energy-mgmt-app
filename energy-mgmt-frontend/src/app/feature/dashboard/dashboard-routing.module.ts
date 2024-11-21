@@ -24,6 +24,16 @@ export const routes: Routes = [
       requiredRoles: ['ROLE_USER']
     }
   },
+
+  // {
+  //   path: 'client/push',
+  //   canActivate: [hasRole],
+  //   component: PushComponent,
+  //   data: {
+  //     requiredRoles: ['ROLE_USER']
+  //   }
+  // },
+
   {
     path: 'admin/users',
     canActivate: [hasRole],
