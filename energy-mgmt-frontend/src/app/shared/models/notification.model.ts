@@ -1,4 +1,5 @@
 export interface NotificationModel {
-  title: string;
   message: string;
+  device: string;
+  date: string;
 }

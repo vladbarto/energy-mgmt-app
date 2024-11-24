@@ -1,4 +1,4 @@
-import {Component, DestroyRef, inject, OnDestroy, OnInit, signal, ViewChild} from '@angular/core';
+import {Component, DestroyRef, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {DeviceModel} from "../../../../shared/models/device.model";
@@ -9,6 +9,7 @@ import {WebSocketService} from "../../../../core/service/web-socket/web-socket.s
 import {NotificationModel} from "../../../../shared/models/notification.model";
 import {MatDialog} from "@angular/material/dialog";
 import {PushNotificationComponent} from "./push-notification/push-notification.component";
+import {environment} from "../../../../../environments/environment.development";
 
 @Component({
   selector: 'app-client',
@@ -21,9 +22,13 @@ export class ClientComponent implements OnInit, OnDestroy {
   devices: DeviceModel[] = [];
   noOfDevices: number = 0;
   notification: NotificationModel = {
-    title: '',
-    message: ''
+    message: '',
+    device: '',
+    date: ''
   };
+  notificationList: NotificationModel[] = [];
+  // Use a Map to store readings for each device
+  deviceReadings: { [deviceId: string]: any[] } = {}; // Store readings for each device
 
   constructor(
     private router: Router,
@@ -38,7 +43,16 @@ export class ClientComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.buildNewDeviceForm();
     this.getDevicesOfLoggedUser();
-    this.webSocketService.connectSocket();
+    this.webSocketService.connectSocket(environment.CHAT_URL);
+
+    // Subscribe to WebSocket messages
+    this.webSocketService.message$.subscribe((message) => {
+      if (message.type === 'PUSH_NOTIFICATION') {
+        this.handlePushNotification(message);
+      } else if (message.type === 'BUNCH_OF_READINGS') {
+        this.handleReadings(message); // Pass the data to the chart component
+      }
+    });
   }
 
   ngOnDestroy() { // TODO: mai testeaza, ca nu se distruge cookie-ul cum vrei tu cand dai stop la app
@@ -48,6 +62,79 @@ export class ClientComponent implements OnInit, OnDestroy {
 
     this.clearCookies();
   }
+
+  // Handle PUSH_NOTIFICATION type
+  private handlePushNotification(notificationData: any): void {
+    this.notification = {
+      message: notificationData.message || 'New Notification',
+      device: notificationData.deviceId || 'Some device!',
+      date: notificationData.date || 'Today'
+    };
+    let newNotification = this.notification;
+    this.notificationList.push(newNotification);
+    this.openDialog();
+  }
+
+  // Handle BUNCH_OF_READINGS type
+  private handleReadings(incomingData: any): void {
+    const requiredDeviceId = incomingData.deviceId;
+    const readings: any[] = JSON.parse(incomingData.message);
+    const x = readings.map((reading) =>
+      ({
+        name: reading.hour,
+        value: reading.readValue
+      }));
+
+    // Check if the device already has data in the deviceReadings map
+    if (!this.deviceReadings[requiredDeviceId]) {
+      // If not, initialize it as an empty array
+      this.deviceReadings[requiredDeviceId] = [];
+    }
+
+    const deviceData = {
+      name: 'Device whatever',
+      series: x
+    };
+
+    this.deviceReadings[requiredDeviceId].push(deviceData);
+    console.log(JSON.stringify(this.deviceReadings[requiredDeviceId]));  }
+
+  // A helper method to get readings for a specific device
+  getReadingsForDevice(deviceId: string | undefined): any[] {
+    if(deviceId) {
+      return this.deviceReadings[deviceId] || [];
+    }
+    return [];
+  }
+
+// Format the readings to match the expected chart data format
+  private formatReadingsForChart(readings: any[]): any[] {
+    // Assuming `readings` is an array of readings for different devices
+    return readings.map(reading => ({
+      name: reading.timestamp,  // Use timestamp as the name
+      series: [
+        {
+          name: 'Device 1',  // You can replace 'Device 1' with the actual device ID or description
+          value: reading.value  // Use the corresponding value (e.g., energy consumption)
+        }
+      ]
+    }));
+  }
+
+  // getReadingsForDevice(deviceId: string | undefined): any[] {
+  //   // Filter the readingsData for the given deviceId
+  //   return this.readingsData
+  //     .filter(reading => reading.deviceId === deviceId)
+  //     .map(reading => ({
+  //       name: reading.timestamp,  // Using timestamp as 'name'
+  //       series: [
+  //         {
+  //           name: 'Device 1',       // Device name or ID can be dynamic if needed
+  //           value: reading.value    // Corresponding value (e.g., energy consumption)
+  //         }
+  //       ]
+  //     }));
+  // }
 
   private buildNewDeviceForm(): void {
     this.newDeviceRequestForm = this.formBuilder.group({
@@ -105,30 +192,29 @@ export class ClientComponent implements OnInit, OnDestroy {
         next: response => {
           this.devices = response;
           this.noOfDevices = response.length;
+
+
         }, error: err => console.log(err),
       });
   }
 
-  triggerNotification() {
-    this.notification = {
-      title: 'New Notification',
-      message: 'This is a dynamically triggered notification!'
-    };
-  }
-
   openDialog() {
+    //   https://www.youtube.com/watch?v=FThtv9iorao&t=10s
+    //   https://www.concretepage.com/angular-material/angular-material-dialog-position
+
+    // Calculate the offset based on the current number of notifications
+    const offset = (this.notificationList.length - 1) * 110; // 110px per notification (adjust as needed)
+
+    let notification = this.notification;
+    console.log("what data gets here: {}", notification);
     this.dialogRef.open(PushNotificationComponent, {
-      data: {
-        title: 'New Notification',
-        message: 'This is a dynamically triggered notification!'
-      },
+      data: notification,
       width: '350px',
       height: '100px',
-      position: {right:'10px', top: '10px'},
+      position: {right:'10px', top: `${10 + offset}px`},
+      hasBackdrop: false
       // disableClose: true
     });
-  //   https://www.youtube.com/watch?v=FThtv9iorao&t=10s
-  //   https://www.concretepage.com/angular-material/angular-material-dialog-position
   }
 }
 

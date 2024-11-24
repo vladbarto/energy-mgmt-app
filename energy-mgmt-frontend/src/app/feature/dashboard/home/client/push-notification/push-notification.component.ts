@@ -10,14 +10,13 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 export class PushNotificationComponent {
 
   protected notification: NotificationModel = {
-    title: '',
-    message: ''
+    message: '',
+    device: '',
+    date: ''
   };
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: NotificationModel) {
-    this.notification = {
-      title: data.title,
-      message: data.message
-    };
+    this.notification = data;
+    console.log(this.notification);
   }
 }

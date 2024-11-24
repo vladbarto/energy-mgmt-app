@@ -3,6 +3,7 @@ import { DeviceModel } from '../../../../../shared/models/device.model';
 import {Color, ScaleType} from "@swimlane/ngx-charts";
 import {multi} from "../data";
 import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
+import {WebSocketService} from "../../../../../core/service/web-socket/web-socket.service";
 
 @Component({
   selector: 'app-device-card',
@@ -11,10 +12,9 @@ import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 })
 export class DeviceCardComponent {
   @Input() device!: DeviceModel;
+  @Input() readings: any[] = [];
+  calendar: NgbDateStruct | undefined;
 
-  model: NgbDateStruct | undefined;
-
-  multi: any[] | undefined;
   view: [number, number] = [700, 300];
 
   // options
@@ -35,7 +35,9 @@ export class DeviceCardComponent {
     group: ScaleType.Linear
   };
 
-  constructor() {
+  constructor(
+    private webSocketService: WebSocketService
+  ) {
     Object.assign(this, { multi });
   }
 
@@ -51,4 +53,24 @@ export class DeviceCardComponent {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
+  onDateChange(): void {
+    if(this.calendar) {
+      if(this.device) {
+        this.webSocketService.sendMessage(
+          "FETCH_READINGS",
+          "We're gonna fetch some readings data from DB",
+          this.device.id!,
+          this.ngbDateToString(this.calendar),
+          this.device.mhec);
+      }
+    }
+  }
+
+  private ngbDateToString(date: NgbDateStruct): string {
+    return `${date.year}-${date.month}-${date.day}`
+  }
+
+  getReadingsForDevice(deviceId: string): any[] {
+    return this.readings.filter(reading => reading.deviceId === deviceId);
+  }
 }

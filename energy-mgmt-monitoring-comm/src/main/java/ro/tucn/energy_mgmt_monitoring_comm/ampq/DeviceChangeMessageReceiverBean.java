@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.WebSocketSession;
 import ro.tucn.energy_mgmt_monitoring_comm.dto.device.DeviceRequestDTO;
 import ro.tucn.energy_mgmt_monitoring_comm.service.device.DeviceService;
 

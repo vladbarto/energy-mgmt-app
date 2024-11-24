@@ -12,7 +12,6 @@ import { UsersComponent } from './home/admin/users/users.component';
 import { DevicesComponent } from './home/admin/devices/devices.component';
 import { UserCardComponent } from './home/admin/users/user-card/user-card.component';
 import { DeviceCardAComponent } from './home/admin/devices/device-card-a/device-card-a.component';
-import { DeviceConsumptionStatsComponent } from './home/client/device-consumption-stats/device-consumption-stats.component';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
 import {MatFormField, MatFormFieldControl, MatFormFieldModule} from "@angular/material/form-field";
 import {
@@ -34,9 +33,7 @@ import { PushNotificationComponent } from './home/client/push-notification/push-
     DevicesComponent,
     UserCardComponent,
     DeviceCardAComponent,
-    DeviceConsumptionStatsComponent,
     PushNotificationComponent,
-    // PushComponent
   ],
   imports: [
     CommonModule,

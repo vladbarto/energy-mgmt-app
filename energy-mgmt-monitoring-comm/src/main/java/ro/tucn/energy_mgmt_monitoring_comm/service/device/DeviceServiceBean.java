@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import ro.tucn.energy_mgmt_monitoring_comm.dto.device.DeviceRequestDTO;
+import ro.tucn.energy_mgmt_monitoring_comm.dto.device.DeviceResponseDTO;
+import ro.tucn.energy_mgmt_monitoring_comm.dto.readings.ReadingResponseDTO;
 import ro.tucn.energy_mgmt_monitoring_comm.exception.ExceptionCode;
 import ro.tucn.energy_mgmt_monitoring_comm.exception.NotFoundException;
 import ro.tucn.energy_mgmt_monitoring_comm.mapper.DeviceMapper;
@@ -19,6 +21,18 @@ public class DeviceServiceBean implements DeviceService {
     private final DeviceRepository deviceRepository;
     private final DeviceMapper deviceMapper;
     private final String applicationName;
+
+    @Override
+    public DeviceResponseDTO findDevice(UUID deviceId) {
+        log.info("Device with id {}", deviceId);
+
+        return deviceRepository.findById(deviceId)
+                .map(deviceMapper::entityToResponseDTO)
+                .orElseThrow(() -> new NotFoundException(String.format(
+                        ExceptionCode.ERR004_DEVICE_NOT_FOUND.getMessage(),
+                        deviceId
+                )));
+    }
 
     @Transactional
     protected void save(DeviceRequestDTO deviceRequestDTO) {

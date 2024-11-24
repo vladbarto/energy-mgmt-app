@@ -5,12 +5,6 @@
     <p class="card-text">{{device.mhec}}</p>
     <p class="card-text cutoff-text">{{device.id}}</p>
 
-    <!--    <button (click)="viewDetails(announcement.announcementId!)" class="btn btn-primary me-1">-->
-<!--      <i class="fa fa-magnifying-glass"></i>-->
-<!--    </button>-->
-<!--    <button (click)="deleteAnnouncementPressed(announcement.announcementId || '')" class="btn btn-danger ms-1">-->
-<!--      <i class="fa fa-trash"></i>-->
-<!--    </button>-->
     <button mat-icon-button [matMenuTriggerFor]="displayStats" class="btn btn-info me-1">
       <i class="fa-solid fa-gauge-high"></i>
     </button>
@@ -27,7 +21,7 @@
         [xAxisLabel]="xAxisLabel"
         [yAxisLabel]="yAxisLabel"
         [timeline]="timeline"
-        [results]="multi"
+        [results]="readings"
         (select)="onSelect($event)"
         (activate)="onActivate($event)"
         (deactivate)="onDeactivate($event)"
@@ -43,7 +37,8 @@
             class="form-control"
             placeholder="yyyy-mm-dd"
             name="dp"
-            [(ngModel)]="model"
+            [(ngModel)]="calendar"
+            (ngModelChange)="onDateChange()"
             ngbDatepicker
             #d="ngbDatepicker"
           />
@@ -51,11 +46,6 @@
         </div>
       </div>
     </form>
-
-    <hr />
-<!--    <pre>Model: {{ model | json }}</pre>-->
-
-
 
   </div>
 </div>

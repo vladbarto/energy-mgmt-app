@@ -1,7 +1,3 @@
-<!--  Push Notifications-->
-<button (click)="openDialog()">Trigger Notification</button>
-<!--<app-push-notification [notification]="notification"></app-push-notification>-->
-
 <!--  Header-->
 <div class="bg-light pt-3 pb-3">
 
@@ -50,61 +46,55 @@
             <h5>Number of devices</h5>
           </div>
         </div>
-    </div>
-
-    <!--    Devices area -->
-    <div class="bg-light mt-5">
-
-      <!--    Device cards "army" -->
-      <div class="p-2 d-flex flex-row">
-        @for (device of devices; track device.id) {
-<!--          <app-device-card [device]="device" (deleteAnnouncement)="deleteAnnouncementCalled($event)"></app-device-card>-->
-        <app-device-card [device]="device"></app-device-card>
-        } @empty {
-          <p>No device</p>
-        }
       </div>
 
-      <!--    Add new device -->
-      <div class="w-25">
-        <button #drop class="rounded-1 border-0 dropdown singleDro pt-2" (click)="displayNewDeviceForm()">
-          <i class="fa-solid fa-plus text-danger"></i>
-          <p>Add device</p>
-        </button>
+      <!--    Devices area -->
+      <div class="bg-light mt-5">
 
-        <div *ngIf = "showNewDevice">
-          <div class="container bg-danger">
-            <form (ngSubmit)="onAddNewDevice()" [formGroup]="newDeviceRequestForm">
-              <div class="form-outline mb-1">
-                <label class="form-label"></label>
-                <input class="form-control" formControlName="description" placeholder="Description">
-              </div>
-              <div class="form-outline mb-1">
-                <label class="form-label"></label>
-                <input class="form-control" formControlName="address" placeholder="Address">
-              </div>
-              <div class="form-outline mb-1">
-                <label class="form-label"></label>
-                <input class="form-control" formControlName="mhec" placeholder="Max. Hourly Energy Cons.">
-              </div>
-              <button class="mt-3 mb-3 btn btn-success">Send</button>
-            </form>
+        <!--    Device cards "army" -->
+        <div class="p-2 d-flex flex-row">
+          @for (device of devices; track device.id) {
+          <app-device-card
+            [device]="device"
+            [readings]="getReadingsForDevice(device.id)">
+          </app-device-card>
+          } @empty {
+            <p>No device</p>
+          }
+        </div>
+
+        <!--    Add new device -->
+        <div class="w-25">
+          <button #drop class="rounded-1 border-0 dropdown singleDro pt-2" (click)="displayNewDeviceForm()">
+            <i class="fa-solid fa-plus text-danger"></i>
+            <p>Add device</p>
+          </button>
+
+          <div *ngIf = "showNewDevice">
+            <div class="container bg-danger">
+              <form (ngSubmit)="onAddNewDevice()" [formGroup]="newDeviceRequestForm">
+                <div class="form-outline mb-1">
+                  <label class="form-label"></label>
+                  <input class="form-control" formControlName="description" placeholder="Description">
+                </div>
+                <div class="form-outline mb-1">
+                  <label class="form-label"></label>
+                  <input class="form-control" formControlName="address" placeholder="Address">
+                </div>
+                <div class="form-outline mb-1">
+                  <label class="form-label"></label>
+                  <input class="form-control" formControlName="mhec" placeholder="Max. Hourly Energy Cons.">
+                </div>
+                <button class="mt-3 mb-3 btn btn-success">Send</button>
+              </form>
+            </div>
           </div>
+
         </div>
 
       </div>
 
     </div>
-
-  </div>
-
-
-<!--    <li #drop class="dropdown singleDro" (mouseover)="hoverOn()" (mouseleave)="hoverOff()">-->
-<!--      <button (click)="currentUser()" class="p-3 rounded-5 fundal">-->
-<!--        <i class="fa-solid fa-baby fa-2xl" style="color: white"></i>-->
-<!--      </button>-->
-<!--    </li>-->
-
   </div>
 </div>
 
