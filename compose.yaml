@@ -21,7 +21,7 @@ services:
       - "5433:5432"
     volumes:
       - user_db_data:/var/lib/postgresql/data
-#      - ./init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql  # Mount the init script
+      - ./init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql  # Mount the init script
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -42,7 +42,28 @@ services:
       - "5434:5432"
     volumes:
       - device_db_data:/var/lib/postgresql/data
-#      - ./init-device-db.sql:/docker-entrypoint-initdb.d/init-device-db.sql  # Mount the init script
+      - ./init-device-db.sql:/docker-entrypoint-initdb.d/init-device-db.sql  # Mount the init script
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  BazaDateMonitoring:
+    image: postgres:latest
+    container_name: monitoringContainer
+    restart: always
+    environment:
+      POSTGRES_DB: monitoring-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5435:5432"
+    volumes:
+      - monitoring_db_data:/var/lib/postgresql/data
+      - ./init-monitoring-db.sql:/docker-entrypoint-initdb.d/init-monitoring-db.sql  # Mount the init script
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -51,9 +72,9 @@ services:
     networks:
       - app-network
       
-  front_app:
+  front-app:
     image: energy-mgmt-frontend
-    container_name: front_app
+    container_name: front-app
     build:
       context: ./energy-mgmt-frontend
       dockerfile: ./energy-mgmt-frontend/Dockerfile
@@ -62,13 +83,14 @@ services:
     ports:
       - 6581:4200
     depends_on:
-      - login_app
+      - login-app
+      - monitoring-app
     networks:
       - app-network
 
-  login_app:
+  login-app:
     image: energy-mgmt-login
-    container_name: login_app
+    container_name: login-app
     build:
       context: ./energy-mgmt-login
       dockerfile: ./energy-mgmt-login/Dockerfile
@@ -85,14 +107,14 @@ services:
       BACKEND_DEVICE_HOST: host.docker.internal
       BACKEND_DEVICE_PORT: 6585 
     depends_on:
-      - user_app
-      - device_app
+      - user-app
+      - device-app
     networks:
       - app-network
 
-  user_app:
+  user-app:
     image: energy-mgmt-user
-    container_name: user_app
+    container_name: user-app
     build:
       context: ./energy-mgmt-user
       dockerfile: ./energy-mgmt-user/Dockerfile
@@ -107,9 +129,9 @@ services:
     networks:
       - app-network
 
-  device_app:
+  device-app:
     image: energy-mgmt-devices
-    container_name: device_app
+    container_name: device-app
     build:
       context: ./energy-mgmt-devices
       dockerfile: ./energy-mgmt-devices/Dockerfile
@@ -124,9 +146,27 @@ services:
     networks:
       - app-network
 
+  monitoring-app:
+    image: energy-mgmt-monitoring-comm
+    container_name: monitoring-app
+    build:
+      context: ./energy-mgmt-monitoring-comm
+      dockerfile: ./energy-mgmt-monitoring-comm/Dockerfile
+    ports:
+      - 6586:6586
+    environment:
+      DB_IP: BazaDateMonitoring
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_DBNAME: monitoring-db
+    networks:
+      - app-network
+
 volumes:
   user_db_data:
   device_db_data:
+  monitoring_db_data:
 
 networks:
   app-network:

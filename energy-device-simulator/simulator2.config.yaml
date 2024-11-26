@@ -1,7 +1,7 @@
 simulator:
   readings:
     file: './sensor.csv'
-  device_id: '48a553a3-3409-4c37-a197-3d72118d52f3'  # TODO: adjust with actual UUID in your app; change last digit to 3
+  device_id: 'ddd8a30a-3e59-4d39-b225-282f4e9001c3'  # TODO: adjust with actual UUID in your app; change last digit to 3
 rabbitMQ:
   queue: test_queue
   exchange: test_exchange

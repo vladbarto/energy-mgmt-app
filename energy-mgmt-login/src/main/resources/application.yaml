@@ -1,9 +1,9 @@
 database:
-  user: ${DB_USER:login_user}
+  user: ${DB_USER:postgres}
   name: ${DB_DBNAME:user-db}
   port: ${DB_PORT:5432}
   ip: ${DB_IP:localhost}
-  password: ${DB_PASSWORD:auth}
+  password: ${DB_PASSWORD:postgres}
 api:
   userService:
     host: ${BACKEND_USER_HOST:localhost}

@@ -1,9 +1,9 @@
 # syntax=docker/dockerfile:1
 
-ARG NODE_VERSION=22.9.0
+ARG NODE_VERSION=23.3.0
 
 # Base stage for all builds
-FROM node:${NODE_VERSION}-alpine as base
+FROM node:${NODE_VERSION}-alpine AS base
 
 # Create app directory
 RUN mkdir -p /usr/src/app
@@ -12,7 +12,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Stage for installing dependencies (including devDependencies for build)
-FROM base as deps
+FROM base AS deps
 
 # Install Angular CLI globally
 RUN npm install -g @angular/cli
@@ -21,10 +21,12 @@ RUN npm install -g @angular/cli
 COPY package.json package-lock.json ./
 
 # Install all dependencies (omit --omit=dev to ensure devDependencies are available for build)
+#RUN npm install -g @angular/cli@$(npm list --depth 0 | grep '@angular/cli' | awk '{print $2}')
+
 RUN npm install
 
 # Stage for building the application
-FROM deps as build
+FROM deps AS build
 
 # Copy the rest of the source files into the image
 COPY . .
@@ -33,7 +35,7 @@ COPY . .
 RUN npm run build
 
 # Final stage to run the application with only production dependencies
-FROM base as final
+FROM base AS final
 
 # Set production environment
 ENV NODE_ENV=production
