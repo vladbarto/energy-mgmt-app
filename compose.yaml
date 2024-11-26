@@ -9,6 +9,33 @@
 # https://github.com/docker/awesome-compose
 
 services:
+  traefik:
+    image: traefik:v3.2
+    command:
+      - --api.insecure=true
+      - --providers.docker
+      - --accesslog=true
+      - --accesslog.filepath=/var/log/traefik/access.log
+      - --log.level=DEBUG
+      - --entrypoints.web.address=:80
+    ports:
+      - "80:80"
+      - "8080:8080"
+    depends_on:
+      - BazaDateUser # userContainer
+      - BazaDateDevices # deviceContainer
+      - BazaDateMonitoring # monitoringContainer
+      - front-app
+      - login-app
+      - user-app
+      - device-app
+      - monitoring-app
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      # - traefik_logs:/var/log/traefik
+    networks:
+      - app-network
+
   BazaDateUser:
     image: postgres:latest
     container_name: userContainer
@@ -17,11 +44,11 @@ services:
       POSTGRES_DB: user-db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
-    ports:
-      - "5433:5432"
+    # ports:
+    #   - "5433:5432"
     volumes:
       - user_db_data:/var/lib/postgresql/data
-      - ./init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql  # Mount the init script
+      # - ./init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql  # Mount the init script
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -38,11 +65,11 @@ services:
       POSTGRES_DB: device-db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    ports:
-      - "5434:5432"
+    # ports:
+    #   - "5434:5432"
     volumes:
       - device_db_data:/var/lib/postgresql/data
-      - ./init-device-db.sql:/docker-entrypoint-initdb.d/init-device-db.sql  # Mount the init script
+      # - ./init-device-db.sql:/docker-entrypoint-initdb.d/init-device-db.sql  # Mount the init script
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -59,11 +86,11 @@ services:
       POSTGRES_DB: monitoring-db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    ports:
-      - "5435:5432"
+    # ports:
+    #   - "5435:5432"
     volumes:
       - monitoring_db_data:/var/lib/postgresql/data
-      - ./init-monitoring-db.sql:/docker-entrypoint-initdb.d/init-monitoring-db.sql  # Mount the init script
+      # - ./init-monitoring-db.sql:/docker-entrypoint-initdb.d/init-monitoring-db.sql  # Mount the init script
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -74,28 +101,32 @@ services:
       
   front-app:
     image: energy-mgmt-frontend
-    container_name: front-app
+    # container_name: front-app
     build:
       context: ./energy-mgmt-frontend
       dockerfile: ./energy-mgmt-frontend/Dockerfile
     environment:
       NODE_ENV: production
-    ports:
-      - 6581:4200
-    depends_on:
-      - login-app
-      - monitoring-app
+    # ports:
+    #   - 6581:4200
+    # depends_on:
+    #   - login-app
+    #   - monitoring-app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.front-app.rule=Host(`localhost`)"
+      - "traefik.http.services.front-app.loadbalancer.server.port=6581"
     networks:
       - app-network
 
   login-app:
     image: energy-mgmt-login
-    container_name: login-app
+    # container_name: login-app
     build:
       context: ./energy-mgmt-login
       dockerfile: ./energy-mgmt-login/Dockerfile
-    ports:
-      - 6582:6582
+    # ports:
+    #   - 6582:6582
     environment:
       DB_IP: BazaDateUser
       DB_PORT: 5432
@@ -106,60 +137,84 @@ services:
       BACKEND_USER_PORT: 6584 
       BACKEND_DEVICE_HOST: host.docker.internal
       BACKEND_DEVICE_PORT: 6585 
-    depends_on:
-      - user-app
-      - device-app
+    # depends_on:
+    #   - user-app
+    #   - device-app
+    deploy:
+      replicas: 4
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.login-app.rule=Host(`localhost`)"
+      - "traefik.http.services.login-app.loadbalancer.server.port=6582"
     networks:
       - app-network
 
   user-app:
     image: energy-mgmt-user
-    container_name: user-app
+    # container_name: user-app
     build:
       context: ./energy-mgmt-user
       dockerfile: ./energy-mgmt-user/Dockerfile
-    ports:
-      - 6584:6584
+    # ports:
+    #   - 6584:6584
     environment:
       DB_IP: BazaDateUser
       DB_PORT: 5432
       DB_USER: postgres
       DB_PASSWORD: root
       DB_DBNAME: user-db
+    deploy:
+      replicas: 4
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.user-app.rule=Host(`localhost`)"
+      - "traefik.http.services.user-app.loadbalancer.server.port=6584"
     networks:
       - app-network
 
   device-app:
     image: energy-mgmt-devices
-    container_name: device-app
+    # container_name: device-app
     build:
       context: ./energy-mgmt-devices
       dockerfile: ./energy-mgmt-devices/Dockerfile
-    ports:
-      - 6585:6585
+    # ports:
+    #   - 6585:6585
     environment:
       DB_IP: BazaDateDevices
       DB_PORT: 5432
       DB_USER: postgres
       DB_PASSWORD: postgres
       DB_DBNAME: device-db
+    deploy:
+      replicas: 4
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.device-app.rule=Host(`localhost`)"
+      - "traefik.http.services.device-app.loadbalancer.server.port=6585"
     networks:
       - app-network
 
   monitoring-app:
     image: energy-mgmt-monitoring-comm
-    container_name: monitoring-app
+    # container_name: monitoring-app
     build:
       context: ./energy-mgmt-monitoring-comm
       dockerfile: ./energy-mgmt-monitoring-comm/Dockerfile
-    ports:
-      - 6586:6586
+    # ports:
+    #   - 6586:6586
     environment:
       DB_IP: BazaDateMonitoring
       DB_PORT: 5432
       DB_USER: postgres
       DB_PASSWORD: postgres
       DB_DBNAME: monitoring-db
+    deploy:
+      replicas: 4
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.monitoring-app.rule=Host(`localhost`)"
+      - "traefik.http.services.monitoring-app.loadbalancer.server.port=6586"
     networks:
       - app-network
 
@@ -170,4 +225,5 @@ volumes:
 
 networks:
   app-network:
+    driver: bridge
 
