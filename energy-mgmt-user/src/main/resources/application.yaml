@@ -21,7 +21,7 @@ spring:
 server:
   port: 6584
   servlet:
-    context-path: '/api'
+    context-path: '/api-user'
   error:
     whitelabel:
       enabled: false

@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { DeviceModel } from '../../../../../shared/models/device.model';
 import {Color, ScaleType} from "@swimlane/ngx-charts";
-import {multi} from "../data";
 import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 import {WebSocketService} from "../../../../../core/service/web-socket/web-socket.service";
 
@@ -38,7 +37,6 @@ export class DeviceCardComponent {
   constructor(
     private webSocketService: WebSocketService
   ) {
-    Object.assign(this, { multi });
   }
 
   onSelect(data: any): void {

@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth/v1")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:4200", "http://front_app:4200", "http://localhost:6581"}, allowCredentials = "true")
-//@CrossOrigin("*")
+@CrossOrigin(origins = {
+        "http://localhost:4200",
+        "http://front_app:4200",
+        "http://localhost:6581",
+        "http://localhost"}, allowCredentials = "true")
 public class AuthController {
 
     @PostMapping("/login")

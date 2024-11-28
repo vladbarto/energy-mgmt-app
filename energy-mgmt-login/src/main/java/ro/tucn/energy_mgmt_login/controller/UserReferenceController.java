@@ -17,6 +17,7 @@ import java.util.UUID;
         "http://localhost:4200",
         "http://front_app:4200",
         "http://localhost:6581",
+        "http://localhost"
         }, allowCredentials = "true")
 @RequiredArgsConstructor
 public class UserReferenceController {

@@ -101,21 +101,21 @@ services:
       
   front-app:
     image: energy-mgmt-frontend
-    # container_name: front-app
+    container_name: front-app
     build:
       context: ./energy-mgmt-frontend
       dockerfile: ./energy-mgmt-frontend/Dockerfile
     environment:
       NODE_ENV: production
-    # ports:
-    #   - 6581:4200
+    ports:
+      - 6581:4200
     # depends_on:
     #   - login-app
     #   - monitoring-app
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.front-app.rule=Host(`localhost`)"
-      - "traefik.http.services.front-app.loadbalancer.server.port=6581"
+      - "traefik.http.services.front-app.loadbalancer.server.port=4200"
     networks:
       - app-network
 
@@ -133,18 +133,18 @@ services:
       DB_USER: postgres
       DB_PASSWORD: root
       DB_DBNAME: user-db
-      BACKEND_USER_HOST: host.docker.internal
+      BACKEND_USER_HOST: user-app # localhost # host.docker.internal
       BACKEND_USER_PORT: 6584 
-      BACKEND_DEVICE_HOST: host.docker.internal
+      BACKEND_DEVICE_HOST: device-app # host.docker.internal
       BACKEND_DEVICE_PORT: 6585 
     # depends_on:
     #   - user-app
     #   - device-app
     deploy:
-      replicas: 4
+      replicas: 3
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.login-app.rule=Host(`localhost`)"
+      - "traefik.http.routers.login-app.rule=Host(`localhost`) && PathPrefix(`/api-login`)"
       - "traefik.http.services.login-app.loadbalancer.server.port=6582"
     networks:
       - app-network
@@ -164,10 +164,10 @@ services:
       DB_PASSWORD: root
       DB_DBNAME: user-db
     deploy:
-      replicas: 4
+      replicas: 3
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.user-app.rule=Host(`localhost`)"
+      - "traefik.http.routers.user-app.rule=Host(`localhost`) && PathPrefix(`/api-user`)"
       - "traefik.http.services.user-app.loadbalancer.server.port=6584"
     networks:
       - app-network
@@ -187,10 +187,10 @@ services:
       DB_PASSWORD: postgres
       DB_DBNAME: device-db
     deploy:
-      replicas: 4
+      replicas: 3
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.device-app.rule=Host(`localhost`)"
+      - "traefik.http.routers.device-app.rule=Host(`localhost`) && PathPrefix(`/api-device`)"
       - "traefik.http.services.device-app.loadbalancer.server.port=6585"
     networks:
       - app-network
@@ -210,11 +210,14 @@ services:
       DB_PASSWORD: postgres
       DB_DBNAME: monitoring-db
     deploy:
-      replicas: 4
+      replicas: 3
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.monitoring-app.rule=Host(`localhost`)"
+      - "traefik.http.routers.monitoring-app.rule=Host(`localhost`) && PathPrefix(`/ws`)"
       - "traefik.http.services.monitoring-app.loadbalancer.server.port=6586"
+      - "traefik.http.routers.monitoring-app.middlewares=websocket-headers"
+      - "traefik.http.middlewares.websocket-headers.headers.customrequestheaders.Upgrade=websocket"
+      - "traefik.http.middlewares.websocket-headers.headers.customrequestheaders.Connection=Upgrade"
     networks:
       - app-network
 

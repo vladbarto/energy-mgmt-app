@@ -26,7 +26,8 @@ import java.util.UUID;
         "http://front_app:4200",
         "http://localhost:6582",
         "http://localhost:6581",
-        "http://login_app:6582"
+        "http://login_app:6582",
+        "http://localhost"
 }, allowCredentials = "true")
 // TODO: change 6582 to 6581? and localhost to docker internal host chestia aia (DE TESTAT)
 @RequestMapping("/user/v1")

@@ -24,7 +24,12 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequestMapping("/user/v1")
-@CrossOrigin(origins = {"http://localhost:4200", "http://front_app:4200", "http://localhost:6581", "docker."}, allowCredentials = "true")
+@CrossOrigin(origins = {
+        "http://localhost:4200",
+        "http://front_app:4200",
+        "http://localhost:6581",
+        "http://localhost"
+}, allowCredentials = "true")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;

@@ -22,7 +22,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost"}, allowCredentials = "true")
 @RequestMapping("/device/v1")
 @RequiredArgsConstructor
 public class DeviceController {

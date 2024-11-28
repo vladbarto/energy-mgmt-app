@@ -1,6 +1,6 @@
 database:
   user: ${DB_USER:postgres}
-  name: ${DB_DBNAME:device-db}
+  name: ${DB_DBNAME:monitoring-db}
   port: ${DB_PORT:5432}
   ip: ${DB_IP:localhost}
   password: ${DB_PASSWORD:postgres}
@@ -42,7 +42,7 @@ spring:
 server:
   port: 6586
 #  servlet:
-#    context-path: '/api'
+#    context-path: '/ws'
   error:
     whitelabel:
       enabled: false

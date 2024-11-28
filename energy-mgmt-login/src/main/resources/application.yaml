@@ -28,7 +28,7 @@ spring:
 server:
   port: 6582
   servlet:
-    context-path: '/api'
+    context-path: '/api-login'
   error:
     whitelabel:
       enabled: false
@@ -40,5 +40,5 @@ microservices:
 #  deviceService: "http://localhost:6585/api"
 #  userService: "http://host.docker.internal:6584/api"
 #  deviceService: "http://host.docker.internal:6585/api"
-  userService: http://${api.userService.host}:${api.userService.port}/api
-  deviceService: http://${api.deviceService.host}:${api.deviceService.port}/api
+  userService: http://${api.userService.host}:${api.userService.port}/api-user
+  deviceService: http://${api.deviceService.host}:${api.deviceService.port}/api-device

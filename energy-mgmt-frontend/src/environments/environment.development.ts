@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  apiLoginServiceUrl: "http://localhost:6582/api/", // INFO: port is 6582 for login
+  apiLoginServiceUrl: "http://localhost/api-login/", // INFO: put port 6582 for login service
   userServicePreEndpoint: "user/v1",
-  CHAT_URL: 'ws://localhost:6586/ws' //'wss://echo.websocket.org/'
+  CHAT_URL: 'ws://localhost/ws' //'wss://echo.websocket.org/' // INFO: put port 6586 for monitoring service
 };

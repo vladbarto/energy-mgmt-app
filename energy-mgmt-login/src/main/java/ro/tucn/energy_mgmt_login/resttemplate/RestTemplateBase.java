@@ -8,10 +8,6 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import ro.tucn.energy_mgmt_login.exception.RestTemplateException;
 
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 @Slf4j
 @RequiredArgsConstructor
 public abstract class RestTemplateBase<Request, Response> {
@@ -38,7 +34,7 @@ public abstract class RestTemplateBase<Request, Response> {
             ResponseEntity<T> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, responseType);
 
             if (!responseEntity.getStatusCode().is2xxSuccessful()) {
-                throw new RestTemplateException("Error fetching data from GET request to URL: " + url);
+                throw new RestTemplateException("[Not a 2xx code] Error fetching data from GET request to URL: " + url);
             }
 
             return responseEntity.getBody();
