@@ -11,6 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class DeviceChangeResponseDTO {
     private UUID deviceId;
+    private UUID userId;
     private float mhec;
     private MethodType methodType;
     private SendingStatus status;

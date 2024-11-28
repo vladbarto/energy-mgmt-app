@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
+import ro.tucn.energy_mgmt_monitoring_comm.dto.device.DeviceResponseDTO;
 import ro.tucn.energy_mgmt_monitoring_comm.dto.readings.ReadingRequestDTO;
 import ro.tucn.energy_mgmt_monitoring_comm.dto.textMessage.MessageType;
 import ro.tucn.energy_mgmt_monitoring_comm.dto.textMessage.TextMessageResponseDTO;
@@ -40,7 +41,9 @@ public class DeviceConsumptionMessageReceiverBean implements MessageReceiver {
             readingService.save(reading);
 
             // get the reference mhec for comparison
-            float mhec = deviceService.findDevice(reading.getDeviceId()).getMhec();
+            DeviceResponseDTO correspondingDevice = deviceService.findDevice(reading.getDeviceId());
+            String userId = correspondingDevice.getUserId().toString();
+            float mhec = correspondingDevice.getMhec();
 
             if(reading.getReadValue() > mhec) { // if read value exceeds mhec
                 // Send notification to the global WebSocket session
@@ -56,11 +59,11 @@ public class DeviceConsumptionMessageReceiverBean implements MessageReceiver {
                         .date(reading.getTimestamp().toString())
                         .build();
 
-                if (webSocketService.hasSession()) {
-                    webSocketService.sendMessage(objectMapper.writeValueAsString(responseDTO));
+                if (webSocketService.hasSession(userId)) {
+                    webSocketService.sendMessageToKey(userId, objectMapper.writeValueAsString(responseDTO));
                 }
                 else {
-                    log.warn("No active WebSocket session to send notification.");
+                    log.warn("No active WebSocket session for user {} to send notification.", userId);
                 }
             }
         } catch (Exception e) {

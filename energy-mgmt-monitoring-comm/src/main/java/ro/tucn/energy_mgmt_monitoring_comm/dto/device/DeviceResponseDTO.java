@@ -1,9 +1,6 @@
 package ro.tucn.energy_mgmt_monitoring_comm.dto.device;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -11,10 +8,10 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class DeviceResponseDTO {
 
     private UUID deviceId;
+    private UUID userId;
     private float mhec;
-//    private MethodType methodType;
-//    private SendingStatus status;
 }

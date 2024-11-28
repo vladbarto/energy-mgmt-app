@@ -67,8 +67,4 @@ export class DeviceCardComponent {
   private ngbDateToString(date: NgbDateStruct): string {
     return `${date.year}-${date.month}-${date.day}`
   }
-
-  getReadingsForDevice(deviceId: string): any[] {
-    return this.readings.filter(reading => reading.deviceId === deviceId);
-  }
 }

@@ -55,17 +55,6 @@ public class DeviceController {
         );
     }
 
-//    @GetMapping("/info")
-//    public ResponseEntity<DeviceResponseDTO> getLoggedDeviceInfo() {
-//        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String devicename = new String("vladbarto");//(String) authentication.getPrincipal();
-//
-//        return new ResponseEntity<>(
-//                deviceService.findByDeviceName(devicename),
-//                HttpStatus.OK
-//        );
-//    }
-
     @PostMapping("/one")
     @Operation(summary = "Device Registration")
     @ApiResponse(responseCode = "201", description = "Device successfully registered",

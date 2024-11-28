@@ -11,6 +11,7 @@ public class MessageUtils {
     public DeviceChangeResponseDTO getDeviceChangeResponseDTO(DeviceChangeRequestDTO deviceChangeRequestDTO, SendingStatus status) {
         return DeviceChangeResponseDTO.builder()
                 .deviceId(deviceChangeRequestDTO.getDeviceId())
+                .userId(deviceChangeRequestDTO.getUserId())
                 .status(status)
                 .build();
     }

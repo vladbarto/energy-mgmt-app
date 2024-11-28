@@ -43,7 +43,10 @@ export class ClientComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.buildNewDeviceForm();
     this.getDevicesOfLoggedUser();
-    this.webSocketService.connectSocket(environment.CHAT_URL);
+
+    // Note: ws://localhost/ws?userId=some-uuid
+    let currentUserId = this.getUser().id;
+    this.webSocketService.connectSocket(`${environment.CHAT_URL}?userId=${currentUserId}`);
 
     // Subscribe to WebSocket messages
     this.webSocketService.message$.subscribe((message) => {
@@ -96,8 +99,16 @@ export class ClientComponent implements OnInit, OnDestroy {
       series: x
     };
 
-    this.deviceReadings[requiredDeviceId].push(deviceData);
-    console.log(JSON.stringify(this.deviceReadings[requiredDeviceId]));  }
+    // this.deviceReadings[requiredDeviceId].push(deviceData);
+    // console.log(JSON.stringify(this.deviceReadings[requiredDeviceId]));
+    // Update the readings array with a new reference
+    this.deviceReadings = {
+      ...this.deviceReadings,
+      [requiredDeviceId]: [deviceData],
+    };
+
+    console.log(JSON.stringify(this.deviceReadings[requiredDeviceId]));
+  }
 
   // A helper method to get readings for a specific device
   getReadingsForDevice(deviceId: string | undefined): any[] {
@@ -106,35 +117,6 @@ export class ClientComponent implements OnInit, OnDestroy {
     }
     return [];
   }
-
-// Format the readings to match the expected chart data format
-  private formatReadingsForChart(readings: any[]): any[] {
-    // Assuming `readings` is an array of readings for different devices
-    return readings.map(reading => ({
-      name: reading.timestamp,  // Use timestamp as the name
-      series: [
-        {
-          name: 'Device 1',  // You can replace 'Device 1' with the actual device ID or description
-          value: reading.value  // Use the corresponding value (e.g., energy consumption)
-        }
-      ]
-    }));
-  }
-
-  // getReadingsForDevice(deviceId: string | undefined): any[] {
-  //   // Filter the readingsData for the given deviceId
-  //   return this.readingsData
-  //     .filter(reading => reading.deviceId === deviceId)
-  //     .map(reading => ({
-  //       name: reading.timestamp,  // Using timestamp as 'name'
-  //       series: [
-  //         {
-  //           name: 'Device 1',       // Device name or ID can be dynamic if needed
-  //           value: reading.value    // Corresponding value (e.g., energy consumption)
-  //         }
-  //       ]
-  //     }));
-  // }
 
   private buildNewDeviceForm(): void {
     this.newDeviceRequestForm = this.formBuilder.group({

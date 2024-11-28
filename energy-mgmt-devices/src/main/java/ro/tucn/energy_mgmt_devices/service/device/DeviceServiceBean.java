@@ -70,15 +70,6 @@ public class DeviceServiceBean implements DeviceService {
         List<DeviceEntity> deviceEntityList = deviceRepository.findAllByMhecGreaterThan(mhec);
         return deviceMapper.entityListToResponseDTOList(deviceEntityList);
     }
-//    @Override
-//    public DeviceResponseDTO findByDeviceName(String devicename) {
-//        return deviceRepository.findByDeviceName(devicename)
-//                .map(deviceMapper::entityToResponseDTO)
-//                .orElseThrow(() -> new NotFoundException(String.format(
-//                        ExceptionCode.ERR004_DEVICE_NOT_FOUND.getMessage(),
-//                        devicename
-//                )));
-//    }
 
     @Override
     @Transactional
@@ -175,6 +166,7 @@ public class DeviceServiceBean implements DeviceService {
 
         DeviceChangeRequestDTO requestDTO = DeviceChangeRequestDTO.builder()
                 .deviceId(deviceId)
+                .userId(deviceRequestDTO.getUserId())
                 .mhec(deviceRequestDTO.getMhec())
                 .methodType(MethodType.POST)
                 .build();
@@ -188,6 +180,7 @@ public class DeviceServiceBean implements DeviceService {
 
         DeviceChangeRequestDTO requestDTO = DeviceChangeRequestDTO.builder()
                 .deviceId(deviceId)
+                .userId(deviceRequestDTO.getUserId())
                 .mhec(deviceRequestDTO.getMhec())
                 .methodType(MethodType.UPDATE)
                 .build();

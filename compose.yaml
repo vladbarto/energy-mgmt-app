@@ -210,7 +210,7 @@ services:
       DB_PASSWORD: postgres
       DB_DBNAME: monitoring-db
     deploy:
-      replicas: 3
+      replicas: 1
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.monitoring-app.rule=Host(`localhost`) && PathPrefix(`/ws`)"

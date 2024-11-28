@@ -20,6 +20,9 @@ public class DeviceEntity {
     @Id
     private UUID deviceId;
 
+    @Column(name = "USERID")
+    private UUID userId;
+
     @Column(name = "MHEC")
     private float mhec; /// maximum hourly energy consumption
 }

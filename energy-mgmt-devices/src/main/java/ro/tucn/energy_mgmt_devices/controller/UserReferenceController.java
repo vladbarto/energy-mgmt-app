@@ -43,17 +43,6 @@ public class UserReferenceController {
         );
     }
 
-//    @GetMapping("/info")
-//    public ResponseEntity<UserReferenceResponseDTO> getLoggedUserReferenceInfo() {
-//        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String userReferencename = new String("vladbarto");//(String) authentication.getPrincipal();
-//
-//        return new ResponseEntity<>(
-//                userReferenceService.findByUserReferenceName(userReferencename),
-//                HttpStatus.OK
-//        );
-//    }
-
     @PostMapping("/one")
     @Operation(summary = "UserReference Registration")
     @ApiResponse(responseCode = "201", description = "UserReference successfully registered",
