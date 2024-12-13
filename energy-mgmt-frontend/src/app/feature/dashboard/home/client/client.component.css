@@ -7,8 +7,13 @@
   font-family: "Font Awesome 6 Free", serif !important;
 }
 
-.utility, logout {
+.utility, logout, chat {
   color: black;
+}
+
+.chat:hover {
+  background: rgb(163,14,167);
+  background: linear-gradient(160deg, rgba(163,14,167,1) 0%, rgba(249,18,176,1) 35%, rgba(231,105,108,1) 66%, rgba(220,160,65,1) 100%);
 }
 
 .utility:hover {

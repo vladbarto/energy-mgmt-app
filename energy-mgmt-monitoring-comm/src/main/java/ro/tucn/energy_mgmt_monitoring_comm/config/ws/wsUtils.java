@@ -13,5 +13,4 @@ public class wsUtils {
         }
         return null;
     }
-
 }

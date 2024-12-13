@@ -9,6 +9,11 @@
       </div>
 
       <div #drop class="dropdown singleDro right col-lg-6 d-flex justify-content-end">
+
+        <button (click)="goToPage('dashboard/chat')" class="btn p-2 chat me-1">
+          <i class="fa-regular fa-comments"></i>
+        </button>
+
         <button mat-icon-button [matMenuTriggerFor]="beforeMenu" class="btn p-2 utility me-1">
           <i class="fa-regular fa-user"></i>
         </button>
@@ -21,9 +26,9 @@
           <div class="gold">
             <div class="m-1 p-1" style="font-size: 11pt">
               <span class="fw-bold">User: </span>
-              <p>{{this.getUser().username}}</p>
+              <p>{{this.loggedUser.username}}</p>
               <span class="fw-bold">Email: </span>
-              <p>{{this.getUser().email}}</p>
+              <p>{{this.loggedUser.email}}</p>
             </div>
           </div>
         </mat-menu>

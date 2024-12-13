@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
-import {Subject} from "rxjs";
+import {BehaviorSubject, Subject} from "rxjs";
+import {ChatModel} from "../../../shared/models/chat.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebSocketService {
   private webSocket: WebSocket | null = null;
+
   private messageSubject = new Subject<any>(); // Create a Subject to broadcast incoming messages
   public message$ = this.messageSubject.asObservable(); // Expose it as an Observable for subscription
+
+  // BehaviorSubject for socket status
+  private socketStatusSubject = new BehaviorSubject<boolean>(false); // Default: disconnected
+  public socketStatus$ = this.socketStatusSubject.asObservable();
 
   constructor() {}
 
@@ -24,8 +30,8 @@ export class WebSocketService {
 
     // Connection opened
     this.webSocket.addEventListener("open", (event) => {
-      this.sendMessage("OPEN_WS", "Hello WebSocket Server1!", "", "2024-11-22", 0.0);
       console.warn("Socket connected, message sent");
+      this.socketStatusSubject.next(true); // Emit "connected" status
     });
 
     // Listen for messages and broadcast them to subscribers
@@ -41,6 +47,7 @@ export class WebSocketService {
 
     this.webSocket.addEventListener("error", (event) => {
       console.error("WebSocket error:", event);
+      this.socketStatusSubject.next(false); // Emit "disconnected" or "error" status
     });
   }
 
@@ -49,6 +56,7 @@ export class WebSocketService {
     if (this.webSocket) {
       this.webSocket.onclose = (event) => {
         console.log("The connection has been closed successfully.");
+        this.socketStatusSubject.next(false); // Emit "disconnected" status
       };
       this.webSocket.close();
       this.webSocket = null;
@@ -56,6 +64,7 @@ export class WebSocketService {
   }
 
   // Send a message to the WebSocket server
+  // designed to interact with Monitoring Microservice
   sendMessage(type: string, messageToSend: string, deviceId: string, date: string, mhec: number): void {
     if (this.webSocket && this.webSocket.readyState === WebSocket.OPEN) {
       let message = JSON.stringify({
@@ -67,6 +76,15 @@ export class WebSocketService {
       });
 
       this.webSocket.send(message);
+    } else {
+      console.error("WebSocket is not open.");
+    }
+  }
+
+  sendChatMessage(chatMessage: ChatModel) {
+    if(this.webSocket && this.webSocket.readyState === WebSocket.OPEN) {
+      console.warn(chatMessage);
+      this.webSocket.send(JSON.stringify(chatMessage));
     } else {
       console.error("WebSocket is not open.");
     }

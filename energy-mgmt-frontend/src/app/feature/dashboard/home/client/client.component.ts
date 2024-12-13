@@ -46,7 +46,7 @@ export class ClientComponent implements OnInit, OnDestroy {
 
     // Note: ws://localhost/ws?userId=some-uuid
     let currentUserId = this.getUser().id;
-    this.webSocketService.connectSocket(`${environment.CHAT_URL}?userId=${currentUserId}`);
+    this.webSocketService.connectSocket(`${environment.MONITORING_URL}?userId=${currentUserId}`);
 
     // Subscribe to WebSocket messages
     this.webSocketService.message$.subscribe((message) => {
@@ -197,6 +197,10 @@ export class ClientComponent implements OnInit, OnDestroy {
       hasBackdrop: false
       // disableClose: true
     });
+  }
+
+  goToPage(pageName:string){
+    this.router.navigate([`${pageName}`]);
   }
 }
 

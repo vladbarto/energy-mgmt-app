@@ -23,6 +23,7 @@ import {
 import {MatNativeDateModule} from "@angular/material/core";
 import {NgbAlert, NgbInputDatepicker} from "@ng-bootstrap/ng-bootstrap";
 import { PushNotificationComponent } from './home/client/push-notification/push-notification.component';
+import { ChatComponent } from './home/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { PushNotificationComponent } from './home/client/push-notification/push-
     UserCardComponent,
     DeviceCardAComponent,
     PushNotificationComponent,
+    ChatComponent,
   ],
   imports: [
     CommonModule,

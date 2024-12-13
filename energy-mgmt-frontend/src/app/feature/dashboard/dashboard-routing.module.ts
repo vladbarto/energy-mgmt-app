@@ -6,6 +6,7 @@ import {NotFoundComponent} from "../../shared/components/not-found/not-found.com
 import {hasRole} from "../../core/guard/authorization/authorization.guard";
 import {UsersComponent} from "./home/admin/users/users.component";
 import {DevicesComponent} from "./home/admin/devices/devices.component";
+import {ChatComponent} from "./home/chat/chat.component";
 
 export const routes: Routes = [
   {
@@ -38,6 +39,14 @@ export const routes: Routes = [
     component: DevicesComponent,
     data: {
       requiredRoles: ['ROLE_ADMIN']
+    }
+  },
+  {
+    path: 'chat',
+    canActivate: [hasRole],
+    component: ChatComponent,
+    data: {
+      requiredRoles: ['ROLE_ADMIN', 'ROLE_USER']
     }
   },
   {

@@ -42,7 +42,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     provideCharts(withDefaultRegisterables()),
     {
       provide: WebSocket,
-      useFactory: () => new WebSocket(environment.CHAT_URL),
+      useFactory: () => new WebSocket(environment.MONITORING_URL),
     },
   ],
   exports: [

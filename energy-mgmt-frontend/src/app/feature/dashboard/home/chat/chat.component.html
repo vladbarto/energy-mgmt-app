@@ -1,0 +1,129 @@
+<!--  Header-->
+<div class="background pt-3 pb-3">
+
+  <div class="container">
+    <div class="row pt-2">
+
+      <div class="left col-lg-6 align-items-center justify-content-center">
+        <img alt="responsive-image" src="assets/Enel_Group_logo.svg" style="width: 100pt; height: auto">
+      </div>
+
+      <div #drop class="dropdown singleDro right col-lg-6 d-flex justify-content-end">
+
+        <button mat-icon-button [matMenuTriggerFor]="beforeMenu" class="btn p-2 utility me-1">
+          <i class="fa-regular fa-user"></i>
+        </button>
+
+        <button (click)="logOut()" class="btn p-2 logout">
+          <i class="fa fa-right-from-bracket"></i>
+        </button>
+
+        <mat-menu class="bg-info" #beforeMenu="matMenu" xPosition="before">
+          <div class="m-1 p-1" style="font-size: 11pt">
+            <span class="fw-bold">User: </span>
+            <p>{{this.loggedUser.username}}</p>
+            <span class="fw-bold">Email: </span>
+            <p>{{this.loggedUser.email}}</p>
+          </div>
+
+        </mat-menu>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--  Body -->
+<div class="background-body layer1">
+  <div class="container pt-5">
+    <div class="row">
+
+<!--      Left hand side: a list of all users + search for an user-->
+      <div class="col col-md-2 LHS">
+        <div class="container p-2 rounded-4 bg-info">
+
+          <div class="container search-user-area">
+            <div class="mb-3 d-flex flex-column">
+              <label class="form-label"></label>
+              <input type="text" placeholder="Username" class="form-control"[(ngModel)]="desiredUsername" (keydown.enter)="getUser()">
+
+              <div class="d-flex flex-row mt-2">
+                <button class="btn btn-success btn-sm" (click)="getAllUsers()">
+                  <!--            <button class="btn btn-success" (click)="getUsers()">-->
+                  <p>All users</p>
+                </button>
+              </div>
+
+              <div *ngIf=" user.id!='' ">
+                <p>Results:</p>
+                <div class="btn btn-light">
+                  {{user.username}}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- List of all chats-->
+          <div class="container bg-success-subtle">
+            <h5>List of all chats</h5>
+          </div>
+
+
+        </div>
+      </div>
+
+<!--      Middle hand side: chat window-->
+      <div class="col MHS" *ngIf=" user.id != '' ">
+        <div  class="container rounded-4 d-flex flex-column">
+          <!-- Chat messages area -->
+          <div class="chat-messages flex-grow-1 p-2 mb-2 overflow-auto rounded-3">
+            <div
+              *ngFor="let msg of messages"
+              [ngClass]="{'from-me': msg.transmitter === loggedUser.id, 'from-them': msg.transmitter === user.id}"
+              class="p-2 mb-1"
+            >
+              {{ msg.text }}
+              <div *ngIf="msg.transmitter === loggedUser.id">
+                <<{{ msg.status }}>>
+              </div>
+            </div>
+
+            <div *ngIf="this.receivedIsTyping" class="text-white">
+              Typing...
+            </div>
+          </div>
+
+          <!-- Input area -->
+          <div class="chat-input p-2 d-flex align-items-center rounded-3">
+            <input
+              type="text"
+              class="form-control me-2 rounded-4"
+              placeholder="Type your message..."
+              [(ngModel)]="message"
+              (keydown.enter)="sendMessage()"
+              (input)="notifyTyping()"
+            />
+
+            <button class="btn btn-primary rounded-5 border-0" (click)="sendMessage()" style="background-color: #1fa661">
+              <i class="fa fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+<!--      Right hand side: info about user (see discord's layout)-->
+      <div *ngIf=" user.id != '' " class="col col-md-3 RHS">
+        <div class="container rounded-4 bg-info pt-2">
+          <h4>User Details</h4>
+          <div *ngIf=" this.user.id != '' ">
+            <p>Username: {{ user.username }}</p>
+            <p>(Id: {{ user.id }})</p>
+            <p> Admin: {{ user.admin }}</p>
+            <p>Email: {{user.email}}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

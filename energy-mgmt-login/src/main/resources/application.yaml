@@ -11,6 +11,13 @@ api:
   deviceService:
     host: ${BACKEND_DEVICE_HOST:localhost}
     port: ${BACKEND_DEVICE_PORT:6585}
+  monitoringService:
+    host: ${BACKEND_MONITORING_HOST:localhost}
+    port: ${BACKEND_MONITORING_PORT:6586}
+  chatService:
+    host: ${BACKEND_CHAT_HOST:localhost}
+    port: ${BACKEND_CHAT_PORT:6587}
+
 spring:
   application:
     name: energy-mgmt-login
@@ -42,3 +49,5 @@ microservices:
 #  deviceService: "http://host.docker.internal:6585/api"
   userService: http://${api.userService.host}:${api.userService.port}/api-user
   deviceService: http://${api.deviceService.host}:${api.deviceService.port}/api-device
+  monitoringService: ws://${api.monitoringService.host}:${api.monitoringService.port}/ws
+  chatService: ws://${api.chatService.host}:${api.chatService.port}/wsChat
