@@ -2,10 +2,8 @@ package ro.tucn.energy_mgmt_chat.service.WebSocket;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 import java.io.IOException;
 

@@ -48,13 +48,13 @@ public class MessageServiceBean implements MessageService {
 
     @Override
     @Transactional
-    public int updateMessageStatusesToReceived(UUID clientId) {
-        return messageRepository.updateAllBySenderWithStatusSentToReceived(clientId);
+    public int updateMessageStatusesToReceived(String clientUsername) {
+        return messageRepository.updateAllBySenderWithStatusSentToReceived(clientUsername);
     }
 
     @Override
     @Transactional
-    public int updateMessageStatusesToSeenBetweenUsers(UUID transmitter, UUID receiver) {
+    public int updateMessageStatusesToSeenBetweenUsers(String transmitter, String receiver) {
         log.info("Updating message statuses to SEEN between transmitter [{}] and receiver [{}]", transmitter, receiver);
 
         try {
@@ -69,11 +69,11 @@ public class MessageServiceBean implements MessageService {
 
 
     @Override
-    public List<MessageResponseDTO> getMessagesBetweenUsers(UUID aUserId, UUID bUserId) {
-        log.info("Getting messages between {} and {}", aUserId, bUserId);
+    public List<MessageResponseDTO> getMessagesBetweenUsers(String aUsername, String anotherUsername) {
+        log.info("Getting messages between {} and {}", aUsername, anotherUsername);
 
         return messageMapper.entityListToResponseDTOList(
-                messageRepository.findAllMessagesBetweenUsers(aUserId, bUserId)
+                messageRepository.findAllMessagesBetweenUsers(aUsername, anotherUsername)
         );
     }
 }

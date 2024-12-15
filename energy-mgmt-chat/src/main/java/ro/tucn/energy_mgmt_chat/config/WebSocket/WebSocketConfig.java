@@ -9,7 +9,6 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
-import ro.tucn.energy_mgmt_chat.security.interceptor.JwtHandshakeInterceptor;
 import ro.tucn.energy_mgmt_chat.service.WebSocket.WebSocketService;
 import ro.tucn.energy_mgmt_chat.service.message.MessageService;
 
@@ -21,7 +20,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     private final WebSocketService webSocketService;
     private final MessageService messageService;
-
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {

@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   constructor(private browserStorage: BrowserStorageService) {}
 
   ngOnInit() {
-    this.browserStorage.clearCookies();
+    // this.browserStorage.clearCookies();
   }
 
 }

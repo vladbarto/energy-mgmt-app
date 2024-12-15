@@ -5,7 +5,6 @@ export const environment = {
   userServicePreEndpoint: "user/v1",
   MONITORING_URL: "ws://localhost:6586/ws", // for local dev
           // 'ws://localhost/ws', // for local docker
-  CHAT_URL: //"ws://localhost:6582/api-login/wsChat"
-    "ws://localhost:6587/wsChat" // for local dev
-  // 'ws://localhost/wsChat' // for local docker
+  CHAT_URL: "ws://localhost:6587/wsChat" // for local dev
+      // 'ws://localhost/wsChat' // for local docker
 };

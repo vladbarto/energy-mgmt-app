@@ -21,4 +21,15 @@ export class BrowserStorageService {
       document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;';
     }
   }
+
+  public getJwtTokenFromCookies(): string | null {
+    const cookies = document.cookie.split(';');
+    for (const cookie of cookies) {
+      const [key, value] = cookie.trim().split('=');
+      if (key === 'jwt-token') {
+        return value;
+      }
+    }
+    return null;
+  }
 }

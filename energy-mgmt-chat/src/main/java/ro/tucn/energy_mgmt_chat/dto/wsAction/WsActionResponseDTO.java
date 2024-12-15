@@ -14,8 +14,8 @@ import java.util.UUID;
 @ToString
 public class WsActionResponseDTO {
     private ActionType type;
-    private UUID transmitter;
-    private UUID receiver;
+    private String transmitter;
+    private String receiver;
     private String text;
     private LocalDateTime sendingTime;
     private MessageStatus status;

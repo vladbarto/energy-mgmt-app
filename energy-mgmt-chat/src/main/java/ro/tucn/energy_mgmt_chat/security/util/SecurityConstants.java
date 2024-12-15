@@ -1,9 +1,10 @@
-package ro.tucn.energy_mgmt_login.security.util;
+package ro.tucn.energy_mgmt_chat.security.util;
 
 public final class SecurityConstants {
 
     public static final Integer PASSWORD_STRENGTH = 10;
     public static final String AUTH_PATHS_TO_SKIP = "/auth/**";
+    public static final String WEB_SOCKET_PATH_TO_SKIP = "/wsChat";
     public static final String LOGIN_URL = "/auth/v1/login";
     public static final String JWT_TOKEN = "jwt-token";
     public static final String REGISTER_URL = "/user/v1/one";

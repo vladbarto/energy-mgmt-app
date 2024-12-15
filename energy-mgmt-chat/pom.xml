@@ -64,16 +64,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency><!-- https://mvnrepository.com/artifact/com.rabbitmq.jms/rabbitmq-jms -->
-			<groupId>com.rabbitmq.jms</groupId>
-			<artifactId>rabbitmq-jms</artifactId>
-			<version>${rabbitmq-jms.version}</version>
-		</dependency>
-		<dependency><!-- https://mvnrepository.com/artifact/org.springframework.amqp/spring-amqp -->
-			<groupId>org.springframework.amqp</groupId>
-			<artifactId>spring-amqp</artifactId>
-			<version>${spring-ampq.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>

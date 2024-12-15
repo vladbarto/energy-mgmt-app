@@ -22,7 +22,7 @@ import java.util.UUID;
  */
 public class WsActionRequestDTO {
     private ActionType type;
-    private UUID transmitter;
-    private UUID receiver;
+    private String transmitter;
+    private String receiver;
     private String text;
 }

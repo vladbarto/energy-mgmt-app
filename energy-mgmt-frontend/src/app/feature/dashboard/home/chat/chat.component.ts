@@ -37,7 +37,7 @@ export class ChatComponent implements OnInit{
     let currentUserId = this.loggedUser.id;
 
     // Connect to the WebSocket
-    this.webSocketService.connectSocket(`${environment.CHAT_URL}?userId=${currentUserId}`);
+    this.webSocketService.connectSocket(`${environment.CHAT_URL}`);
 
     // Listen for the WebSocket connection being established
     this.webSocketService.socketStatus$.subscribe((status) => {
@@ -46,7 +46,7 @@ export class ChatComponent implements OnInit{
         // when user connected to websocket, means that he has internet access, meaning that he received the messages (not implicitly seen them)
         let notifyReceived: ChatModel = {
           type: 'RECEIVED',
-          transmitter: this.loggedUser.id!,
+          transmitter: this.loggedUser.username!,
           receiver: '',
           text: ''
         };
@@ -91,8 +91,8 @@ export class ChatComponent implements OnInit{
 
       let mesaj: ChatModel = {
         type: 'Some irrelevant type',
-        transmitter: this.loggedUser.id!,
-        receiver: this.user.id!,
+        transmitter: this.loggedUser.username!,
+        receiver: this.user.username!,
         text: this.message,
         status: 'SENT'
       };
@@ -100,8 +100,8 @@ export class ChatComponent implements OnInit{
 
       let chatMessage: ChatModel = {
         type: 'SEND_MESSAGE',
-        transmitter: this.loggedUser.id!,
-        receiver: this.user.id!,
+        transmitter: this.loggedUser.username!,
+        receiver: this.user.username!,
         text: this.message,
       };
 
@@ -114,8 +114,8 @@ export class ChatComponent implements OnInit{
       this.transmittedIsTyping = false;
       let stopTypingMessage: ChatModel = {
         type: 'STOP_TYPING',
-        transmitter: this.loggedUser.id!,
-        receiver: this.user.id!,
+        transmitter: this.loggedUser.username!,
+        receiver: this.user.username!,
         text: '', // No actual text needed for stop typing notifications
       };
 
@@ -129,8 +129,8 @@ export class ChatComponent implements OnInit{
         this.transmittedIsTyping = true; // Only send the TYPING event once per typing session
         let typingMessage: ChatModel = {
           type: 'TYPING',
-          transmitter: this.loggedUser.id!,
-          receiver: this.user.id!,
+          transmitter: this.loggedUser.username!,
+          receiver: this.user.username!,
           text: '', // No actual text needed for typing notifications
         };
 
@@ -141,8 +141,8 @@ export class ChatComponent implements OnInit{
         this.transmittedIsTyping = false; // Reset typing state
         let stopTypingMessage: ChatModel = {
           type: 'STOP_TYPING',
-          transmitter: this.loggedUser.id!,
-          receiver: this.user.id!,
+          transmitter: this.loggedUser.username!,
+          receiver: this.user.username!,
           text: '', // No actual text needed for stop typing notifications
         };
 
@@ -187,9 +187,9 @@ export class ChatComponent implements OnInit{
   protected renderIsTyping() {
     this.webSocketService.message$.subscribe({
       next: (msg: ChatModel) => {
-        if (msg.type === 'TYPING' && msg.transmitter === this.user.id) {
+        if (msg.type === 'TYPING' && msg.transmitter === this.user.username) {
           this.receivedIsTyping = true; // Set to true when the TYPING event is received
-        } else if (msg.type === 'STOP_TYPING' && msg.transmitter === this.user.id) {
+        } else if (msg.type === 'STOP_TYPING' && msg.transmitter === this.user.username) {
           this.receivedIsTyping = false; // Set to false when STOP_TYPING event is received
         }
       },
@@ -229,8 +229,8 @@ export class ChatComponent implements OnInit{
   protected fetchMessages() {
     let FetchMessagesRequest: ChatModel = {
       type: 'FETCH_MESSAGES',
-      transmitter: this.loggedUser.id!,
-      receiver: this.user.id!,
+      transmitter: this.loggedUser.username!,
+      receiver: this.user.username!,
       text: '', // No actual text needed for stop typing notifications
     };
 
@@ -240,10 +240,10 @@ export class ChatComponent implements OnInit{
 
   protected chatIsOpen(msg: ChatModel): boolean {
     // Check if the logged user is either the transmitter or the receiver
-    const isUserInvolved = this.loggedUser.id === msg.transmitter || this.loggedUser.id === msg.receiver;
+    const isUserInvolved = this.loggedUser.username === msg.transmitter || this.loggedUser.username === msg.receiver;
 
     // Check if the current chat (focused) is with the other party in the message
-    const isChatFocused = this.user.id === msg.transmitter || this.user.id === msg.receiver;
+    const isChatFocused = this.user.username === msg.transmitter || this.user.username === msg.receiver;
 
     return isUserInvolved && isChatFocused;
   }

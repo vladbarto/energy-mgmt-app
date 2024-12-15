@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface MessageService {
     MessageResponseDTO save(MessageRequestDTO messageRequestDTO);
-    int updateMessageStatusesToReceived(UUID clientId);
-    int updateMessageStatusesToSeenBetweenUsers(UUID transmitterId, UUID receiverId);
-    List<MessageResponseDTO> getMessagesBetweenUsers(UUID aUserId, UUID bUserId);
+    int updateMessageStatusesToReceived(String clientUsername);
+    int updateMessageStatusesToSeenBetweenUsers(String transmitter, String receiver);
+    List<MessageResponseDTO> getMessagesBetweenUsers(String aUsername, String anotherUsername);
 }

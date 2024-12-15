@@ -22,10 +22,10 @@ public class MessageEntity {
     private UUID id;
 
     @Column(name = "TRANSMITTER")
-    private UUID transmitter;
+    private String transmitter;
 
     @Column(name = "RECEIVER")
-    private UUID receiver;
+    private String receiver;
 
     @Column(name = "TEXT")
     private String text;

@@ -12,15 +12,15 @@ import java.util.UUID;
 public interface MessageRepository extends JpaRepository<MessageEntity, UUID> {
 
     @Query(value = "UPDATE MESSAGE SET STATUS = 'RECEIVED' WHERE RECEIVER = :sender AND STATUS = 'SENT'", nativeQuery = true)
-    int updateAllBySenderWithStatusSentToReceived(@Param("sender") UUID sender);
+    int updateAllBySenderWithStatusSentToReceived(@Param("sender") String sender);
 
     @Query(value = "UPDATE MESSAGE SET STATUS = :status WHERE TRANSMITTER = :transmitter AND RECEIVER = :receiver AND STATUS <> :status", nativeQuery = true)
-    int updateStatusesToSeen(@Param("transmitter") UUID transmitter,
-                             @Param("receiver") UUID receiver,
+    int updateStatusesToSeen(@Param("transmitter") String transmitter,
+                             @Param("receiver") String receiver,
                              @Param("status") MessageStatus status);
 
     @Query("SELECT m FROM MessageEntity m WHERE (m.transmitter = :userA AND m.receiver = :userB) OR (m.transmitter = :userB AND m.receiver = :userA)")
-    List<MessageEntity> findAllMessagesBetweenUsers(@Param("userA") UUID userA, @Param("userB") UUID userB);
+    List<MessageEntity> findAllMessagesBetweenUsers(@Param("userA") String userA, @Param("userB") String userB);
 
-    List<MessageEntity> findAllByReceiver(UUID receiver);
+    List<MessageEntity> findAllByReceiver(String receiver);
 }

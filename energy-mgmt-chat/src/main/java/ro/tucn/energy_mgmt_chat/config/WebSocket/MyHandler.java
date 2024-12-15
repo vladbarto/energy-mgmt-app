@@ -14,15 +14,18 @@ import ro.tucn.energy_mgmt_chat.dto.message.MessageStatus;
 import ro.tucn.energy_mgmt_chat.dto.wsAction.ActionType;
 import ro.tucn.energy_mgmt_chat.dto.wsAction.WsActionRequestDTO;
 import ro.tucn.energy_mgmt_chat.dto.wsAction.WsActionResponseDTO;
+import ro.tucn.energy_mgmt_chat.security.filter.AuthorizationFilter;
 import ro.tucn.energy_mgmt_chat.service.WebSocket.WebSocketService;
 import ro.tucn.energy_mgmt_chat.service.message.MessageService;
+import ro.tucn.energy_mgmt_chat.security.util.JwtUtils;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static ro.tucn.energy_mgmt_chat.config.WebSocket.wsUtils.extractQueryParam;
+import static ro.tucn.energy_mgmt_chat.config.WebSocket.WsUtils.extractQueryParam;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -35,28 +38,46 @@ public class MyHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
         try {
-            // Extract userId from the WebSocket URI query parameters.
+            // Extract the JWT token from the WebSocket URI query parameters
             String query = session.getUri().getQuery();
-            String userId = extractQueryParam(query, "userId");
-            if (userId == null || userId.isEmpty()) {
-                log.warn("Missing userId in WebSocket connection.");
-                session.close(CloseStatus.BAD_DATA.withReason("Missing userId"));
+            String token = extractQueryParam(query, "token");
+
+            if (token == null || token.isEmpty()) {
+                log.warn("Missing JWT token in WebSocket connection.");
+                session.close(CloseStatus.BAD_DATA.withReason("Missing JWT token"));
                 return;
             }
 
-            // Register this session with the userId in the WebSocketService.
-            webSocketService.addSession(userId, session);
-            log.info("WebSocket connection established for userId: {}", userId);
+            // Validate and parse the JWT token
+            if (!AuthorizationFilter.validateToken(token)) {
+                log.warn("Invalid JWT token in WebSocket connection.");
+                session.close(CloseStatus.BAD_DATA.withReason("Invalid JWT token"));
+                return;
+            }
+
+            // Extract userId from the validated JWT token
+            String username = JwtUtils.extractUsernameFromToken(token);
+
+            if (username == null || username.isEmpty()) {
+                log.warn("JWT token does not contain a valid userId.");
+                session.close(CloseStatus.BAD_DATA.withReason("Invalid userId in JWT token"));
+                return;
+            }
+
+            // Register this WebSocket session with the userId in the WebSocketService
+            webSocketService.addSession(username, session);
+            log.info("WebSocket connection established for userId: {}", username);
 
         } catch (Exception e) {
             log.error("Failed to establish WebSocket connection: {}", e.getMessage());
             try {
-                session.close(CloseStatus.SERVER_ERROR.withReason("Failed to process userId"));
+                session.close(CloseStatus.SERVER_ERROR.withReason("Failed to process JWT token"));
             } catch (IOException ioException) {
                 log.error("Failed to close WebSocket session: {}", ioException.getMessage());
             }
         }
     }
+
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
@@ -68,7 +89,7 @@ public class MyHandler extends TextWebSocketHandler {
                 log.info("Chat message received: {}", wsActionRequestDTO);
                 handleSendMessageType(wsActionRequestDTO);
             } else if (ActionType.TYPING == wsActionRequestDTO.getType() ||
-            ActionType.STOP_TYPING == wsActionRequestDTO.getType()) {
+                    ActionType.STOP_TYPING == wsActionRequestDTO.getType()) {
                 log.info("Typing info received: {}", wsActionRequestDTO);
                 handleTypingType(wsActionRequestDTO);
             } else if (ActionType.FETCH_MESSAGES == wsActionRequestDTO.getType()) {
@@ -90,19 +111,31 @@ public class MyHandler extends TextWebSocketHandler {
         }
     }
 
+
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
+        // Handle connection closure
         try {
             String query = session.getUri().getQuery();
-            String userId = extractQueryParam(query, "userId");
-            if (userId != null) {
-                webSocketService.removeSession(userId);
-                log.info("WebSocket connection closed for userId: {}", userId);
+            String token = extractQueryParam(query, "token");
+
+            // Extract userId from the validated JWT token
+            String username = JwtUtils.extractUsernameFromToken(token);
+
+            if (!username.isEmpty()) {
+                webSocketService.removeSession(username);
+                log.info("WebSocket connection closed for user with username: {}", username);
+                log.info("Connection closed for session ID: {}, CloseStatus: {}", session.getId(), status);
             }
+
         } catch (Exception e) {
             log.error("Failed to process WebSocket disconnection: {}", e.getMessage());
         }
     }
+
+    /**
+     * HANDLERS
+     */
 
     private void handleSendMessageType(WsActionRequestDTO requestDTO) {
         MessageRequestDTO messageRequestDTO = MessageRequestDTO.builder()
@@ -119,7 +152,7 @@ public class MyHandler extends TextWebSocketHandler {
         log.info("Message response: {}", messageResponseDTO.toString());
 
         try {
-            if(webSocketService.hasSession(requestDTO.getReceiver().toString())) {
+            if(webSocketService.hasSession(requestDTO.getReceiver())) {
                 WsActionResponseDTO wsActionResponseDTO = WsActionResponseDTO.builder()
                         .transmitter(requestDTO.getTransmitter())
                         .receiver(requestDTO.getReceiver())
@@ -131,7 +164,7 @@ public class MyHandler extends TextWebSocketHandler {
 
                 log.info("Sending out typing notification to connected receiver: {}", wsActionResponseDTO);
                 webSocketService.sendMessageToKey(
-                        requestDTO.getReceiver().toString(),
+                        requestDTO.getReceiver(),
                         objectMapper.writeValueAsString(wsActionResponseDTO));
             }
         } catch (JsonProcessingException e) {
@@ -147,9 +180,9 @@ public class MyHandler extends TextWebSocketHandler {
                 .build();
 
         try {
-            if(webSocketService.hasSession(responseDTO.getReceiver().toString())) {
+            if(webSocketService.hasSession(responseDTO.getReceiver())) {
                 log.info("Sending out typing notification to connected receiver: {}", responseDTO);
-                webSocketService.sendMessageToKey(responseDTO.getReceiver().toString(), objectMapper.writeValueAsString(responseDTO));
+                webSocketService.sendMessageToKey(responseDTO.getReceiver(), objectMapper.writeValueAsString(responseDTO));
             }
         } catch (JsonProcessingException e) {
             log.error(e.getMessage(), e);
@@ -157,8 +190,8 @@ public class MyHandler extends TextWebSocketHandler {
     }
 
     private void handleFetchMessagesType(WsActionRequestDTO requestDTO) {
-        UUID whoMakesTheRequest = requestDTO.getTransmitter();
-        UUID whoHeHasAConversationWith = requestDTO.getReceiver();
+        String whoMakesTheRequest = requestDTO.getTransmitter();
+        String whoHeHasAConversationWith = requestDTO.getReceiver();
 
         List<MessageResponseDTO> messageResponseDTOList = messageService.getMessagesBetweenUsers(
                 whoMakesTheRequest,
@@ -178,9 +211,9 @@ public class MyHandler extends TextWebSocketHandler {
                         //.sendingTime(messageResponseDTO.getSendingTime())
                         .build();
 
-                if(webSocketService.hasSession(wsActionResponseDTO.getReceiver().toString())) {
+                if(webSocketService.hasSession(wsActionResponseDTO.getReceiver())) {
                     log.info("Sending message to who solicited it: {}", wsActionResponseDTO);
-                    webSocketService.sendMessageToKey(whoMakesTheRequest.toString(), objectMapper.writeValueAsString(wsActionResponseDTO));
+                    webSocketService.sendMessageToKey(whoMakesTheRequest, objectMapper.writeValueAsString(wsActionResponseDTO));
                 }
             }
         } catch (Exception e) {
@@ -209,7 +242,7 @@ public class MyHandler extends TextWebSocketHandler {
     }
 
 
-//    private void handleSeenSignalType(WsActionRequestDTO requestDTO) {
+    //    private void handleSeenSignalType(WsActionRequestDTO requestDTO) {
 //        List<MessageResponseDTO> messageResponseDTOList = messageService.getMessagesBetweenUsers(
 //                requestDTO.getTransmitter(), requestDTO.getReceiver());
 //
@@ -225,10 +258,10 @@ public class MyHandler extends TextWebSocketHandler {
 //                        //.sendingTime(messageResponseDTO.getSendingTime())
 //                        .build();
 //
-//                if(webSocketService.hasSession(wsActionResponseDTO.getReceiver().toString())) {
+//                if(webSocketService.hasSession(wsActionResponseDTO.getReceiver())) {
 //                    log.info("Updated msg from msg list with seen status: {}", wsActionResponseDTO);
 //                    webSocketService.sendMessageToKey(
-//                            wsActionResponseDTO.getReceiver().toString(),
+//                            wsActionResponseDTO.getReceiver(),
 //                            objectMapper.writeValueAsString(wsActionResponseDTO));
 //                }
 //            }
@@ -244,14 +277,13 @@ public class MyHandler extends TextWebSocketHandler {
                     .receiver(requestDTO.getTransmitter())
                     .build();
 
-            if (webSocketService.hasSession(requestDTO.getTransmitter().toString())) {
+            if (webSocketService.hasSession(requestDTO.getTransmitter())) {
                 webSocketService.sendMessageToKey(
-                        requestDTO.getTransmitter().toString(),
+                        requestDTO.getTransmitter(),
                         objectMapper.writeValueAsString(seenSignalResponse));
             }
         } catch (Exception e) {
             log.error("Failed to notify SEEN_SIGNAL: {}", e.getMessage());
         }
     }
-
 }

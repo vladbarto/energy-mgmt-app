@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment.development';
 import {BehaviorSubject, Subject} from "rxjs";
 import {ChatModel} from "../../../shared/models/chat.model";
+import {BrowserStorageService} from "../browser-storage-mgmt/browser-storage.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,9 @@ export class WebSocketService {
   private socketStatusSubject = new BehaviorSubject<boolean>(false); // Default: disconnected
   public socketStatus$ = this.socketStatusSubject.asObservable();
 
-  constructor() {}
+  constructor(
+    private browserStorageService: BrowserStorageService
+  ) {}
 
   // Connect socket with a specific URL
   connectSocket(socketUrl: string): void {
@@ -26,7 +28,16 @@ export class WebSocketService {
       return;
     }
 
-    this.webSocket = new WebSocket(socketUrl);
+    // Retrieve the JWT token from cookies
+    const jwtToken = this.browserStorageService.getJwtTokenFromCookies();
+    if (!jwtToken) {
+      console.error("JWT token is not available.");
+      return;
+    }
+
+    let webSocketUrl: string =  `${socketUrl}?token=${jwtToken}`;
+    // Use the Sec-WebSocket-Protocol header to send the token
+    this.webSocket = new WebSocket(webSocketUrl);
 
     // Connection opened
     this.webSocket.addEventListener("open", (event) => {

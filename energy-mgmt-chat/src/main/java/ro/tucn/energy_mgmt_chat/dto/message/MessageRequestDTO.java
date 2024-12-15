@@ -12,8 +12,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @ToString
 public class MessageRequestDTO {
-    private UUID transmitter;
-    private UUID receiver;
+    private String transmitter;
+    private String receiver;
     private String text;
     private LocalDateTime sendingTime;
     private MessageStatus status;
