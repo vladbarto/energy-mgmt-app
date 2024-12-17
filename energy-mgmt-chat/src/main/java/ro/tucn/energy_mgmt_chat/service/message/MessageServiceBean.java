@@ -58,7 +58,7 @@ public class MessageServiceBean implements MessageService {
         log.info("Updating message statuses to SEEN between transmitter [{}] and receiver [{}]", transmitter, receiver);
 
         try {
-            int updatedCount = messageRepository.updateStatusesToSeen(transmitter, receiver, MessageStatus.SEEN);
+            int updatedCount = messageRepository.updateStatusesToSeen(transmitter, receiver, MessageStatus.SEEN.name());
             log.info("Updated {} messages to SEEN between transmitter [{}] and receiver [{}]", updatedCount, transmitter, receiver);
             return updatedCount;
         } catch (Exception e) {
@@ -74,6 +74,15 @@ public class MessageServiceBean implements MessageService {
 
         return messageMapper.entityListToResponseDTOList(
                 messageRepository.findAllMessagesBetweenUsers(aUsername, anotherUsername)
+        );
+    }
+
+    @Override
+    public List<MessageResponseDTO> getAnnouncements(String anotherUsername) {
+        log.info("Getting messages on group {}", anotherUsername);
+
+        return messageMapper.entityListToResponseDTOList(
+                messageRepository.findAllMessagesWithReceiverCalledAnnouncements(anotherUsername)
         );
     }
 }

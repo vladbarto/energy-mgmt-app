@@ -1,0 +1,3 @@
+CREATE USER vladbarto WITH PASSWORD '1234';
+CREATE DATABASE "chat-db" WITH OWNER vladbarto;
+GRANT ALL PRIVILEGES ON DATABASE "chat-db" TO vladbarto;

@@ -96,7 +96,10 @@ export class ChatComponent implements OnInit{
         text: this.message,
         status: 'SENT'
       };
-      this.addMessage(mesaj);
+
+      if(mesaj.receiver != 'announcements') {
+        this.addMessage(mesaj);
+      }
 
       let chatMessage: ChatModel = {
         type: 'SEND_MESSAGE',
@@ -163,8 +166,17 @@ export class ChatComponent implements OnInit{
 
     console.log('Adding message:', chatMessage);
     this.messages.push(chatMessage);
+
+    this.sortMessages();
   }
 
+  private sortMessages(): void {
+    this.messages.sort((a, b) => {
+      const dateA = new Date(a.timestamp!).getTime();
+      const dateB = new Date(b.timestamp!).getTime();
+      return dateA - dateB; // Ascending order
+    });
+  }
 
   protected getUser() {
     this.userService.getByUsername(this.desiredUsername)
@@ -245,7 +257,7 @@ export class ChatComponent implements OnInit{
     // Check if the current chat (focused) is with the other party in the message
     const isChatFocused = this.user.username === msg.transmitter || this.user.username === msg.receiver;
 
-    return isUserInvolved && isChatFocused;
+    return (isUserInvolved && isChatFocused) || this.user.username === 'announcements';
   }
 
 }

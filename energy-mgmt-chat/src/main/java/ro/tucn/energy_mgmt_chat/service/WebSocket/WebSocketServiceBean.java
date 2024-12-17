@@ -53,6 +53,7 @@ public class WebSocketServiceBean implements WebSocketService {
         sessionMap.forEach((key, session) -> {
             if (session.isOpen()) {
                 try {
+                    log.info("User {} connected", key);
                     session.sendMessage(new TextMessage(message));
                 } catch (IOException e) {
                     log.error("Failed to send message to key {}: {}", key, e.getMessage());

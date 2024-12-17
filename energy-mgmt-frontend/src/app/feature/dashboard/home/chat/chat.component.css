@@ -3,7 +3,7 @@
 }
 
 /* Ensure Font Awesome icons retain their own font-family */
-.fa, .fas, .far, .fal, .fab, .fa-regular {
+.fa, .fas, .far, .fal, .fab, .fa-regular, .fa-solid {
   font-family: "Font Awesome 6 Free", serif !important;
 }
 
@@ -82,6 +82,18 @@
   margin-bottom: 5px;
   align-items: flex-start;
   background-color: #e5e5ea;
+  color: #000;
+  border-radius: 25px;
+}
+
+.announcement {
+  max-width: 400px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 5px;
+  align-items: center;
+  /*justify-content: center;*/
+  background-color: #b7b592;
   color: #000;
   border-radius: 25px;
 }

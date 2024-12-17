@@ -25,7 +25,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         log.info("Registering websocket handlers");
         registry.addHandler(myHandler(), "/wsChat")
-//                .addInterceptors(new JwtHandshakeInterceptor())  // Add JWT authentication interceptor
                 .setAllowedOrigins("*");
     }
 

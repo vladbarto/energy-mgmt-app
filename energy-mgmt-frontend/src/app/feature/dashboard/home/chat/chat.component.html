@@ -79,12 +79,23 @@
           <div class="chat-messages flex-grow-1 p-2 mb-2 overflow-auto rounded-3">
             <div
               *ngFor="let msg of messages"
-              [ngClass]="{'from-me': msg.transmitter === loggedUser.id, 'from-them': msg.transmitter === user.id}"
+              [ngClass]="{
+              'from-me': msg.transmitter === loggedUser.username,
+              'from-them': msg.transmitter === user.username,
+              'announcement': msg.receiver === 'announcements'}"
               class="p-2 mb-1"
             >
               {{ msg.text }}
-              <div *ngIf="msg.transmitter === loggedUser.id">
-                <<{{ msg.status }}>>
+              <div *ngIf="msg.transmitter === loggedUser.username">
+                <div *ngIf="msg.status === 'SENT'">
+                  <i class="fa-solid fa-arrow-right"></i>
+                </div>
+                <div *ngIf="msg.status === 'RECEIVED'">
+                  <i class="fa-solid fa-check"></i>
+                </div>
+                <div *ngIf="msg.status === 'SEEN'">
+                  <i class="fa-regular fa-eye"></i>
+                </div>
               </div>
             </div>
 
@@ -94,7 +105,7 @@
           </div>
 
           <!-- Input area -->
-          <div class="chat-input p-2 d-flex align-items-center rounded-3">
+          <div *ngIf="!(this.user.username === 'announcements' && !this.loggedUser.admin)" class="chat-input p-2 d-flex align-items-center rounded-3">
             <input
               type="text"
               class="form-control me-2 rounded-4"

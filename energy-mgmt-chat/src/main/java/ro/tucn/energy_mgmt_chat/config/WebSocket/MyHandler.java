@@ -2,6 +2,7 @@ package ro.tucn.energy_mgmt_chat.config.WebSocket;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.CloseStatus;
@@ -81,6 +82,7 @@ public class MyHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
+        objectMapper.registerModule(new JavaTimeModule());
         log.info("Received message: {}", message.getPayload());
         try {
             WsActionRequestDTO wsActionRequestDTO = objectMapper.readValue(message.getPayload(), WsActionRequestDTO.class);
@@ -152,16 +154,19 @@ public class MyHandler extends TextWebSocketHandler {
         log.info("Message response: {}", messageResponseDTO.toString());
 
         try {
-            if(webSocketService.hasSession(requestDTO.getReceiver())) {
-                WsActionResponseDTO wsActionResponseDTO = WsActionResponseDTO.builder()
-                        .transmitter(requestDTO.getTransmitter())
-                        .receiver(requestDTO.getReceiver())
-                        .text(requestDTO.getText())
-                        .type(ActionType.RECEIVE_MESSAGE)
-                        .status(MessageStatus.SENT)
-                        .messageId(messageResponseDTO.getId())
-                        .build();
+            WsActionResponseDTO wsActionResponseDTO = WsActionResponseDTO.builder()
+                    .transmitter(requestDTO.getTransmitter())
+                    .receiver(requestDTO.getReceiver())
+                    .text(requestDTO.getText())
+                    .type(ActionType.RECEIVE_MESSAGE)
+                    .status(MessageStatus.SENT)
+                    .messageId(messageResponseDTO.getId())
+                    .build();
 
+            if(messageResponseDTO.getReceiver().equals("announcements")) {
+                log.info("Sending announcement to all");
+                webSocketService.sendMessageToAll(objectMapper.writeValueAsString(wsActionResponseDTO));
+            } else if(webSocketService.hasSession(requestDTO.getReceiver())) {
                 log.info("Sending out typing notification to connected receiver: {}", wsActionResponseDTO);
                 webSocketService.sendMessageToKey(
                         requestDTO.getReceiver(),
@@ -193,33 +198,54 @@ public class MyHandler extends TextWebSocketHandler {
         String whoMakesTheRequest = requestDTO.getTransmitter();
         String whoHeHasAConversationWith = requestDTO.getReceiver();
 
-        List<MessageResponseDTO> messageResponseDTOList = messageService.getMessagesBetweenUsers(
-                whoMakesTheRequest,
-                whoHeHasAConversationWith);
+        List<MessageResponseDTO> messageResponseDTOList;
+        if(whoHeHasAConversationWith.equals("announcements")) {
+            // nume hardcodat, user dummy creat
+            messageResponseDTOList = messageService.getAnnouncements(
+                    whoHeHasAConversationWith
+            );
+        } else {
+            messageResponseDTOList = messageService.getMessagesBetweenUsers(
+                    whoMakesTheRequest,
+                    whoHeHasAConversationWith);
+        }
 
         try {
-            log.info("Fetching messages from receiver: {}", requestDTO.getReceiver());
+            log.info("Fetching messages from receiver: {}, requested by {}", requestDTO.getReceiver(), whoMakesTheRequest);
 
             for (MessageResponseDTO messageResponseDTO : messageResponseDTOList) {
+                log.info("Ia sa vedem mesajul de pe grup: {}", messageResponseDTO);
+
                 WsActionResponseDTO wsActionResponseDTO = WsActionResponseDTO.builder()
                         .type(ActionType.FETCH_MESSAGES)
                         .transmitter(messageResponseDTO.getTransmitter())
-                        .receiver(messageResponseDTO.getReceiver())
+                        .receiver(messageResponseDTO.getReceiver()) // sau whoMakesTheRequest mai corect, dar irelevant aici, relevant in if
                         .status(messageResponseDTO.getStatus())
                         .text(messageResponseDTO.getText())
                         .messageId(messageResponseDTO.getId())
-                        //.sendingTime(messageResponseDTO.getSendingTime())
+                        .sendingTime(messageResponseDTO.getSendingTime())
                         .build();
 
-                if(webSocketService.hasSession(wsActionResponseDTO.getReceiver())) {
+                if(webSocketService.hasSession(whoMakesTheRequest)) {
                     log.info("Sending message to who solicited it: {}", wsActionResponseDTO);
                     webSocketService.sendMessageToKey(whoMakesTheRequest, objectMapper.writeValueAsString(wsActionResponseDTO));
                 }
             }
+
+            // Dupa ce userul isi aduce (fetch toate mesajele), celalalt user primeste de la server un SEEN_SIGNAL
+            WsActionResponseDTO wsActionResponseDTO = WsActionResponseDTO.builder()
+                    .type(ActionType.SEEN_SIGNAL)
+                    .transmitter(whoMakesTheRequest)
+                    .receiver(whoHeHasAConversationWith)
+                    .build();
+
+            if(webSocketService.hasSession(whoHeHasAConversationWith)) {
+                log.info("Sending Seen Signal to chat partner: {}", wsActionResponseDTO);
+                webSocketService.sendMessageToKey(whoHeHasAConversationWith, objectMapper.writeValueAsString(wsActionResponseDTO));
+            }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
-
     }
 
     private void handleReceivedMessagesType(WsActionRequestDTO requestDTO) {
@@ -241,34 +267,6 @@ public class MyHandler extends TextWebSocketHandler {
         }
     }
 
-
-    //    private void handleSeenSignalType(WsActionRequestDTO requestDTO) {
-//        List<MessageResponseDTO> messageResponseDTOList = messageService.getMessagesBetweenUsers(
-//                requestDTO.getTransmitter(), requestDTO.getReceiver());
-//
-//        try {
-//            for (MessageResponseDTO messageResponseDTO : messageResponseDTOList) {
-//                WsActionResponseDTO wsActionResponseDTO = WsActionResponseDTO.builder()
-//                        .type(ActionType.SEEN_SIGNAL)
-//                        .transmitter(messageResponseDTO.getTransmitter())
-//                        .receiver(messageResponseDTO.getReceiver())
-//                        .status(messageResponseDTO.getStatus())
-//                        .text(messageResponseDTO.getText())
-//                        .messageId(messageResponseDTO.getId())
-//                        //.sendingTime(messageResponseDTO.getSendingTime())
-//                        .build();
-//
-//                if(webSocketService.hasSession(wsActionResponseDTO.getReceiver())) {
-//                    log.info("Updated msg from msg list with seen status: {}", wsActionResponseDTO);
-//                    webSocketService.sendMessageToKey(
-//                            wsActionResponseDTO.getReceiver(),
-//                            objectMapper.writeValueAsString(wsActionResponseDTO));
-//                }
-//            }
-//        } catch (Exception e) {
-//            log.error(e.getMessage(), e);
-//        }
-//    }
     private void handleSeenSignalType(WsActionRequestDTO requestDTO) {
         try {
             WsActionResponseDTO seenSignalResponse = WsActionResponseDTO.builder()

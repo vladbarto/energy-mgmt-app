@@ -30,6 +30,7 @@ services:
       - user-app
       - device-app
       - monitoring-app
+      - chat-app
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       # - traefik_logs:/var/log/traefik
@@ -99,6 +100,27 @@ services:
     networks:
       - app-network
       
+  BazaDateChat:
+    image: postgres:latest
+    container_name: chatContainer
+    restart: always
+    environment:
+      POSTGRES_DB: chat-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    # ports:
+    #   - "5436:5432"
+    volumes:
+      - chat_db_data:/var/lib/postgresql/data
+      - ./init-chat-db.sql:/docker-entrypoint-initdb.d/init-chat-db.sql  # Mount the init script
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
   front-app:
     image: energy-mgmt-frontend
     container_name: front-app
@@ -225,6 +247,7 @@ volumes:
   user_db_data:
   device_db_data:
   monitoring_db_data:
+  chat_db_data:
 
 networks:
   app-network:

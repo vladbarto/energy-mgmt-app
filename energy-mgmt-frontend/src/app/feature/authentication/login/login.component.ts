@@ -79,8 +79,8 @@ export class LoginComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(response => {
         sessionStorage.setItem('loggedUser', JSON.stringify(response));
-        //this.router.navigateByUrl(response.admin? '/dashboard/admin' : '/dashboard/client');
-        this.router.navigateByUrl('/dashboard/chat');
+        this.router.navigateByUrl(response.admin? '/dashboard/admin' : '/dashboard/client');
+        // this.router.navigateByUrl('/dashboard/chat');
       });
   }
 }
