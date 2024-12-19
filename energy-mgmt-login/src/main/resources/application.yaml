@@ -49,5 +49,5 @@ microservices:
 #  deviceService: "http://host.docker.internal:6585/api"
   userService: http://${api.userService.host}:${api.userService.port}/api-user
   deviceService: http://${api.deviceService.host}:${api.deviceService.port}/api-device
-  monitoringService: ws://${api.monitoringService.host}:${api.monitoringService.port}/ws
-  chatService: ws://${api.chatService.host}:${api.chatService.port}/wsChat
+#  monitoringService: ws://${api.monitoringService.host}:${api.monitoringService.port}/ws
+#  chatService: ws://${api.chatService.host}:${api.chatService.port}/wsChat

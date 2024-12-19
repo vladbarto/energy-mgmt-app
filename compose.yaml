@@ -112,7 +112,7 @@ services:
     #   - "5436:5432"
     volumes:
       - chat_db_data:/var/lib/postgresql/data
-      - ./init-chat-db.sql:/docker-entrypoint-initdb.d/init-chat-db.sql  # Mount the init script
+      # - ./init-chat-db.sql:/docker-entrypoint-initdb.d/init-chat-db.sql  # Mount the init script
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -240,6 +240,34 @@ services:
       - "traefik.http.routers.monitoring-app.middlewares=websocket-headers"
       - "traefik.http.middlewares.websocket-headers.headers.customrequestheaders.Upgrade=websocket"
       - "traefik.http.middlewares.websocket-headers.headers.customrequestheaders.Connection=Upgrade"
+    networks:
+      - app-network
+
+  chat-app:
+    image: energy-mgmt-chat
+    # container_name: chat-app
+    build:
+      context: ./energy-mgmt-chat
+      dockerfile: ./energy-mgmt-chat/Dockerfile
+    # ports:
+    #   - 6587:6587
+    environment:
+      DB_IP: BazaDateChat
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_DBNAME: chat-db
+    deploy:
+      replicas: 1
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.monitoring-app.rule=Host(`localhost`) && PathPrefix(`/wsChat`)"
+      - "traefik.http.services.monitoring-app.loadbalancer.server.port=6587"
+      - "traefik.http.routers.monitoring-app.middlewares=websocket-headers"
+      - "traefik.http.middlewares.websocket-headers.headers.customrequestheaders.Upgrade=websocket-chat"
+      - "traefik.http.middlewares.websocket-headers.headers.customrequestheaders.Connection=Upgrade-chat"
+      - "traefik.http.middlewares.noheaderchange.headers.customrequestheaders.RemoveAuthorization=false"
+      - "traefik.http.middlewares.noheaderchange.headers.customresponseheaders.RemoveSet-Cookie=false"
     networks:
       - app-network
 

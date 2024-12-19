@@ -14,7 +14,7 @@ import java.util.UUID;
 public class DeviceRequestDTO {
 
     private UUID deviceId;
-    private UUID userId;
+    private String username;
     private float mhec;
     private MethodType methodType;
 }

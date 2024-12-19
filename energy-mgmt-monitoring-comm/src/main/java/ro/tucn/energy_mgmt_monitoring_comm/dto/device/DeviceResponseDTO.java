@@ -12,6 +12,6 @@ import java.util.UUID;
 public class DeviceResponseDTO {
 
     private UUID deviceId;
-    private UUID userId;
+    private String username;
     private float mhec;
 }

@@ -1,4 +1,4 @@
-package ro.tucn.energy_mgmt_chat.security.util;
+package ro.tucn.energy_mgmt_monitoring_comm.security.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -13,17 +13,17 @@ import java.util.Properties;
 
 @Slf4j
 @UtilityClass
-public class JwtUtils {
+public class JwtUtil {
 
     public String secretKey;
     public Integer tokenExpirationDays;
 
     static {
-        try (InputStream inputStream = JwtUtils.class.getResourceAsStream("/application.yaml")) {
+        try (InputStream inputStream = JwtUtil.class.getResourceAsStream("/application.yaml")) {
             Properties properties = new Properties();
             properties.load(inputStream);
-            JwtUtils.secretKey = properties.getProperty("secret-key");
-            JwtUtils.tokenExpirationDays = Integer.parseInt(properties.getProperty("token-expiration-days"));
+            JwtUtil.secretKey = properties.getProperty("secret-key");
+            JwtUtil.tokenExpirationDays = Integer.parseInt(properties.getProperty("token-expiration-days"));
         } catch (IOException | NumberFormatException e) {
             log.error(e.getMessage());
         }
@@ -49,3 +49,4 @@ public class JwtUtils {
                 .getBody();
     }
 }
+

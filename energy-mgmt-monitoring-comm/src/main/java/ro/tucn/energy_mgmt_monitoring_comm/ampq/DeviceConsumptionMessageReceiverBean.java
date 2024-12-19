@@ -42,7 +42,7 @@ public class DeviceConsumptionMessageReceiverBean implements MessageReceiver {
 
             // get the reference mhec for comparison
             DeviceResponseDTO correspondingDevice = deviceService.findDevice(reading.getDeviceId());
-            String userId = correspondingDevice.getUserId().toString();
+            String username = correspondingDevice.getUsername();
             float mhec = correspondingDevice.getMhec();
 
             if(reading.getReadValue() > mhec) { // if read value exceeds mhec
@@ -59,11 +59,11 @@ public class DeviceConsumptionMessageReceiverBean implements MessageReceiver {
                         .date(reading.getTimestamp().toString())
                         .build();
 
-                if (webSocketService.hasSession(userId)) {
-                    webSocketService.sendMessageToKey(userId, objectMapper.writeValueAsString(responseDTO));
+                if (webSocketService.hasSession(username)) {
+                    webSocketService.sendMessageToKey(username, objectMapper.writeValueAsString(responseDTO));
                 }
                 else {
-                    log.warn("No active WebSocket session for user {} to send notification.", userId);
+                    log.warn("No active WebSocket session for user {} to send notification.", username);
                 }
             }
         } catch (Exception e) {

@@ -13,6 +13,8 @@ import ro.tucn.energy_mgmt_monitoring_comm.dto.readings.ReadingResponseDTO;
 import ro.tucn.energy_mgmt_monitoring_comm.dto.textMessage.MessageType;
 import ro.tucn.energy_mgmt_monitoring_comm.dto.textMessage.TextMessageRequestDTO;
 import ro.tucn.energy_mgmt_monitoring_comm.dto.textMessage.TextMessageResponseDTO;
+import ro.tucn.energy_mgmt_monitoring_comm.security.filter.AuthorizationFilter;
+import ro.tucn.energy_mgmt_monitoring_comm.security.util.JwtUtil;
 import ro.tucn.energy_mgmt_monitoring_comm.service.readings.ReadingService;
 import ro.tucn.energy_mgmt_monitoring_comm.service.webSocket.WebSocketService;
 import static ro.tucn.energy_mgmt_monitoring_comm.config.ws.wsUtils.extractQueryParam;
@@ -34,23 +36,40 @@ public class MyHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
         try {
-            // Extract userId from the WebSocket URI query parameters.
+            // Extract the JWT token from the WebSocket URI query parameters
             String query = session.getUri().getQuery();
-            String userId = extractQueryParam(query, "userId");
-            if (userId == null || userId.isEmpty()) {
-                log.warn("Missing userId in WebSocket connection.");
-                session.close(CloseStatus.BAD_DATA.withReason("Missing userId"));
+            String token = extractQueryParam(query, "token");
+
+            if (token == null || token.isEmpty()) {
+                log.warn("Missing JWT token in WebSocket connection.");
+                session.close(CloseStatus.BAD_DATA.withReason("Missing JWT token"));
                 return;
             }
 
-            // Register this session with the userId in the WebSocketService.
-            webSocketService.addSession(userId, session);
-            log.info("WebSocket connection established for userId: {}", userId);
+            // Validate and parse the JWT token
+            if (!AuthorizationFilter.validateToken(token)) {
+                log.warn("Invalid JWT token in WebSocket connection.");
+                session.close(CloseStatus.BAD_DATA.withReason("Invalid JWT token"));
+                return;
+            }
+
+            // Extract userId from the validated JWT token
+            String username = JwtUtil.extractUsernameFromToken(token);
+
+            if (username == null || username.isEmpty()) {
+                log.warn("JWT token does not contain a valid userId.");
+                session.close(CloseStatus.BAD_DATA.withReason("Invalid userId in JWT token"));
+                return;
+            }
+
+            // Register this WebSocket session with the userId in the WebSocketService
+            webSocketService.addSession(username, session);
+            log.info("WebSocket connection established for userId: {}", username);
 
         } catch (Exception e) {
             log.error("Failed to establish WebSocket connection: {}", e.getMessage());
             try {
-                session.close(CloseStatus.SERVER_ERROR.withReason("Failed to process userId"));
+                session.close(CloseStatus.SERVER_ERROR.withReason("Failed to process JWT token"));
             } catch (IOException ioException) {
                 log.error("Failed to close WebSocket session: {}", ioException.getMessage());
             }
@@ -140,13 +159,20 @@ public class MyHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
+        // Handle connection closure
         try {
             String query = session.getUri().getQuery();
-            String userId = extractQueryParam(query, "userId");
-            if (userId != null) {
-                webSocketService.removeSession(userId);
-                log.info("WebSocket connection closed for userId: {}", userId);
+            String token = extractQueryParam(query, "token");
+
+            // Extract userId from the validated JWT token
+            String username = JwtUtil.extractUsernameFromToken(token);
+
+            if (!username.isEmpty()) {
+                webSocketService.removeSession(username);
+                log.info("WebSocket connection closed for user with username: {}", username);
+                log.info("Connection closed for session ID: {}, CloseStatus: {}", session.getId(), status);
             }
+
         } catch (Exception e) {
             log.error("Failed to process WebSocket disconnection: {}", e.getMessage());
         }

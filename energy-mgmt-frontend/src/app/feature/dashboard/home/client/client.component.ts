@@ -46,7 +46,7 @@ export class ClientComponent implements OnInit, OnDestroy {
 
     // Note: ws://localhost/ws?userId=some-uuid
     let currentUserId = this.getUser().id;
-    this.webSocketService.connectSocket(`${environment.MONITORING_URL}?userId=${currentUserId}`);
+    this.webSocketService.connectSocket(`${environment.MONITORING_URL}`);
 
     // Subscribe to WebSocket messages
     this.webSocketService.message$.subscribe((message) => {
